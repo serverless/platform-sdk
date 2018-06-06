@@ -7,9 +7,9 @@ if (!global._babelPolyfill) {
 require('source-map-support/register')
 
 const service = require('./service')
-const utils = require('./utils')
+const login = require('./login')
 
 module.exports = {
   ...service,
-  ...utils
+  ...login
 }
