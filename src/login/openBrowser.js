@@ -24,6 +24,6 @@ module.exports = function openBrowser(url) {
   if (process.platform === 'darwin' && browser === 'open') {
     browser = undefined
   }
-  const options = { app: browser }
+  const options = { wait: false, app: browser }
   return opn(url, options).catch((err) => displayManualOpenMessage(url, err))
 }

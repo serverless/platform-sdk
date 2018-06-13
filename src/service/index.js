@@ -1,2 +1,2 @@
-export { default as publish } from './publish'
-export { default as archive } from './archive'
+export { default as publishService } from './publishService'
+export { default as archiveService } from './archiveService'
