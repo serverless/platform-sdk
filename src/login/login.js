@@ -5,8 +5,6 @@ const querystring = require('querystring')
 const openBrowser = require('./openBrowser')
 const platformConfig = require('../config.json')
 
-const PLATFORM_FRONTEND_BASE_URL = 'http://localhost:3000/'
-
 const login = async () => {
   const app = express()
   app.use(bodyParser.json())
