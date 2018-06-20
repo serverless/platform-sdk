@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const querystring = require('querystring')
 const openBrowser = require('./openBrowser')
+const platformConfig = require('../config.json')
 
 const PLATFORM_FRONTEND_BASE_URL = 'http://localhost:3000/'
 
@@ -11,9 +12,9 @@ const login = async () => {
   app.use(bodyParser.json())
   app.use(cors())
   const server = app.listen(8000)
-  const queries = querystring.stringify({ cli: 'v2' })
+  const queries = querystring.stringify({ cli: 'true' })
 
-  const opnRes = await openBrowser(`${PLATFORM_FRONTEND_BASE_URL}?${queries}`)
+  const opnRes = await openBrowser(`${platformConfig.FRONTEND_BASE_URL}?${queries}`)
 
   return new Promise((resolve) => {
     app.post('/', (req, res) => {
