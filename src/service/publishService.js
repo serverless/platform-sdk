@@ -2,7 +2,7 @@ const fetch = require('isomorphic-fetch')
 const platformConfig = require('../config.json')
 
 const publishService = async (data) => {
-  const response = await fetch(`${platformConfig.BACKEND_BASE_URL}/tenants/${data.tenant}/applications/${data.app}/services`, {
+  const response = await fetch(`${platformConfig.BACKEND_BASE_URL}tenants/${data.tenant}/applications/${data.app}/services`, {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
@@ -15,7 +15,8 @@ const publishService = async (data) => {
     const text = await response.text()
     throw new Error(text)
   }
-  return response
+  const serviceUrl = `${platformConfig.FRONTEND_BASE_URL}tenants/${data.tenant}/applications/${data.app}/services/${data.service.name}`
+  return serviceUrl
 }
 
 export default publishService

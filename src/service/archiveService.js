@@ -2,7 +2,7 @@ const fetch = require('isomorphic-fetch')
 const platformConfig = require('../config.json')
 
 const archiveService = async (data) => {
-  const response = await fetch(`${platformConfig.BACKEND_BASE_URL}/tenants/${data.tenant}/applications/${data.app}/services/${data.name}`, {
+  const response = await fetch(`${platformConfig.BACKEND_BASE_URL}tenants/${data.tenant}/applications/${data.app}/services/${data.name}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -14,7 +14,8 @@ const archiveService = async (data) => {
     const text = await response.text()
     throw new Error(text)
   }
-  return response
+  const serviceUrl = `${platformConfig.FRONTEND_BASE_URL}tenants/${data.tenant}/applications/${data.app}/services/${data.name}`
+  return serviceUrl
 }
 
 export default archiveService

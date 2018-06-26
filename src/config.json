@@ -1,4 +1,4 @@
 {
-  "BACKEND_BASE_URL": "https://5xe6lexe8e.execute-api.us-east-1.amazonaws.com/dev",
+  "BACKEND_BASE_URL": "https://5xe6lexe8e.execute-api.us-east-1.amazonaws.com/dev/",
   "FRONTEND_BASE_URL": "https://dashboard.serverless-dev.com/"
 }
