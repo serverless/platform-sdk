@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const querystring = require('querystring')
 const openBrowser = require('./openBrowser')
-const platformConfig = require('../config.json')
+const platformConfig = require('../config')
 
 const login = async () => {
   const app = express()
@@ -12,7 +12,7 @@ const login = async () => {
   const server = app.listen(8000)
   const queries = querystring.stringify({ cli: 'true' })
 
-  const opnRes = await openBrowser(`${platformConfig.FRONTEND_BASE_URL}?${queries}`)
+  const opnRes = await openBrowser(`${platformConfig.frontendUrl}?${queries}`)
 
   return new Promise((resolve) => {
     app.post('/', (req, res) => {

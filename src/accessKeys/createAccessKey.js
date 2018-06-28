@@ -1,8 +1,8 @@
 const fetch = require('isomorphic-fetch')
-const platformConfig = require('../config.json')
+const platformConfig = require('../config')
 
 const createAccessKey = async (data) => {
-  const response = await fetch(`${platformConfig.BACKEND_BASE_URL}tenants/${data.tenant}/accessKeys`, {
+  const response = await fetch(`${platformConfig.backendUrl}tenants/${data.tenant}/accessKeys`, {
     method: 'POST',
     body: JSON.stringify({
       tenantName: data.tenant,
