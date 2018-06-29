@@ -64,7 +64,14 @@ Promise resolving to an `accessKey` string, that is the access key.
 ```js
 const { createAccessKey } = require('@serverless/platform-sdk')
 
-const accessKey = await createAccessKey()
+const data = {
+  username: 'eahefnawy',
+  tenant: 'eahefnawy',
+  idToken: 'abc',
+  title: 'Framework'
+}
+
+const accessKey = await createAccessKey(data)
 ```
 
 ---
