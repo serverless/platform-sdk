@@ -19,7 +19,9 @@ const createAccessKey = async (data) => {
     const text = await response.text()
     throw new Error(text)
   }
-  return response
+
+  const { secretAccessKey } = await response.json()
+  return secretAccessKey
 }
 
 export default createAccessKey
