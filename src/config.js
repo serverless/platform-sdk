@@ -6,7 +6,7 @@ const config = {
     backendUrl: 'https://garkuu3a57.execute-api.us-east-1.amazonaws.com/dev/'
   },
   preview: {
-    frontendUrl: 'https://deploy-preview-124--eg-dashboard-dev.netlify.com/',
+    frontendUrl: 'https://deploy-preview-162--eg-dashboard-dev.netlify.com/',
     backendUrl: 'https://garkuu3a57.execute-api.us-east-1.amazonaws.com/dev/'
   },
   dev: {

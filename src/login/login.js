@@ -10,16 +10,19 @@ const login = async () => {
   app.use(bodyParser.json())
   app.use(cors())
   const server = app.listen(8000)
-  const queries = querystring.stringify({ cli: 'true' })
+  const beginLoginQueries = querystring.stringify({ cli: 'true' })
+  const endLoginQueries = querystring.stringify({ cli: 'true', cliLoginSuccessful: 'true' })
 
-  const opnRes = await openBrowser(`${platformConfig.frontendUrl}?${queries}`)
+  const opnRes = await openBrowser(`${platformConfig.frontendUrl}?${beginLoginQueries}`)
 
   return new Promise((resolve) => {
-    app.post('/', (req, res) => {
+    app.get('/', (req, res) => {
+      if (opnRes) opnRes.kill()
       opnRes.kill()
+      res.redirect(`${platformConfig.frontendUrl}?${endLoginQueries}`)
       res.end()
       server.close()
-      return resolve(req.body)
+      return resolve(req.query)
     })
   })
 }
