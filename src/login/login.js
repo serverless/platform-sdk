@@ -16,7 +16,9 @@ const login = async () => {
 
   return new Promise((resolve) => {
     app.post('/', (req, res) => {
-      opnRes.kill()
+      if (opnRes) {
+        opnRes.kill()
+      }
       res.end()
       server.close()
       return resolve(req.body)
