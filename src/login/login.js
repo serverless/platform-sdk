@@ -18,7 +18,6 @@ const login = async () => {
   return new Promise((resolve) => {
     app.get('/', (req, res) => {
       if (opnRes) opnRes.kill()
-      opnRes.kill()
       res.redirect(`${platformConfig.frontendUrl}?${endLoginQueries}`)
       res.end()
       server.close()
