@@ -7,12 +7,16 @@ if (!global._babelPolyfill) {
 require('source-map-support/register')
 
 const service = require('./service')
+const deployments = require('./deployments')
+const apps = require('./apps')
 const tenants = require('./tenants')
 const accessKeys = require('./accessKeys')
 const login = require('./login')
 
 module.exports = {
   ...service,
+  ...deployments,
+  ...apps,
   ...tenants,
   ...accessKeys,
   ...login
