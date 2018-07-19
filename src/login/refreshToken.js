@@ -5,7 +5,7 @@ const refreshToken = async (userRefreshToken) => {
   const body = JSON.stringify({
     refreshToken: userRefreshToken
   })
-  const response = await fetch(`https://ua4s71ruc7.execute-api.us-east-1.amazonaws.com/dev/tokens/refresh`, {
+  const response = await fetch(`${platformConfig.backendUrl}tokens/refresh`, {
     method: 'POST',
     body,
     headers: {

@@ -6,7 +6,7 @@ const getTokens = async (code) => {
     code,
     redirect_uri: 'http://localhost:8000/'
   })
-  const response = await fetch(`https://ua4s71ruc7.execute-api.us-east-1.amazonaws.com/dev/tokens`, {
+  const response = await fetch(`${platformConfig.backendUrl}tokens`, {
     method: 'POST',
     body,
     headers: {
