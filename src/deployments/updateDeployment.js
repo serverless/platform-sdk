@@ -29,14 +29,7 @@ const updateDeployment = async (data) => {
     throw new Error(text)
   }
 
-  const { id } = await response.json()
-  if (data.state && data.state.service && data.state.service.name) {
-    const serviceUrl = `${platformConfig.frontendUrl}tenants/${data.state.tenant}/applications/${
-      data.state.app
-    }/services/${data.state.service.name}`
-    return serviceUrl
-  }
-  return id
+  return response.json()
 }
 
 export default updateDeployment

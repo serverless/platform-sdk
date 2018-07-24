@@ -19,10 +19,7 @@ const archiveService = async (data) => {
     const text = await response.text()
     throw new Error(text)
   }
-  const serviceUrl = `${platformConfig.frontendUrl}tenants/${data.tenant}/applications/${
-    data.app
-  }/services/${data.name}`
-  return serviceUrl
+  return response.json()
 }
 
 export default archiveService

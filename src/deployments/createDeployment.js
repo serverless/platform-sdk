@@ -19,8 +19,7 @@ const createDeployment = async (data) => {
     const text = await response.text()
     throw new Error(text)
   }
-  const { id } = await response.json()
-  return id
+  return response.json()
 }
 
 export default createDeployment
