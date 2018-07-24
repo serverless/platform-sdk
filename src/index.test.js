@@ -1,5 +1,5 @@
 describe('index', () => {
-  test('require runs without error', async () => {
+  test('require runs without error', () => {
     const mod = require('./')
     expect(mod).toMatchObject({
       createAccessKey: expect.any(Function),
