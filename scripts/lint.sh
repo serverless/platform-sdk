@@ -1,1 +1,2 @@
-eslint . --cache
+set -e
+eslint . --cache --fix

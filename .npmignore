@@ -26,20 +26,30 @@ npm-debug.log
 
 # eslint
 .eslintcache
-
-#development
-.editorconfig
 .eslintignore
 .eslintrc.js
+
+# prettier
+.prettierignore
+prettier.config.js
+
+#development
+.babelrc
+.codecov.yml
+.editorconfig
+.lintstagedrc.json
 .travis.yml
+*.test.js
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 DEVELOPMENT.md
 docker-compose.yml
 Dockerfile
 __tests__
+coverage
 docs
 examples
-prettier.config.js
+jest.config.js
+scripts
 src
 tests
