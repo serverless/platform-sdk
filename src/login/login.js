@@ -13,14 +13,7 @@ const login = async () => {
   const server = app.listen(8000)
   let refreshToken
 
-  const scope = [
-    'openid',
-    'email_verified',
-    'email',
-    'profile',
-    'name',
-    'offline_access'
-  ]
+  const scope = ['openid', 'email_verified', 'email', 'profile', 'name', 'offline_access']
 
   const AUTH0_DOMAIN = platformConfig.auth0Domain
 
@@ -37,7 +30,9 @@ const login = async () => {
 
   return new Promise((resolve) => {
     app.get('/', async (req, res) => { // eslint-disable-line
-      if (opnRes) opnRes.kill()
+      if (opnRes) {
+        opnRes.kill()
+      }
       if (req.query.code) {
         const tokens = await getTokens(req.query.code)
         refreshToken = tokens.refresh_token
@@ -52,7 +47,10 @@ const login = async () => {
         res.redirect(`${platformConfig.frontendUrl}callback?${tokensQueries}`)
         res.end()
       } else {
-        const endLoginQueries = querystring.stringify({ cli: 'true', cliLoginSuccessful: 'true' })
+        const endLoginQueries = querystring.stringify({
+          cli: 'true',
+          cliLoginSuccessful: 'true'
+        })
         res.redirect(`${platformConfig.frontendUrl}?${endLoginQueries}`)
         res.end()
         server.close()
