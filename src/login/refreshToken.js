@@ -1,5 +1,6 @@
 const fetch = require('isomorphic-fetch')
 const platformConfig = require('../config')
+const currentVersion = require('../../package.json').version
 
 const refreshToken = async (userRefreshToken) => {
   const body = JSON.stringify({
@@ -9,7 +10,8 @@ const refreshToken = async (userRefreshToken) => {
     method: 'POST',
     body,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'x-platform-version': currentVersion
     }
   })
 

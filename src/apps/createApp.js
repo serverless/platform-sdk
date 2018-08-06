@@ -1,5 +1,6 @@
 const fetch = require('isomorphic-fetch')
 const platformConfig = require('../config')
+const currentVersion = require('../../package.json').version
 
 const slugifyApp = (text) =>
   text
@@ -20,6 +21,7 @@ const createApp = async (data) => {
     body,
     headers: {
       'Content-Type': 'application/json',
+      'x-platform-version': currentVersion,
       Authorization: `bearer ${data.token}`
     }
   })

@@ -1,5 +1,6 @@
 const fetch = require('isomorphic-fetch')
 const platformConfig = require('../config')
+const currentVersion = require('../../package.json').version
 
 const createAccessKey = async (data) => {
   const response = await fetch(`${platformConfig.backendUrl}tenants/${data.tenant}/accessKeys`, {
@@ -11,6 +12,7 @@ const createAccessKey = async (data) => {
     }),
     headers: {
       'Content-Type': 'application/json',
+      'x-platform-version': currentVersion,
       Authorization: `bearer ${data.idToken}`
     }
   })
