@@ -1,6 +1,6 @@
 const fetch = require('isomorphic-fetch')
 const platformConfig = require('../config')
-const currentVersion = require('../../../package.json').version
+const currentVersion = require('../../package.json').version
 
 const refreshToken = async (userRefreshToken) => {
   const body = JSON.stringify({

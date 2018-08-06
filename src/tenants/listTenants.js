@@ -1,6 +1,6 @@
 const fetch = require('isomorphic-fetch')
 const platformConfig = require('../config')
-const currentVersion = require('../../../package.json').version
+const currentVersion = require('../../package.json').version
 
 const listTenants = async (data) => {
   const response = await fetch(`${platformConfig.backendUrl}tenants?userName=${data.username}`, {

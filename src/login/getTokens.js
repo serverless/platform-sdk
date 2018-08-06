@@ -1,6 +1,6 @@
 const fetch = require('isomorphic-fetch')
 const platformConfig = require('../config')
-const currentVersion = require('../../../package.json').version
+const currentVersion = require('../../package.json').version
 
 const getTokens = async (code) => {
   const body = JSON.stringify({
