@@ -1,5 +1,6 @@
 const fetch = require('isomorphic-fetch')
 const platformConfig = require('../config')
+const currentVersion = require('../../../package.json').version
 
 const getApp = async (data) => {
   const response = await fetch(
@@ -8,6 +9,7 @@ const getApp = async (data) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'x-platform-version': currentVersion,
         Authorization: `bearer ${data.token}`
       }
     }

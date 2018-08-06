@@ -1,5 +1,6 @@
 const fetch = require('isomorphic-fetch')
 const platformConfig = require('../config')
+const currentVersion = require('../../../package.json').version
 
 const updateDeployment = async (data) => {
   const body = {
@@ -19,6 +20,7 @@ const updateDeployment = async (data) => {
       body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',
+        'x-platform-version': currentVersion,
         Authorization: `bearer ${data.accessKey}`
       }
     }

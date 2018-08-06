@@ -1,5 +1,6 @@
 const fetch = require('isomorphic-fetch')
 const platformConfig = require('../config')
+const currentVersion = require('../../../package.json').version
 
 const createDeployment = async (data) => {
   const response = await fetch(
@@ -10,6 +11,7 @@ const createDeployment = async (data) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-platform-version': currentVersion,
         Authorization: `bearer ${data.accessKey}`
       }
     }
