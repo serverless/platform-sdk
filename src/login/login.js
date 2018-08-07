@@ -21,7 +21,7 @@ const login = async () => {
     audience: `https://${AUTH0_DOMAIN}/userinfo`,
     response_type: 'code',
     client_id: platformConfig.auth0ClientId,
-    redirect_uri: 'http://localhost:8000/',
+    redirect_uri: `${platformConfig.frontendUrl}callback`,
     scope: scope.join(' ')
   })
   const auth0Endpoint = `https://${AUTH0_DOMAIN}/authorize?${auth0Queries}`
