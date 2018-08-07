@@ -5,7 +5,7 @@ const currentVersion = require('../../package.json').version
 const getTokens = async (code) => {
   const body = JSON.stringify({
     code,
-    redirect_uri: 'http://localhost:8000/'
+    redirect_uri: `${platformConfig.frontendUrl}callback`
   })
   const response = await fetch(`${platformConfig.backendUrl}tokens`, {
     method: 'POST',
