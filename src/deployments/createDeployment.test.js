@@ -18,10 +18,19 @@ describe('createDeployment', () => {
       tenant: 'sometenant',
       app: 'someapp',
       serviceName: 'someservicename',
-      accessKey: 'someaccesskey'
+      accessKey: 'someaccesskey',
+      provider: 'someprovider',
+      region: 'someregion'
     }
 
     await createDeployment(data)
+
+    const body = {
+      deployment: {
+        provider: data.provider,
+        region: data.region
+      }
+    }
 
     expect(fetch).toBeCalledWith(
       `${platformConfig.backendUrl}tenants/${data.tenant}/applications/${data.app}/services/${
@@ -29,6 +38,7 @@ describe('createDeployment', () => {
       }/deployments`,
       {
         method: 'POST',
+        body: JSON.stringify(body),
         headers: {
           'Content-Type': 'application/json',
           'x-platform-version': currentVersion,
