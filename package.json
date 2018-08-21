@@ -18,7 +18,7 @@
     "clean": "./scripts/clean.sh",
     "cleanse": "./scripts/cleanse.sh",
     "lint": "./scripts/lint.sh",
-    "lint:staged": "./scripts/lint-staged.sh",
+    "lint:staged": "lint-staged",
     "setup": "./scripts/setup.sh",
     "setup:ci": "./scripts/setup-ci.sh",
     "test": "./scripts/test.sh",
@@ -55,6 +55,12 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix .",
+      "git add -A"
+    ]
   },
   "pre-commit": [
     "lint:staged"
