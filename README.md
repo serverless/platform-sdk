@@ -6,6 +6,7 @@ Functional SDK for the Serverless Platfrom.
 [![Build Status](https://travis-ci.org/serverless/platform-sdk.svg)](https://travis-ci.org/serverless/platform-sdk)
 [![license](https://img.shields.io/npm/l/@serverless/platform-sdk.svg)](https://www.npmjs.com/package/@serverless/platform-sdk)
 [![coverage](https://img.shields.io/codecov/c/github/serverless/platform-sdk.svg)](https://codecov.io/gh/serverless/platform-sdk)
+[![Known Vulnerabilities](https://snyk.io/test/github/serverless/platform-sdk/badge.svg)](https://snyk.io/test/github/serverless/platform-sdk)
 
 ## Contents
 
@@ -69,7 +70,7 @@ refresh token string
 Promise resolving to the following object:
 
 - `id_token` - `string` - new Auth0 id token
-- `access_token` - `string` - new Auth0 access token 
+- `access_token` - `string` - new Auth0 access token
 - `expires_in` - `string` - number of seconds until token expiration
 
 **Example**
@@ -345,4 +346,3 @@ const data = {
 
 const app = await createApp(data)
 ```
-

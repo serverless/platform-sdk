@@ -22,7 +22,7 @@
     "setup": "./scripts/setup.sh",
     "setup:ci": "./scripts/setup-ci.sh",
     "test": "./scripts/test.sh",
-    "test:ci": "./scripts/test-ci.sh",
+    "test:ci": "snyk test && ./scripts/test-ci.sh",
     "watch": "./scripts/watch.sh"
   },
   "dependencies": {
@@ -51,7 +51,8 @@
     "jest-cli": "^21.2.0",
     "lint-staged": "7.1.3",
     "pre-commit": "^1.2.2",
-    "prettier": "^1.13.6"
+    "prettier": "^1.13.6",
+    "snyk": "^1.92.5"
   },
   "publishConfig": {
     "access": "public"
