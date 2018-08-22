@@ -14,6 +14,13 @@ afterAll(() => jest.restoreAllMocks())
 
 describe('createDeployment', () => {
   test('it should make a valid request', async () => {
+    if (process.env.CI) {
+      delete process.env.CI
+    }
+    if (process.env.TRAVIS) {
+      delete process.env.TRAVIS
+    }
+
     const data = {
       tenant: 'sometenant',
       app: 'someapp',
