@@ -11,6 +11,8 @@ install:
 script:
 - npm run lint
 - npm run test:ci
+before_deploy:
+- snyk monitor --org=serverless
 deploy:
   provider: npm
   email: services@serverless.com
