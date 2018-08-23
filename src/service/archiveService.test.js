@@ -18,17 +18,27 @@ describe('archiveService', () => {
       app: 'someapp',
       tenant: 'sometenant',
       name: 'somename',
-      accessKey: 'someaccesskey'
+      accessKey: 'someaccesskey',
+      provider: 'someprovider',
+      region: 'someregion'
     }
 
     await archiveService(data)
+
+    const body = {
+      deployment: {
+        provider: data.provider,
+        region: data.region
+      }
+    }
 
     expect(fetch).toBeCalledWith(
       `${platformConfig.backendUrl}tenants/${data.tenant}/applications/${data.app}/services/${
         data.name
       }`,
       {
-        method: 'DELETE',
+        method: 'PUT',
+        body: JSON.stringify(body),
         headers: {
           'Content-Type': 'application/json',
           'x-platform-version': currentVersion,
