@@ -45,14 +45,26 @@ describe('createDeployment', () => {
       }
     )
   })
+})
 
-  test('it should make a valid request in Travis', async () => {
-    // CI setup
+describe('createDeployment - Travis', () => {
+  beforeEach(() => {
+    process.env.SERVERLESS_ACCESS_KEY = true
     process.env.TRAVIS = true
     process.env.TRAVIS_REPO_SLUG = 'serverless/service'
     process.env.TRAVIS_COMMIT = 'abc'
     process.env.TRAVIS_BUILD_ID = 'xyz'
+  })
 
+  afterEach(() => {
+    delete process.env.SERVERLESS_ACCESS_KEY
+    delete process.env.TRAVIS
+    delete process.env.TRAVIS_REPO_SLUG
+    delete process.env.TRAVIS_COMMIT
+    delete process.env.TRAVIS_BUILD_ID
+  })
+
+  test('it should make a valid request in Travis', async () => {
     const source = {
       owner: 'serverless',
       repo: 'service',
@@ -87,15 +99,12 @@ describe('createDeployment', () => {
         }
       }
     )
-
-    delete process.env.TRAVIS
-    delete process.env.TRAVIS_REPO_SLUG
-    delete process.env.TRAVIS_COMMIT
-    delete process.env.TRAVIS_BUILD_ID
   })
+})
 
-  test('it should make a valid request in any CI', async () => {
-    // CI setup
+describe('createDeployment - CI', () => {
+  beforeEach(() => {
+    process.env.SERVERLESS_ACCESS_KEY = true
     process.env.CI = 'true'
     process.env.CI_SOURCE_OWNER = 'serverless'
     process.env.CI_SOURCE_REPO = 'service'
@@ -103,7 +112,19 @@ describe('createDeployment', () => {
     process.env.CI_COMMIT = 'abc'
     process.env.CI_TYPE = 'someCISystem'
     process.env.CI_BUILD_ID = 'xyz'
+  })
 
+  afterEach(() => {
+    delete process.env.SERVERLESS_ACCESS_KEY
+    delete process.env.CI
+    delete process.env.CI_SOURCE_OWNER
+    delete process.env.CI_SOURCE_REPO
+    delete process.env.CI_SOURCE_TYPE
+    delete process.env.CI_COMMIT
+    delete process.env.CI_TYPE
+    delete process.env.CI_BUILD_ID
+  })
+  test('it should make a valid request in any CI', async () => {
     const source = {
       owner: 'serverless',
       repo: 'service',
@@ -138,13 +159,5 @@ describe('createDeployment', () => {
         }
       }
     )
-
-    delete process.env.CI
-    delete process.env.CI_SOURCE_OWNER
-    delete process.env.CI_SOURCE_REPO
-    delete process.env.CI_SOURCE_TYPE
-    delete process.env.CI_COMMIT
-    delete process.env.CI_TYPE
-    delete process.env.CI_BUILD_ID
   })
 })

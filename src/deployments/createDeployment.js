@@ -6,7 +6,7 @@ const createDeployment = async (data) => {
   const source = {}
   const build = {}
 
-  if (process.env.TRAVIS) {
+  if (process.env.SERVERLESS_ACCESS_KEY && process.env.TRAVIS) {
     const [owner, repo] = process.env.TRAVIS_REPO_SLUG.split('/')
     source.owner = owner
     source.repo = repo
@@ -14,7 +14,7 @@ const createDeployment = async (data) => {
     source.sha = process.env.TRAVIS_COMMIT
     build.type = 'travis'
     build.id = process.env.TRAVIS_BUILD_ID
-  } else if (process.env.CI) {
+  } else if (process.env.SERVERLESS_ACCESS_KEY && process.env.CI) {
     source.owner = process.env.CI_SOURCE_OWNER
     source.repo = process.env.CI_SOURCE_REPO
     source.type = process.env.CI_SOURCE_TYPE
