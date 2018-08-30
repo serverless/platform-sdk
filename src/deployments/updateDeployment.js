@@ -4,12 +4,8 @@ const currentVersion = require('../../package.json').version
 
 const updateDeployment = async (data) => {
   const body = {
-    deployment: {
-      status: data.status
-    }
-  }
-  if (data.state && data.state.service && data.state.service.name) {
-    body.state = data.state
+    status: data.status,
+    computedData: data.computedData
   }
   const response = await fetch(
     `${platformConfig.backendUrl}tenants/${data.tenant}/applications/${data.app}/services/${

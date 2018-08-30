@@ -20,15 +20,17 @@ describe('updateDeployment', () => {
       serviceName: 'someservicename',
       accessKey: 'someaccesskey',
       deploymentId: 'somedeploymentId',
-      status: 'failed'
+      status: 'failed',
+      computedData: {
+        readme: '# README'
+      }
     }
 
     await updateDeployment(data)
 
     const body = {
-      deployment: {
-        status: data.status
-      }
+      status: data.status,
+      computedData: data.computedData
     }
 
     expect(fetch).toBeCalledWith(
@@ -54,21 +56,17 @@ describe('updateDeployment', () => {
       serviceName: 'someservicename',
       accessKey: 'someaccesskey',
       deploymentId: 'somedeploymentId',
-      status: 'failed',
-      state: {
-        service: {
-          name: 'someservicename'
-        }
+      status: 'success',
+      computedData: {
+        readme: '# README'
       }
     }
 
     await updateDeployment(data)
 
     const body = {
-      deployment: {
-        status: data.status
-      },
-      state: data.state
+      status: data.status,
+      computedData: data.computedData
     }
 
     expect(fetch).toBeCalledWith(
