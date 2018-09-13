@@ -127,7 +127,8 @@ Object
 - `accessKey` - `string` - dashboard access key
 - `app` - `string` - service app
 - `name` - `string` - service name
-
+- `provider` - `string` - provider name
+- `region` - `string` - region name
 
 **Returns**
 
@@ -142,7 +143,9 @@ const data = {
   tenant: 'eahefnawy',
   accessKey: 'abc',
   app: 'my-app',
-  name: 'my-service'
+  name: 'my-service',
+  provider: 'aws',
+  region: 'us-east-1'
 }
 
 await archiveService(data)
@@ -223,7 +226,7 @@ Object
 - `app` - `string` - app name
 - `serviceName` - `string` - service name
 - `accessKey` - `string` - dashboard access key
-
+- `files` - `object` - files which should be stored in the Platforms deployment record
 
 **Returns**
 
@@ -238,7 +241,12 @@ const data = {
   tenant: 'eahefnawy',
   app: 'my-app',
   serviceName: 'my-service',
-  accessKey: 'abc'
+  accessKey: 'abc',
+  files: {
+    'serverless-state.json': {
+      //...snip...
+    }
+  }
 }
 
 const { id } = await createDeployment(data)
@@ -259,7 +267,7 @@ Object
 - `deploymentId` - `string` - id of the previously created deployment
 - `status` - `string` - status of the deployment to update
 - `accessKey` - `string` - dashboard access key
-- `state` - `object` - optional - state of the **successful** deployment.
+- `computedData` - `object` - computed data the Platform needs to generate the state items
 
 
 **Returns**
@@ -276,8 +284,11 @@ const data = {
   app: 'my-app',
   serviceName: 'my-service',
   deploymentId: 'abc',
-  status: 'Failed',
-  accessKey: 'abc'
+  status: 'failed',
+  accessKey: 'abc',
+  computedData: {
+    // ...snip...
+  }
 }
 
 const { id } = await updateDeployment(data)
