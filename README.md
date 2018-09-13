@@ -267,7 +267,6 @@ Object
 - `deploymentId` - `string` - id of the previously created deployment
 - `status` - `string` - status of the deployment to update
 - `accessKey` - `string` - dashboard access key
-- `state` - `object` - optional - state of the **successful** deployment.
 - `computedData` - `object` - computed data the Platform needs to generate the state items
 
 
