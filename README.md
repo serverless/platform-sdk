@@ -145,7 +145,7 @@ const data = {
   app: 'my-app',
   name: 'my-service',
   provider: 'aws',
-  regions: 'us-east-1'
+  region: 'us-east-1'
 }
 
 await archiveService(data)
