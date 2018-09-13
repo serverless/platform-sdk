@@ -243,7 +243,7 @@ const data = {
   serviceName: 'my-service',
   accessKey: 'abc',
   files: {
-    'serverless-stage.json': {
+    'serverless-state.json': {
       //...snip...
     }
   }
