@@ -2,14 +2,7 @@ import BbPromise from 'bluebird'
 import fetch from 'isomorphic-fetch'
 import getCredentialsUrl from './getCredentialsUrl'
 import { getUser } from '../rcfile'
-
-function checkStatus(res) {
-  if (res.ok) {
-    // res.status >= 200 && res.status < 300
-    return res
-  }
-  throw new Error(res)
-}
+import { checkStatus } from '../fetchUtils'
 
 export default (ctx) => {
   if (!process.env.SLS_CLOUD_ACCESS) {
