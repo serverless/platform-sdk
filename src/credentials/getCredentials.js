@@ -1,5 +1,5 @@
 import BbPromise from 'bluebird'
-import fetch from 'node-fetch'
+import fetch from 'isomorphic-fetch'
 import getCredentialsUrl from './getCredentialsUrl'
 import { getUser } from '../rcfile'
 
