@@ -13,16 +13,19 @@ const createDestination = async ({ sls: { service, cli }, provider }) => {
     accountId: Account
   })
 
-  return fetch(`${getLogDestinationUrl()}/destinations/create`, {
-    method: 'POST',
-    body,
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-    .then(checkStatus)
-    .then((res) => res.json())
-    .catch(() => cli.log('Could not get CloudWatch Logs Destination from Serverless Platform.'))
+  try {
+    const resp = await fetch(`${getLogDestinationUrl()}/destinations/create`, {
+      method: 'POST',
+      body,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    checkStatus(resp)
+    return resp.json()
+  } catch (e) {
+    cli.log('Could not get CloudWatch Logs Destination from Serverless Platform.')
+  }
 }
 
 export default createDestination

@@ -11,16 +11,19 @@ const removeLogDestination = async ({ sls: { service }, provider }) => {
     regionName: provider.getRegion()
   })
 
-  return fetch(`${getLogDestinationUrl()}/destinations/delete`, {
-    method: 'POST',
-    body,
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-    .then(checkStatus)
-    .then((res) => res.json())
-    .catch(() => null)
+  try {
+    const resp = await fetch(`${getLogDestinationUrl()}/destinations/delete`, {
+      method: 'POST',
+      body,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    checkStatus(resp)
+    return resp.json()
+  } catch (e) {
+    return null
+  }
 }
 
 export default removeLogDestination
