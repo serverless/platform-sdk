@@ -14,6 +14,7 @@ const accessKeys = require('./accessKeys')
 const login = require('./login')
 const credentials = require('./credentials')
 const rcfile = require('./rcfile')
+const logs = require('./logs')
 
 module.exports = {
   ...service,
@@ -23,5 +24,6 @@ module.exports = {
   ...accessKeys,
   ...login,
   ...credentials,
-  ...rcfile
+  ...rcfile,
+  ...logs
 }
