@@ -1,9 +1,8 @@
 import fetch from 'isomorphic-fetch'
-import getCredentialsUrl from './getCredentialsUrl'
+const platformConfig = require('../config')
 import { getUser } from '../rcfile'
-import { checkStatus } from '../fetchUtils'
 
-export default (ctx) => {
+export default async (ctx) => {
   if (!process.env.SLS_CLOUD_ACCESS) {
     return Promise.resolve()
   }
@@ -19,21 +18,21 @@ export default (ctx) => {
     service: ctx.sls.service.getServiceName()
   })
 
-  return fetch(getCredentialsUrl(), {
-    method: 'POST',
-    body,
-    headers: {
-      Authorization: `bearer ${user.idToken}`
+  const response = await fetch(
+    `${platformConfig.backendUrl}tenants/${ctx.sls.service.tenant}/credentials/keys`,
+    {
+      method: 'POST',
+      body,
+      headers: {
+        Authorization: `bearer ${user.idToken}`
+      }
     }
-  })
-    .then(checkStatus)
-    .then((res) => res.json())
-    .then((json) => {
-      process.env.AWS_ACCESS_KEY_ID = json.accessKeyId
-      process.env.AWS_SECRET_ACCESS_KEY = json.secretAccessKey
-      process.env.AWS_SESSION_TOKEN = json.sessionToken
-      ctx.sls.cli.log('Cloud credentials set from Serverless Platform.')
-      return Promise.resolve()
-    })
-    .catch(() => ctx.sls.cli.log('Could not retrieve credentials from Serverless Platform.'))
+  )
+
+  if (!response.ok) {
+    const text = await response.text()
+    throw new Error(` Could not retrieve credentials from Serverless Platform: ${text}`)
+  }
+
+  return response.json()
 }
