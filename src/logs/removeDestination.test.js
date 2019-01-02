@@ -15,24 +15,16 @@ afterAll(() => jest.restoreAllMocks())
 
 describe('removeLogDestination', () => {
   test('it creates the log destination URL', async () => {
-    const ctx = {
-      sls: {
-        service: {
-          tenant: 'tenant',
-          app: 'app',
-          getServiceName: jest.fn().mockReturnValue('serviceName')
-        }
-      },
-      provider: {
-        getStage: jest.fn().mockReturnValue('stage'),
-        getRegion: jest.fn().mockReturnValue('region'),
-        request: jest.fn()
-      }
+    const opts = {
+      tenantName: 'tenant',
+      appName: 'app',
+      serviceName: 'serviceName',
+      regionName: 'region',
+      stageName: 'stage',
+      accountId: 'ACCOUNT_ID'
     }
-    await removeLogDestination(ctx)
-    expect(ctx.provider.request).toHaveBeenCalledTimes(0)
-    expect(ctx.provider.getStage).toBeCalledWith()
-    expect(ctx.provider.getRegion).toBeCalledWith()
+
+    await removeLogDestination(opts)
     expect(fetch).toBeCalledWith(`${getLogDestinationUrl()}/destinations/delete`, {
       method: 'POST',
       body: JSON.stringify({

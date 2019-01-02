@@ -1,29 +1,34 @@
 import fetch from 'isomorphic-fetch'
 import getLogDestinationUrl from './destinationUrl'
-import { checkStatus } from '../fetchUtils'
 
-const removeLogDestination = async ({ sls: { service }, provider }) => {
+const removeLogDestination = async ({
+  tenantName,
+  appName,
+  serviceName,
+  stageName,
+  regionName
+}) => {
   const body = JSON.stringify({
-    tenantName: service.tenant,
-    appName: service.app,
-    serviceName: service.getServiceName(),
-    stageName: provider.getStage(),
-    regionName: provider.getRegion()
+    tenantName,
+    appName,
+    serviceName,
+    stageName,
+    regionName
   })
 
-  try {
-    const resp = await fetch(`${getLogDestinationUrl()}/destinations/delete`, {
-      method: 'POST',
-      body,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    checkStatus(resp)
-    return resp.json()
-  } catch (e) {
-    return null
+  const response = await fetch(`${getLogDestinationUrl()}/destinations/delete`, {
+    method: 'POST',
+    body,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+
+  if (!response.ok) {
+    const text = await response.text()
+    throw new Error(text)
   }
+  return response.json()
 }
 
 export default removeLogDestination

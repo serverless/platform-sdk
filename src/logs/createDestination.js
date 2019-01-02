@@ -1,31 +1,36 @@
 import fetch from 'isomorphic-fetch'
 import getLogDestinationUrl from './destinationUrl'
-import { checkStatus } from '../fetchUtils'
 
-const createDestination = async ({ sls: { service, cli }, provider }) => {
-  const { Account } = await provider.request('STS', 'getCallerIdentity', {})
+const createDestination = async ({
+  tenantName,
+  appName,
+  serviceName,
+  stageName,
+  regionName,
+  accountId
+}) => {
   const body = JSON.stringify({
-    tenantName: service.tenant,
-    appName: service.app,
-    serviceName: service.getServiceName(),
-    stageName: provider.getStage(),
-    regionName: provider.getRegion(),
-    accountId: Account
+    tenantName,
+    appName,
+    serviceName,
+    stageName,
+    regionName,
+    accountId
   })
 
-  try {
-    const resp = await fetch(`${getLogDestinationUrl()}/destinations/create`, {
-      method: 'POST',
-      body,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    checkStatus(resp)
-    return resp.json()
-  } catch (e) {
-    cli.log('Could not get CloudWatch Logs Destination from Serverless Platform.')
+  const response = await fetch(`${getLogDestinationUrl()}/destinations/create`, {
+    method: 'POST',
+    body,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+
+  if (!response.ok) {
+    const text = await response.text()
+    throw new Error(text)
   }
+  return response.json()
 }
 
 export default createDestination

@@ -15,24 +15,16 @@ afterAll(() => jest.restoreAllMocks())
 
 describe('getLogDestination', () => {
   test('it creates the log destination URL', async () => {
-    const ctx = {
-      sls: {
-        service: {
-          tenant: 'tenant',
-          app: 'app',
-          getServiceName: jest.fn().mockReturnValue('serviceName')
-        }
-      },
-      provider: {
-        getStage: jest.fn().mockReturnValue('stage'),
-        getRegion: jest.fn().mockReturnValue('region'),
-        request: jest.fn().mockReturnValue({ Account: 'ACCOUNT_ID' })
-      }
+    const opts = {
+      tenantName: 'tenant',
+      appName: 'app',
+      serviceName: 'serviceName',
+      regionName: 'region',
+      stageName: 'stage',
+      accountId: 'ACCOUNT_ID'
     }
-    await getLogDestination(ctx)
-    expect(ctx.provider.request).toBeCalledWith('STS', 'getCallerIdentity', {})
-    expect(ctx.provider.getStage).toBeCalledWith()
-    expect(ctx.provider.getRegion).toBeCalledWith()
+
+    await getLogDestination(opts)
     expect(fetch).toBeCalledWith(`${getLogDestinationUrl()}/destinations/create`, {
       method: 'POST',
       body: JSON.stringify({
