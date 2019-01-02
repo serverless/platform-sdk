@@ -8,8 +8,6 @@ lib-cov
 *.gz
 
 pids
-logs
-!/src/logs
 results
 
 # node js
