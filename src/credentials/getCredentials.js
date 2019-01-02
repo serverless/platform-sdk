@@ -1,4 +1,3 @@
-import BbPromise from 'bluebird'
 import fetch from 'isomorphic-fetch'
 import getCredentialsUrl from './getCredentialsUrl'
 import { getUser } from '../rcfile'
@@ -6,12 +5,12 @@ import { checkStatus } from '../fetchUtils'
 
 export default (ctx) => {
   if (!process.env.SLS_CLOUD_ACCESS) {
-    return BbPromise.resolve()
+    return Promise.resolve()
   }
   const user = getUser()
   if (!user) {
     ctx.serverless.cli.log('User not logged in to Platform. Skipping fetch credentials.')
-    return BbPromise.resolve()
+    return Promise.resolve()
   }
   const body = JSON.stringify({
     stageName: ctx.provider.getStage(),
@@ -34,7 +33,7 @@ export default (ctx) => {
       process.env.AWS_SECRET_ACCESS_KEY = json.secretAccessKey
       process.env.AWS_SESSION_TOKEN = json.sessionToken
       ctx.sls.cli.log('Cloud credentials set from Serverless Platform.')
-      return BbPromise.resolve()
+      return Promise.resolve()
     })
     .catch(() => ctx.sls.cli.log('Could not retrieve credentials from Serverless Platform.'))
 }
