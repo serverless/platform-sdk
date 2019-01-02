@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch'
-import getLogDestinationUrl from './destinationUrl'
+import platformConfig from '../config'
 
 const createDestination = async ({
   tenantName,
@@ -18,7 +18,7 @@ const createDestination = async ({
     accountId
   })
 
-  const response = await fetch(`${getLogDestinationUrl()}/destinations/create`, {
+  const response = await fetch(`${platformConfig.logDestinationUrl}destinations/create`, {
     method: 'POST',
     body,
     headers: {

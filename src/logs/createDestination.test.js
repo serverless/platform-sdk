@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch'
+import platformConfig from '../config'
 import { getLogDestination } from './'
-import getLogDestinationUrl from './destinationUrl'
 
 jest.mock('isomorphic-fetch', () =>
   jest.fn().mockReturnValue(
@@ -25,7 +25,7 @@ describe('getLogDestination', () => {
     }
 
     await getLogDestination(opts)
-    expect(fetch).toBeCalledWith(`${getLogDestinationUrl()}/destinations/create`, {
+    expect(fetch).toBeCalledWith(`${platformConfig.logDestinationUrl}destinations/create`, {
       method: 'POST',
       body: JSON.stringify({
         tenantName: 'tenant',

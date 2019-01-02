@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch'
+import platformConfig from '../config'
 import { removeLogDestination } from './'
-import getLogDestinationUrl from './destinationUrl'
 
 jest.mock('isomorphic-fetch', () =>
   jest.fn().mockReturnValue(
@@ -25,7 +25,7 @@ describe('removeLogDestination', () => {
     }
 
     await removeLogDestination(opts)
-    expect(fetch).toBeCalledWith(`${getLogDestinationUrl()}/destinations/delete`, {
+    expect(fetch).toBeCalledWith(`${platformConfig.logDestinationUrl}destinations/delete`, {
       method: 'POST',
       body: JSON.stringify({
         tenantName: 'tenant',

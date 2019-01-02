@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch'
-import getLogDestinationUrl from './destinationUrl'
+import platformConfig from '../config'
 
 const removeLogDestination = async ({
   tenantName,
@@ -16,7 +16,7 @@ const removeLogDestination = async ({
     regionName
   })
 
-  const response = await fetch(`${getLogDestinationUrl()}/destinations/delete`, {
+  const response = await fetch(`${platformConfig.logDestinationUrl}destinations/delete`, {
     method: 'POST',
     body,
     headers: {

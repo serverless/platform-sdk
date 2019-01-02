@@ -4,18 +4,21 @@ const config = {
   local: {
     frontendUrl: 'http://localhost:3000/',
     backendUrl: 'https://a0xpn0swpd.execute-api.us-east-1.amazonaws.com/dev/',
+    logDestinationUrl: 'https://7zwgcvkt9k.execute-api.us-east-1.amazonaws.com/dev/',
     auth0Domain: 'serverlessdev.auth0.com',
     auth0ClientId: 'EMAtx5b2Bf3PB94c3pm9nrADxpFvyZcm'
   },
   preview: {
     frontendUrl: 'https://deploy-preview-281--eg-dashboard-dev.netlify.com/',
     backendUrl: 'https://a0xpn0swpd.execute-api.us-east-1.amazonaws.com/dev/',
+    logDestinationUrl: 'https://7zwgcvkt9k.execute-api.us-east-1.amazonaws.com/dev/',
     auth0Domain: 'serverlessdev.auth0.com',
     auth0ClientId: 'EMAtx5b2Bf3PB94c3pm9nrADxpFvyZcm'
   },
   dev: {
     frontendUrl: 'https://dashboard.serverless-dev.com/',
     backendUrl: 'https://a0xpn0swpd.execute-api.us-east-1.amazonaws.com/dev/',
+    logDestinationUrl: 'https://7zwgcvkt9k.execute-api.us-east-1.amazonaws.com/dev/',
     auth0Domain: 'serverlessdev.auth0.com',
     auth0ClientId: 'EMAtx5b2Bf3PB94c3pm9nrADxpFvyZcm'
   },
