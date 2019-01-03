@@ -1,8 +1,16 @@
 import fetch from 'isomorphic-fetch'
 import platformConfig from '../config'
 
-const createDestination = async ({ appUid, serviceName, stageName, regionName, accountId }) => {
+const createDestination = async ({
+  tenantUid,
+  appUid,
+  serviceName,
+  stageName,
+  regionName,
+  accountId
+}) => {
   const body = JSON.stringify({
+    tenantUid,
     appUid,
     serviceName,
     stageName,

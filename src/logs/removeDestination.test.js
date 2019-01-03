@@ -16,6 +16,7 @@ afterAll(() => jest.restoreAllMocks())
 describe('removeLogDestination', () => {
   test('it creates the log destination URL', async () => {
     const opts = {
+      tenantUid: 'tenant123',
       appUid: 'app123',
       serviceName: 'serviceName',
       regionName: 'region',
@@ -27,6 +28,7 @@ describe('removeLogDestination', () => {
     expect(fetch).toBeCalledWith(`${platformConfig.logDestinationUrl}destinations/delete`, {
       method: 'POST',
       body: JSON.stringify({
+        tenantUid: 'tenant123',
         appUid: 'app123',
         serviceName: 'serviceName',
         stageName: 'stage',
