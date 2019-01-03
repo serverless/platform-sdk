@@ -1,16 +1,9 @@
 import fetch from 'isomorphic-fetch'
 import platformConfig from '../config'
 
-const removeLogDestination = async ({
-  tenantName,
-  appName,
-  serviceName,
-  stageName,
-  regionName
-}) => {
+const removeLogDestination = async ({ appUid, serviceName, stageName, regionName }) => {
   const body = JSON.stringify({
-    tenantName,
-    appName,
+    appUid,
     serviceName,
     stageName,
     regionName
