@@ -21,7 +21,8 @@ const removeLogDestination = async ({ appUid, serviceName, stageName, regionName
     const text = await response.text()
     throw new Error(text)
   }
-  return response.json()
+  // This method returns an empty body.
+  return
 }
 
 export default removeLogDestination
