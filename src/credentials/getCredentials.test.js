@@ -13,7 +13,7 @@ describe('getCredentials', () => {
   it('fetches creds from API', async () => {
     process.env.SLS_CLOUD_ACCESS = 'true'
     const result = await getCredentials({
-      user: { idToken: 'userIdToken' },
+      idToken: 'userIdToken',
       stageName: 'stage',
       command: 'deploy',
       app: 'app',
