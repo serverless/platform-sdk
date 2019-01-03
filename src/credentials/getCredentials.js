@@ -3,9 +3,6 @@ const platformConfig = require('../config')
 import { getUser } from '../rcfile'
 
 export default async (ctx) => {
-  if (!process.env.SLS_CLOUD_ACCESS) {
-    return Promise.resolve()
-  }
   const user = getUser()
   if (!user) {
     ctx.serverless.cli.log('User not logged in to Platform. Skipping fetch credentials.')
