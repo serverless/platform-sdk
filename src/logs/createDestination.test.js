@@ -16,8 +16,7 @@ afterAll(() => jest.restoreAllMocks())
 describe('getLogDestination', () => {
   test('it creates the log destination URL', async () => {
     const opts = {
-      tenantName: 'tenant',
-      appName: 'app',
+      appUid: 'app123',
       serviceName: 'serviceName',
       regionName: 'region',
       stageName: 'stage',
@@ -28,8 +27,7 @@ describe('getLogDestination', () => {
     expect(fetch).toBeCalledWith(`${platformConfig.logDestinationUrl}destinations/create`, {
       method: 'POST',
       body: JSON.stringify({
-        tenantName: 'tenant',
-        appName: 'app',
+        appUid: 'app123',
         serviceName: 'serviceName',
         stageName: 'stage',
         regionName: 'region',
