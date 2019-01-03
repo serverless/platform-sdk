@@ -1,30 +1,16 @@
 import fetch from 'isomorphic-fetch'
 const platformConfig = require('../config')
-import { getUser } from '../rcfile'
 
-export default async (ctx) => {
-  const user = getUser()
-  if (!user) {
-    ctx.serverless.cli.log('User not logged in to Platform. Skipping fetch credentials.')
-    return Promise.resolve()
-  }
-  const body = JSON.stringify({
-    stageName: ctx.provider.getStage(),
-    command: ctx.sls.processedInput.commands[0],
-    app: ctx.sls.service.app,
-    service: ctx.sls.service.getServiceName()
-  })
+export default async ({ user, stageName, command, app, service, tenant }) => {
+  const body = JSON.stringify({ stageName, command, app, service })
 
-  const response = await fetch(
-    `${platformConfig.backendUrl}tenants/${ctx.sls.service.tenant}/credentials/keys`,
-    {
-      method: 'POST',
-      body,
-      headers: {
-        Authorization: `bearer ${user.idToken}`
-      }
+  const response = await fetch(`${platformConfig.backendUrl}tenants/${tenant}/credentials/keys`, {
+    method: 'POST',
+    body,
+    headers: {
+      Authorization: `bearer ${user.idToken}`
     }
-  )
+  })
 
   if (!response.ok) {
     const text = await response.text()
