@@ -12,6 +12,9 @@ const apps = require('./apps')
 const tenants = require('./tenants')
 const accessKeys = require('./accessKeys')
 const login = require('./login')
+const credentials = require('./credentials')
+const rcfile = require('./rcfile')
+const logs = require('./logs')
 
 module.exports = {
   ...service,
@@ -19,5 +22,8 @@ module.exports = {
   ...apps,
   ...tenants,
   ...accessKeys,
-  ...login
+  ...login,
+  ...credentials,
+  ...rcfile,
+  ...logs
 }

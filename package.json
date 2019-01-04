@@ -1,6 +1,6 @@
 {
   "name": "@serverless/platform-sdk",
-  "version": "0.3.0",
+  "version": "0.4.0-beta",
   "description": "Serverless Platform SDK",
   "author": "Serverless, Inc.",
   "license": "Apache-2.0",
@@ -14,6 +14,7 @@
   },
   "homepage": "https://github.com/serverless/platform-sdk#readme",
   "scripts": {
+    "prepare": "npm run build",
     "build": "./scripts/build.sh",
     "clean": "./scripts/clean.sh",
     "cleanse": "./scripts/cleanse.sh",

@@ -9,6 +9,7 @@ lib-cov
 
 pids
 logs
+!/src/logs
 results
 
 # node js
