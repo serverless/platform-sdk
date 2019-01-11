@@ -3,6 +3,6 @@ describe('nodeJsRuntime', () => {
     jest.resetModules()
     global.regeneratorRuntime = undefined
     require('./nodeJsRuntime')
-    expect(global.regeneratorRuntime).toBeDefined()
+    expect(global.regeneratorRuntime).toBe(require('regenerator-runtime'))
   })
 })
