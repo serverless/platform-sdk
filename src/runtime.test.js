@@ -1,8 +1,8 @@
-describe('nodeJsRuntime', () => {
+describe('runtime.js', () => {
   test('it registers regeneratorRuntime', () => {
     jest.resetModules()
     global.regeneratorRuntime = undefined
-    require('./nodeJsRuntime')
+    require('./runtime')
     expect(global.regeneratorRuntime).toBe(require('regenerator-runtime'))
   })
 })

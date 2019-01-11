@@ -1,4 +1,4 @@
-require('./nodeJsRuntime')
+require('./runtime')
 
 const service = require('./service')
 const deployments = require('./deployments')
