@@ -24,7 +24,8 @@ const config = {
   },
   prod: {
     frontendUrl: 'https://dashboard.serverless.com/',
-    backendUrl: 'https://jnvhp1any0.execute-api.us-east-1.amazonaws.com/prod/',
+    backendUrl: 'https://api.serverless.com/core/',
+    logDestinationUrl: 'https://api.serverless.com/malt/',
     auth0Domain: 'serverlessinc.auth0.com',
     auth0ClientId: 'YAHOG8papb1tkrLttNVoVOSs4YLOjrNj'
   }
