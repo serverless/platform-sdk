@@ -21,7 +21,7 @@ describe('getCredentials', () => {
       tenant: 'tenant'
     })
     expect(fetch).toBeCalledWith(
-      'https://jnvhp1any0.execute-api.us-east-1.amazonaws.com/prod/tenants/tenant/credentials/keys',
+      'https://api.serverless.com/core/tenants/tenant/credentials/keys',
       {
         method: 'POST',
         body: JSON.stringify({
