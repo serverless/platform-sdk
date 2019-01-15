@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import platformConfig from '../config'
+const { getUser } = require('../rcfile')
 
 const createDestination = async ({
   tenantUid,
@@ -7,8 +8,17 @@ const createDestination = async ({
   serviceName,
   stageName,
   regionName,
-  accountId
+  accountId,
+  token
 }) => {
+  if (!token) {
+    const user = getUser()
+    if (!user) {
+      return Promise.reject('User is not logged in to the Platform.')
+    }
+    token = user.idToken
+  }
+
   const body = JSON.stringify({
     tenantUid,
     appUid,
@@ -22,7 +32,8 @@ const createDestination = async ({
     method: 'POST',
     body,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: `bearer ${token}`
     }
   })
 
