@@ -40,7 +40,7 @@ describe('getLogDestination', () => {
         accountId: 'ACCOUNT_ID'
       }),
       headers: {
-        Authorization: 'userIdToken',
+        Authorization: 'bearer userIdToken',
         'Content-Type': 'application/json'
       }
     })

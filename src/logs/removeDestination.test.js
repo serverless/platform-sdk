@@ -39,6 +39,7 @@ describe('removeLogDestination', () => {
         regionName: 'region'
       }),
       headers: {
+        Authorization: 'bearer userIdToken',
         'Content-Type': 'application/json'
       }
     })
