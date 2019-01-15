@@ -11,6 +11,10 @@ jest.mock('isomorphic-fetch', () =>
   )
 )
 
+jest.mock('../rcfile', () => ({
+  getUser: jest.fn().mockReturnValue({ idToken: 'userIdToken' })
+}))
+
 afterAll(() => jest.restoreAllMocks())
 
 describe('getLogDestination', () => {
@@ -36,6 +40,7 @@ describe('getLogDestination', () => {
         accountId: 'ACCOUNT_ID'
       }),
       headers: {
+        Authorization: 'bearer userIdToken',
         'Content-Type': 'application/json'
       }
     })

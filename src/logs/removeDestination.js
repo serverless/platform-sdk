@@ -1,7 +1,23 @@
 import fetch from 'isomorphic-fetch'
 import platformConfig from '../config'
+const { getUser } = require('../rcfile')
 
-const removeLogDestination = async ({ tenantUid, appUid, serviceName, stageName, regionName }) => {
+const removeLogDestination = async ({
+  tenantUid,
+  appUid,
+  serviceName,
+  stageName,
+  regionName,
+  token
+}) => {
+  if (!token) {
+    const user = getUser()
+    if (!user) {
+      return Promise.reject('User is not logged in to the Platform.')
+    }
+    token = user.idToken
+  }
+
   const body = JSON.stringify({
     tenantUid,
     appUid,
@@ -14,7 +30,8 @@ const removeLogDestination = async ({ tenantUid, appUid, serviceName, stageName,
     method: 'POST',
     body,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: `bearer ${token}`
     }
   })
 
