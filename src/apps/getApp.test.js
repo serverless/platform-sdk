@@ -10,8 +10,8 @@ jest.mock('isomorphic-fetch', () =>
   })
 )
 
-jest.mock('../rcfile', () => ({
-  getUser: jest.fn().mockReturnValue({ idToken: 'userIdToken' })
+jest.mock('../utils', () => ({
+  getLoggedInUser: jest.fn().mockReturnValue({ idToken: 'userIdToken' })
 }))
 
 afterAll(() => jest.restoreAllMocks())
