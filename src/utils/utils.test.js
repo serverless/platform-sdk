@@ -14,7 +14,7 @@ jest.mock('fs', () => ({
           dashboard: {
             username: 'username',
             idToken: 'idToken',
-            foo: 'bar'
+            accessKeys: {}
           }
         }
       }
@@ -32,8 +32,10 @@ describe('readConfigFile', () => {
 describe('getLoggedInUser', () => {
   test('it returns the user from the config file', async () => {
     expect(getLoggedInUser()).toEqual({
+      userId: 'user',
       username: 'username',
-      idToken: 'idToken'
+      idToken: 'idToken',
+      accessKeys: {}
     })
     expect(fs.existsSync).toBeCalledWith(path.join(os.homedir(), '.serverlessrc'))
   })

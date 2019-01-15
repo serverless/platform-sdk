@@ -11,7 +11,11 @@ jest.mock('isomorphic-fetch', () =>
 )
 
 jest.mock('../utils', () => ({
-  getLoggedInUser: jest.fn().mockReturnValue({ accessKey: 'userAccessKey' })
+  getLoggedInUser: jest.fn().mockReturnValue({
+    accessKeys: {
+      sometenant: 'userAccessKey'
+    }
+  })
 }))
 
 afterAll(() => jest.restoreAllMocks())
