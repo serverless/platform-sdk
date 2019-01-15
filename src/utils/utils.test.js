@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
-import { hasConfigFile, getConfig, getUser } from './rcfile'
+import { readConfigFile, getLoggedInUser } from './index.js'
 
 jest.mock('fs', () => ({
   ...require.requireActual('fs'),
@@ -14,7 +14,7 @@ jest.mock('fs', () => ({
           dashboard: {
             username: 'username',
             idToken: 'idToken',
-            foo: 'bar'
+            accessKeys: {}
           }
         }
       }
@@ -22,25 +22,20 @@ jest.mock('fs', () => ({
   )
 }))
 
-describe('hasConfigFile', () => {
-  test('it calls fs.existsSync on ~/.serverlessrc', async () => {
-    expect(hasConfigFile()).toEqual(true)
-    expect(fs.existsSync).toBeCalledWith(path.join(os.homedir(), '.serverlessrc'))
-  })
-})
-
-describe('getConfig', () => {
+describe('readConfigFile', () => {
   test('it reads the config', async () => {
-    expect(getConfig()).toEqual(JSON.parse(fs.readFileSync()))
+    expect(readConfigFile()).toEqual(JSON.parse(fs.readFileSync()))
     expect(fs.existsSync).toBeCalledWith(path.join(os.homedir(), '.serverlessrc'))
   })
 })
 
-describe('getUser', () => {
+describe('getLoggedInUser', () => {
   test('it returns the user from the config file', async () => {
-    expect(getUser()).toEqual({
+    expect(getLoggedInUser()).toEqual({
+      userId: 'user',
       username: 'username',
-      idToken: 'idToken'
+      idToken: 'idToken',
+      accessKeys: {}
     })
     expect(fs.existsSync).toBeCalledWith(path.join(os.homedir(), '.serverlessrc'))
   })

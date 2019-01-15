@@ -10,8 +10,12 @@ jest.mock('isomorphic-fetch', () =>
   })
 )
 
-jest.mock('../rcfile', () => ({
-  getUser: jest.fn().mockReturnValue({ idToken: 'userIdToken' })
+jest.mock('../utils', () => ({
+  getLoggedInUser: jest.fn().mockReturnValue({
+    accessKeys: {
+      sometenant: 'userAccessKey'
+    }
+  })
 }))
 
 afterAll(() => jest.restoreAllMocks())
@@ -32,7 +36,7 @@ describe('getApp', () => {
         headers: {
           'Content-Type': 'application/json',
           'x-platform-version': currentVersion,
-          Authorization: `bearer userIdToken`
+          Authorization: `bearer userAccessKey`
         }
       }
     )

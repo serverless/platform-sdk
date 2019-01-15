@@ -1,12 +1,31 @@
+/*
+ * Login
+ * - Logs user in via CLI.
+ * - Loads and updates data in user's .serverlessrc.
+ */
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const querystring = require('querystring')
+const jwtDecode = require('jwt-decode')
+const currentSdkVersion = require('../../package.json').version
+const utils = require('../utils')
 const openBrowser = require('./openBrowser')
+const { createAccessKeyForTenant } = require('../accessKeys')
 const getTokens = require('./getTokens')
 const platformConfig = require('../config')
 
-const login = async () => {
+const login = async (tenant) => {
+  // Load local configuration file
+  let configFile = utils.readConfigFile()
+  if (!configFile) {
+    throw new Error(
+      `Serverless Enterprise requires a .serverlessrc file in the project's directory or root directory of this machine.`
+    )
+  }
+
+  // Start local server to aide CLI sign-in/up
   const app = express()
   app.use(bodyParser.json())
   app.use(cors())
@@ -28,6 +47,7 @@ const login = async () => {
 
   const opnRes = await openBrowser(auth0Endpoint)
 
+  // Log in to Serverless Enterprise
   return new Promise((resolve) => {
     app.get('/', async (req, res) => { // eslint-disable-line
       if (opnRes) {
@@ -62,6 +82,47 @@ const login = async () => {
         return resolve(tokens)
       }
     })
+  }).then(async (data) => {
+    // Update user's config file (.serverlessrc)
+    const decoded = jwtDecode(data.idToken)
+    const id = decoded.tracking_id || decoded.sub
+    configFile.userId = id
+    configFile.users = configFile.users || {}
+    configFile.users[id] = {
+      userId: id,
+      name: decoded.name,
+      email: decoded.email,
+      username: data.username,
+      dashboard: data
+    }
+
+    // Ensure accessKeys object exists
+    if (!configFile.users[id].dashboard.accessKeys) {
+      configFile.users[id].dashboard.accessKeys = {}
+    }
+
+    // Add enterprise object
+    configFile.users[id].enterprise = configFile.users[id].enterprise || {}
+    configFile.users[id].enterprise.versionSDK = currentSdkVersion
+    configFile.users[id].enterprise.timeLastLogin = Math.round(+new Date() / 1000)
+
+    // Write updated data to .serverlessrc
+    let updatedConfigFile = utils.writeConfigFile(configFile)
+
+    // If tenant is included, update config w/ new accesskey for that tenant
+    let accessKey
+    if (tenant) {
+      accessKey = await createAccessKeyForTenant(tenant)
+      if (accessKey) {
+        configFile = utils.readConfigFile()
+        configFile.users[id].dashboard.accessKeys[tenant] = accessKey
+        updatedConfigFile = utils.writeConfigFile(configFile)
+      }
+    }
+
+    // TODO: Log Stat
+
+    return updatedConfigFile
   })
 }
 
