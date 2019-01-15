@@ -1,15 +1,19 @@
+/*
+ * Create Deployment
+ * - Creates a deployment record on the Serverless Enterprise Platform
+ */
+
 const fetch = require('isomorphic-fetch')
-const platformConfig = require('../config')
 const currentVersion = require('../../package.json').version
+const platformConfig = require('../config')
 
 const createDeployment = async (data) => {
   const body = {
     files: data.files
   }
+
   const response = await fetch(
-    `${platformConfig.backendUrl}tenants/${data.tenant}/applications/${data.app}/services/${
-      data.serviceName
-    }/deployments`,
+    `${platformConfig.backendUrl}tenants/${data.tenant}/applications/${data.app}/services/${data.serviceName}/deployments`, // eslint-disable-line
     {
       method: 'POST',
       body: JSON.stringify(body),

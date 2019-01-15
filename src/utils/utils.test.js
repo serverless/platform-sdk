@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
-import { readConfigFile, getLoggedInUser } from './rcfile'
+import { readConfigFile, getLoggedInUser } from './index.js'
 
 jest.mock('fs', () => ({
   ...require.requireActual('fs'),

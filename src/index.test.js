@@ -2,7 +2,7 @@ describe('index', () => {
   test('require runs without error', () => {
     const mod = require('./')
     expect(mod).toMatchObject({
-      createAccessKey: expect.any(Function),
+      createAccessKeyForTenant: expect.any(Function),
       createApp: expect.any(Function),
       getApp: expect.any(Function),
       createDeployment: expect.any(Function),

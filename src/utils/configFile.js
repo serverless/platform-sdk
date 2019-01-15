@@ -1,14 +1,33 @@
+import fs from 'fs'
 import os from 'os'
 import path from 'path'
-import { path as get, pick, mergeDeepRight } from 'ramda'
+import { path as get, mergeDeepRight } from 'ramda'
 import writeFileAtomic from 'write-file-atomic'
 
 // Locate the correct .serverlessrc per current environment
-let appName = 'serverless'
-let serverlessRcPath = path.join(os.homedir(), `.${appName}rc`)
+let fileName = 'serverless'
 if (process.env.SERVERLESS_PLATFORM_STAGE && process.env.SERVERLESS_PLATFORM_STAGE !== 'prod') {
-  appName = 'serverlessdev'
-  serverlessRcPath = path.join(os.homedir(), `.${appName}rc`)
+  fileName = 'serverlessdev'
+}
+
+/*
+ * Get Config File Path
+ * - .serverlessrc can either be in the current working dir or system root dir.
+ * - This function returns the local path first, if it exists.
+ */
+
+export const getConfigFilePath = () => {
+  const localPath = path.join(process.cwd(), `.${fileName}rc`)
+  const globalPath = path.join(os.homedir(), `.${fileName}rc`)
+  const localConfigExists = fs.existsSync(localPath)
+  const globalConfigExists = fs.existsSync(globalPath)
+
+  if (localConfigExists) {
+    return localPath
+  } else if (globalConfigExists) {
+    return globalPath
+  }
+  return null
 }
 
 /*
@@ -18,7 +37,9 @@ if (process.env.SERVERLESS_PLATFORM_STAGE && process.env.SERVERLESS_PLATFORM_STA
  */
 
 export const readConfigFile = () => {
-  return require('rc')(appName) // eslint-disable-line
+  const configFilePath = getConfigFilePath()
+  const configFile = configFilePath ? fs.readFileSync(configFilePath) : null
+  return configFile ? JSON.parse(configFile) : null
 }
 
 /*
@@ -27,12 +48,11 @@ export const readConfigFile = () => {
  */
 
 export const writeConfigFile = (data) => {
+  const configFilePath = getConfigFilePath()
   const configFile = readConfigFile()
   const updatedConfigFile = mergeDeepRight(configFile, data)
   updatedConfigFile.meta.updated_at = Math.round(+new Date() / 1000)
-
-  writeFileAtomic.sync(serverlessRcPath, JSON.stringify(updatedConfigFile, null, 2))
-
+  writeFileAtomic.sync(configFilePath, JSON.stringify(updatedConfigFile, null, 2))
   return updatedConfigFile
 }
 
@@ -41,12 +61,16 @@ export const writeConfigFile = (data) => {
  * - Fetches the current logged in user from the .serverlessrc file
  */
 
-export const getLoggedInUser = async () => {
+export const getLoggedInUser = () => {
   const config = readConfigFile()
   const user = get(['users', config.userId, 'dashboard'], config)
   if (!user || !user.username || !user.idToken) {
-    // user is logged out
-    return null
+    return null // user is logged out
   }
-  return pick(['idToken', 'username'], user)
+  return {
+    userId: config.userId,
+    username: user.username,
+    accessKeys: user.accessKeys,
+    idToken: user.idToken
+  }
 }

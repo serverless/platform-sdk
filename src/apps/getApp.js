@@ -1,16 +1,13 @@
 const fetch = require('isomorphic-fetch')
 const platformConfig = require('../config')
 const currentVersion = require('../../package.json').version
-const { getLoggedInUser } = require('../utils')
+const { getAccessKeyForTenant } = require('../accessKeys')
 
 const getApp = async (data) => {
   let { token } = data
+
   if (!token) {
-    const user = getLoggedInUser()
-    if (!user) {
-      return Promise.reject('User is not logged in to the Platform.')
-    }
-    token = user.idToken
+    token = getAccessKeyForTenant(data.tenant)
   }
 
   const response = await fetch(

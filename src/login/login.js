@@ -12,12 +12,13 @@ const jwtDecode = require('jwt-decode')
 const currentSdkVersion = require('../../package.json').version
 const utils = require('../utils')
 const openBrowser = require('./openBrowser')
+const { createAccessKeyForTenant } = require('../accessKeys')
 const getTokens = require('./getTokens')
 const platformConfig = require('../config')
 
-const login = async () => {
+const login = async (tenant) => {
   // Load local configuration file
-  const configFile = utils.readConfigFile()
+  let configFile = utils.readConfigFile()
   if (!configFile) {
     throw new Error(
       `Serverless Enterprise requires a .serverlessrc file in the project's directory or root directory of this machine.`
@@ -81,7 +82,7 @@ const login = async () => {
         return resolve(tokens)
       }
     })
-  }).then((data) => {
+  }).then(async (data) => {
     // Update user's config file (.serverlessrc)
     const decoded = jwtDecode(data.idToken)
     const id = decoded.tracking_id || decoded.sub
@@ -95,13 +96,29 @@ const login = async () => {
       dashboard: data
     }
 
+    // Ensure accessKeys object exists
+    if (!configFile.users[id].dashboard.accessKeys) {
+      configFile.users[id].dashboard.accessKeys = {}
+    }
+
     // Add enterprise object
     configFile.users[id].enterprise = configFile.users[id].enterprise || {}
     configFile.users[id].enterprise.versionSDK = currentSdkVersion
     configFile.users[id].enterprise.timeLastLogin = Math.round(+new Date() / 1000)
 
     // Write updated data to .serverlessrc
-    const updatedConfigFile = utils.writeConfigFile(configFile)
+    let updatedConfigFile = utils.writeConfigFile(configFile)
+
+    // If tenant is included, update config w/ new accesskey for that tenant
+    let accessKey
+    if (tenant) {
+      accessKey = await createAccessKeyForTenant(tenant)
+      if (accessKey) {
+        configFile = utils.readConfigFile()
+        configFile.users[id].dashboard.accessKeys[tenant] = accessKey
+        updatedConfigFile = utils.writeConfigFile(configFile)
+      }
+    }
 
     // TODO: Log Stat
 
