@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import platformConfig from '../config'
-const { getUser } = require('../rcfile')
+import utils from '../utils'
 
 const removeLogDestination = async ({
   tenantUid,
@@ -11,7 +11,7 @@ const removeLogDestination = async ({
   token
 }) => {
   if (!token) {
-    const user = getUser()
+    const user = utils.getLoggedInUser()
     if (!user) {
       return Promise.reject('User is not logged in to the Platform.')
     }
