@@ -7,8 +7,9 @@ const refreshToken = async () => {
   const configFile = utils.readConfigFile()
   const currentId = configFile.userId
 
+  // id token not expired, no need to renew
   if (Number(configFile.users[currentId].dashboard.expiresAt) < new Date().getTime()) {
-    throw new Error('Token is expired! Please log in again with `serverless login`')
+    return
   }
 
   const body = JSON.stringify({ refreshToken: configFile.users[currentId].dashboard.refreshToken })
