@@ -8,7 +8,7 @@ const refreshToken = async () => {
   const currentId = configFile.userId
 
   // id token not expired, no need to renew
-  if (Number(configFile.users[currentId].dashboard.expiresAt) < new Date().getTime()) {
+  if (Number(configFile.users[currentId].dashboard.expiresAt) < Date.now()) {
     return
   }
 
@@ -27,7 +27,7 @@ const refreshToken = async () => {
     throw new Error(text)
   }
   const tokens = await response.json()
-  const expiresAt = tokens.expires_in * 1000 + new Date().getTime()
+  const expiresAt = tokens.expires_in * 1000 + Date.now()
   configFile.users[currentId].dashboard.idToken = tokens.id_token
   configFile.users[currentId].dashboard.accessToken = tokens.access_token
   configFile.users[currentId].dashboard.expiresAt = expiresAt

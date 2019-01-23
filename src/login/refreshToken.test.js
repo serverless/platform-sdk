@@ -11,12 +11,14 @@ jest.mock('isomorphic-fetch', () =>
         Promise.resolve({
           id_token: 'id_token',
           access_token: 'access_token',
-          expires_in: 'expires_in'
+          expires_in: 10000
         })
       )
     })
   )
 )
+
+Date.now = jest.fn().mockReturnValue(1548263344735)
 
 jest.mock('../utils', () => ({
   readConfigFile: jest.fn().mockReturnValue({
@@ -24,7 +26,7 @@ jest.mock('../utils', () => ({
     users: {
       userId: {
         dashboard: {
-          expiresAt: 10 * 1000 + new Date().getTime(),
+          expiresAt: 10 * 1000 + Date.now(),
           refreshToken: 'refreshToken'
         }
       }
@@ -48,7 +50,7 @@ describe('refreshToken', () => {
         userId: {
           dashboard: {
             accessToken: 'access_token',
-            expiresAt: NaN,
+            expiresAt: 1548273344735,
             idToken: 'id_token',
             refreshToken: 'refreshToken'
           }
