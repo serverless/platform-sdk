@@ -7,7 +7,7 @@ const getApp = async (data) => {
   let { token } = data
 
   if (!token) {
-    token = getAccessKeyForTenant(data.tenant)
+    token = await getAccessKeyForTenant(data.tenant)
   }
 
   const response = await fetch(
