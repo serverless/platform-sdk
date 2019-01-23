@@ -9,9 +9,9 @@ import { version as currentVersion } from '../../package.json'
  */
 
 const createAccessKeyForTenant = async (tenant, title) => {
-  const user = utils.getLoggedInUser()
-
   await refreshToken()
+
+  const user = utils.getLoggedInUser()
 
   const response = await fetch(`${platformConfig.backendUrl}tenants/${tenant}/accessKeys`, {
     method: 'POST',
@@ -52,9 +52,9 @@ const getAccessKeyForTenant = async (tenant) => {
     throw new Error('SDK: getAccessKeyForTenant() requires a "tenant".')
   }
 
-  const user = utils.getLoggedInUser()
-
   await refreshToken()
+
+  const user = utils.getLoggedInUser()
 
   // Check if in config file, return that next...
   if (!user.accessKeys || !user.accessKeys[tenant]) {
