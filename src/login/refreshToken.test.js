@@ -26,7 +26,7 @@ jest.mock('../utils', () => ({
     users: {
       userId: {
         dashboard: {
-          expiresAt: 10 * 1000 + Date.now(),
+          expiresAt: 1548263344735 - 10000,
           refreshToken: 'refreshToken'
         }
       }

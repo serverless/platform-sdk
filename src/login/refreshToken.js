@@ -8,7 +8,7 @@ const refreshToken = async () => {
   const currentId = configFile.userId
 
   // id token not expired, no need to renew
-  if (Number(configFile.users[currentId].dashboard.expiresAt) < Date.now()) {
+  if (Number(configFile.users[currentId].dashboard.expiresAt) > Date.now()) {
     return
   }
 
