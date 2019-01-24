@@ -1,13 +1,16 @@
-const fetch = require('isomorphic-fetch')
-const platformConfig = require('../config')
-const utils = require('../utils')
-const currentVersion = require('../../package.json').version
+import fetch from 'isomorphic-fetch'
+import platformConfig from '../config'
+import utils from '../utils'
+import refreshToken from '../login/refreshToken'
+import { version as currentVersion } from '../../package.json'
 
 /*
  * Create Access Key For Tenant
  */
 
 const createAccessKeyForTenant = async (tenant, title) => {
+  await refreshToken()
+
   const user = utils.getLoggedInUser()
 
   const response = await fetch(`${platformConfig.backendUrl}tenants/${tenant}/accessKeys`, {
@@ -39,7 +42,7 @@ const createAccessKeyForTenant = async (tenant, title) => {
  * - If an access key is present as an env var, that overrides all else
  */
 
-const getAccessKeyForTenant = (tenant) => {
+const getAccessKeyForTenant = async (tenant) => {
   // Check if in ENV, return that first...
   if (process.env.SERVERLESS_ACCESS_KEY) {
     return process.env.SERVERLESS_ACCESS_KEY
@@ -48,6 +51,8 @@ const getAccessKeyForTenant = (tenant) => {
   if (!tenant) {
     throw new Error('SDK: getAccessKeyForTenant() requires a "tenant".')
   }
+
+  await refreshToken()
 
   const user = utils.getLoggedInUser()
 

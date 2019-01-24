@@ -2,6 +2,7 @@ const { getApp } = require('./')
 const fetch = require('isomorphic-fetch')
 const platformConfig = require('../config')
 const currentVersion = require('../../package.json').version
+import refreshToken from '../login/refreshToken'
 
 jest.mock('isomorphic-fetch', () =>
   jest.fn().mockReturnValue({
@@ -17,6 +18,8 @@ jest.mock('../utils', () => ({
     }
   })
 }))
+
+jest.mock('../login/refreshToken', () => jest.fn().mockReturnValue())
 
 afterAll(() => jest.restoreAllMocks())
 
@@ -40,6 +43,7 @@ describe('getApp', () => {
         }
       }
     )
+    expect(refreshToken).toBeCalledWith()
   })
 
   test('it should make a valid request with a provided token', async () => {
@@ -62,5 +66,6 @@ describe('getApp', () => {
         }
       }
     )
+    expect(refreshToken).toBeCalledWith()
   })
 })

@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import platformConfig from '../config'
 import utils from '../utils'
+import refreshToken from '../login/refreshToken'
 
 const createDestination = async ({
   tenantUid,
@@ -12,6 +13,7 @@ const createDestination = async ({
   token
 }) => {
   if (!token) {
+    await refreshToken()
     const user = utils.getLoggedInUser()
     if (!user) {
       return Promise.reject('User is not logged in to the Platform.')

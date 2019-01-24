@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import platformConfig from '../config'
 import { removeLogDestination } from './'
+import refreshToken from '../login/refreshToken'
 
 jest.mock('isomorphic-fetch', () =>
   jest.fn().mockReturnValue(
@@ -14,6 +15,8 @@ jest.mock('isomorphic-fetch', () =>
 jest.mock('../utils', () => ({
   getLoggedInUser: jest.fn().mockReturnValue({ idToken: 'userIdToken' })
 }))
+
+jest.mock('../login/refreshToken', () => jest.fn())
 
 afterAll(() => jest.restoreAllMocks())
 
@@ -43,5 +46,6 @@ describe('removeLogDestination', () => {
         'Content-Type': 'application/json'
       }
     })
+    expect(refreshToken).toBeCalledWith()
   })
 })

@@ -13,7 +13,7 @@ describe('getCredentials', () => {
   it('fetches creds from API', async () => {
     process.env.SLS_CLOUD_ACCESS = 'true'
     const result = await getCredentials({
-      idToken: 'userIdToken',
+      accessKey: 'accessKey',
       stageName: 'stage',
       command: 'deploy',
       app: 'app',
@@ -30,7 +30,7 @@ describe('getCredentials', () => {
           app: 'app',
           service: 'service'
         }),
-        headers: { Authorization: `bearer userIdToken` }
+        headers: { Authorization: `bearer accessKey` }
       }
     )
     expect(result.destinationArn).toEqual('arn:dest')
