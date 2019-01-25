@@ -13,12 +13,16 @@ const createDestination = async ({
   token
 }) => {
   if (!token) {
-    await refreshToken()
-    const user = utils.getLoggedInUser()
-    if (!user) {
-      return Promise.reject('User is not logged in to the Platform.')
+    if (process.env.SERVERLESS_ACCESS_KEY) {
+      token = process.env.SERVERLESS_ACCESS_KEY
+    } else {
+      await refreshToken()
+      const user = utils.getLoggedInUser()
+      if (!user) {
+        return Promise.reject('User is not logged in to the Platform.')
+      }
+      token = user.idToken
     }
-    token = user.idToken
   }
 
   const body = JSON.stringify({
