@@ -12,7 +12,8 @@ describe('index', () => {
       openBrowser: expect.any(Function),
       refreshToken: expect.any(Function),
       archiveService: expect.any(Function),
-      listTenants: expect.any(Function)
+      listTenants: expect.any(Function),
+      getSecret: expect.any(Function)
     })
   })
 })

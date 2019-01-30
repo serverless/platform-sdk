@@ -13,9 +13,9 @@ const tenants = require('./tenants')
 const accessKeys = require('./accessKeys')
 const login = require('./login')
 const logout = require('./logout')
-const credentials = require('./credentials')
 const utils = require('./utils')
 const logs = require('./logs')
+const secrets = require('./secrets')
 
 module.exports = {
   ...service,
@@ -25,7 +25,7 @@ module.exports = {
   ...accessKeys,
   ...login,
   ...logout,
-  ...credentials,
   ...utils,
-  ...logs
+  ...logs,
+  ...secrets
 }
