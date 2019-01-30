@@ -2,11 +2,12 @@ import fetch from 'isomorphic-fetch'
 import platformConfig from '../config'
 import { checkHttpResponse } from '../utils'
 
-export default async ({ secretName, accessKey, app, service, tenant }) => {
+export default async ({ secretName, accessKey, app, service, tenant, stage }) => {
   const body = JSON.stringify({
     secretName,
     appName: app,
-    serviceName: service
+    serviceName: service,
+    stageName: stage
   })
 
   const response = await fetch(`${platformConfig.backendUrl}tenants/${tenant}/secrets/access`, {
