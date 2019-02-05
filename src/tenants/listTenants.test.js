@@ -1,7 +1,7 @@
-const { listTenants } = require('./')
-const fetch = require('isomorphic-fetch')
-const platformConfig = require('../config')
-const currentVersion = require('../../package.json').version
+import { listTenants } from './'
+import fetch from 'isomorphic-fetch'
+import platformConfig from '../config'
+import { version as currentVersion } from '../../package.json'
 
 jest.mock('isomorphic-fetch', () =>
   jest.fn().mockReturnValue({

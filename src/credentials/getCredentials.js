@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch'
-const platformConfig = require('../config')
+import platformConfig from '../config'
 
 export default async ({ accessKey, stageName, command, app, service, tenant }) => {
   const body = JSON.stringify({ stageName, command, app, service })

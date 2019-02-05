@@ -1,6 +1,6 @@
-const fetch = require('isomorphic-fetch')
-const platformConfig = require('../config')
-const currentVersion = require('../../package.json').version
+import fetch from 'isomorphic-fetch'
+import platformConfig from '../config'
+import { version as currentVersion } from '../../package.json'
 
 const slugifyApp = (text) =>
   text

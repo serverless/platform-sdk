@@ -1,5 +1,5 @@
-const { getServiceUrl } = require('./')
-const platformConfig = require('../config')
+import { getServiceUrl } from './'
+import platformConfig from '../config'
 
 describe('getServiceUrl', () => {
   test('it return a correct service URL', async () => {

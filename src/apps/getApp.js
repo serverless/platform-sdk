@@ -1,7 +1,7 @@
-const fetch = require('isomorphic-fetch')
-const platformConfig = require('../config')
-const currentVersion = require('../../package.json').version
-const { getAccessKeyForTenant } = require('../accessKeys')
+import fetch from 'isomorphic-fetch'
+import platformConfig from '../config'
+import { version as currentVersion } from '../../package.json'
+import { getAccessKeyForTenant } from '../accessKeys'
 
 const getApp = async (data) => {
   let { token } = data

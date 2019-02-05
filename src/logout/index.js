@@ -4,8 +4,8 @@
  * - Loads and updates data in user's .serverlessrc.
  */
 
-const currentSdkVersion = require('../../package.json').version
-const utils = require('../utils')
+import { version as currentSdkVersion } from '../../package.json'
+import utils from '../utils'
 
 const logout = async () => {
   // Load local configuration file
