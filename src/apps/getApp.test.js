@@ -16,7 +16,8 @@ jest.mock('../utils', () => ({
     accessKeys: {
       sometenant: 'userAccessKey'
     }
-  })
+  }),
+  checkHttpResponse: jest.fn()
 }))
 
 jest.mock('../login/refreshToken', () => jest.fn().mockReturnValue())

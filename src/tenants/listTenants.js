@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import platformConfig from '../config'
 import { version as currentVersion } from '../../package.json'
+import { checkHttpResponse } from '../utils'
 
 const listTenants = async (data) => {
   const response = await fetch(`${platformConfig.backendUrl}tenants?userName=${data.username}`, {
@@ -12,10 +13,7 @@ const listTenants = async (data) => {
     }
   })
 
-  if (!response.ok) {
-    const text = await response.text()
-    throw new Error(text)
-  }
+  await checkHttpResponse(response)
 
   return response.json()
 }

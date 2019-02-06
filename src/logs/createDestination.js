@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import platformConfig from '../config'
+import { checkHttpResponse } from '../utils'
 
 const createDestination = async ({
   tenantUid,
@@ -28,10 +29,8 @@ const createDestination = async ({
     }
   })
 
-  if (!response.ok) {
-    const text = await response.text()
-    throw new Error(text)
-  }
+  await checkHttpResponse(response)
+
   return response.json()
 }
 

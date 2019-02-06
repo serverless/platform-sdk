@@ -2,6 +2,7 @@ import fetch from 'isomorphic-fetch'
 import platformConfig from '../config'
 import { version as currentVersion } from '../../package.json'
 import { getAccessKeyForTenant } from '../accessKeys'
+import { checkHttpResponse } from '../utils'
 
 const getApp = async (data) => {
   let { token } = data
@@ -22,10 +23,8 @@ const getApp = async (data) => {
     }
   )
 
-  if (!response.ok) {
-    const text = await response.text()
-    throw new Error(text)
-  }
+  await checkHttpResponse(response)
+
   return response.json()
 }
 

@@ -32,7 +32,8 @@ jest.mock('../utils', () => ({
       }
     }
   }),
-  writeConfigFile: jest.fn().mockReturnValue()
+  writeConfigFile: jest.fn().mockReturnValue(),
+  checkHttpResponse: jest.fn()
 }))
 
 describe('refreshToken', () => {

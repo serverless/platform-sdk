@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import platformConfig from '../config'
+import { checkHttpResponse } from '../utils'
 
 const removeLogDestination = async ({
   tenantUid,
@@ -26,10 +27,8 @@ const removeLogDestination = async ({
     }
   })
 
-  if (!response.ok) {
-    const text = await response.text()
-    throw new Error(text)
-  }
+  await checkHttpResponse(response)
+
   // This method returns an empty body.
   return
 }
