@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 
-const opn = require('opn')
-const chalk = require('chalk')
-const isDockerContainer = require('is-docker')
+import opn from 'opn'
+import chalk from 'chalk'
+import isDockerContainer from 'is-docker'
 
 function displayManualOpenMessage(url, err) {
   // https://github.com/sindresorhus/log-symbols

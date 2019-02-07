@@ -1,3 +1,2 @@
-const configFile = require('./configFile')
-
-module.exports = { ...configFile }
+export * from './configFile'
+export { default as checkHttpResponse } from './checkHttpResponse'

@@ -1,7 +1,7 @@
-const { getApp } = require('./')
-const fetch = require('isomorphic-fetch')
-const platformConfig = require('../config')
-const currentVersion = require('../../package.json').version
+import { getApp } from './'
+import fetch from 'isomorphic-fetch'
+import platformConfig from '../config'
+import { version as currentVersion } from '../../package.json'
 import refreshToken from '../login/refreshToken'
 
 jest.mock('isomorphic-fetch', () =>
@@ -16,7 +16,8 @@ jest.mock('../utils', () => ({
     accessKeys: {
       sometenant: 'userAccessKey'
     }
-  })
+  }),
+  checkHttpResponse: jest.fn()
 }))
 
 jest.mock('../login/refreshToken', () => jest.fn().mockReturnValue())

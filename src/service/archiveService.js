@@ -1,6 +1,7 @@
-const fetch = require('isomorphic-fetch')
-const platformConfig = require('../config')
-const currentVersion = require('../../package.json').version
+import fetch from 'isomorphic-fetch'
+import platformConfig from '../config'
+import { version as currentVersion } from '../../package.json'
+import { checkHttpResponse } from '../utils'
 
 const archiveService = async (data) => {
   const body = {
@@ -22,10 +23,8 @@ const archiveService = async (data) => {
     }
   )
 
-  if (!response.ok) {
-    const text = await response.text()
-    throw new Error(text)
-  }
+  await checkHttpResponse(response)
+
   return response.json()
 }
 

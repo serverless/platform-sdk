@@ -2,6 +2,7 @@ import fetch from 'isomorphic-fetch'
 import platformConfig from '../config'
 import utils from '../utils'
 import { version as currentVersion } from '../../package.json'
+import { checkHttpResponse } from '../utils'
 
 const refreshToken = async () => {
   const configFile = utils.readConfigFile()
@@ -22,10 +23,8 @@ const refreshToken = async () => {
     }
   })
 
-  if (!response.ok) {
-    const text = await response.text()
-    throw new Error(text)
-  }
+  await checkHttpResponse(response)
+
   const tokens = await response.json()
   const expiresAt = tokens.expires_in * 1000 + Date.now()
   configFile.users[currentId].dashboard.idToken = tokens.id_token

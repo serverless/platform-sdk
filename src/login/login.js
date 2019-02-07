@@ -4,17 +4,17 @@
  * - Loads and updates data in user's .serverlessrc.
  */
 
-const express = require('express')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const querystring = require('querystring')
-const jwtDecode = require('jwt-decode')
-const currentSdkVersion = require('../../package.json').version
-const utils = require('../utils')
-const openBrowser = require('./openBrowser')
-const { createAccessKeyForTenant } = require('../accessKeys')
-const getTokens = require('./getTokens')
-const platformConfig = require('../config')
+import express from 'express'
+import bodyParser from 'body-parser'
+import cors from 'cors'
+import querystring from 'querystring'
+import jwtDecode from 'jwt-decode'
+import { version as currentSdkVersion } from '../../package.json'
+import utils from '../utils'
+import openBrowser from './openBrowser'
+import { createAccessKeyForTenant } from '../accessKeys'
+import getTokens from './getTokens'
+import platformConfig from '../config'
 
 const login = async (tenant) => {
   // Load local configuration file

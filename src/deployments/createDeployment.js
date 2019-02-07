@@ -3,9 +3,10 @@
  * - Creates a deployment record on the Serverless Enterprise Platform
  */
 
-const fetch = require('isomorphic-fetch')
-const currentVersion = require('../../package.json').version
-const platformConfig = require('../config')
+import fetch from 'isomorphic-fetch'
+import { version as currentVersion } from '../../package.json'
+import platformConfig from '../config'
+import { checkHttpResponse } from '../utils'
 
 const createDeployment = async (data) => {
   const body = {
@@ -25,10 +26,8 @@ const createDeployment = async (data) => {
     }
   )
 
-  if (!response.ok) {
-    const text = await response.text()
-    throw new Error(text)
-  }
+  await checkHttpResponse(response)
+
   return response.json()
 }
 

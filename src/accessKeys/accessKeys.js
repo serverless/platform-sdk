@@ -3,6 +3,7 @@ import platformConfig from '../config'
 import utils from '../utils'
 import refreshToken from '../login/refreshToken'
 import { version as currentVersion } from '../../package.json'
+import { checkHttpResponse } from '../utils'
 
 /*
  * Create Access Key For Tenant
@@ -27,10 +28,7 @@ const createAccessKeyForTenant = async (tenant, title) => {
     }
   })
 
-  if (!response.ok) {
-    const text = await response.text()
-    throw new Error(text)
-  }
+  await checkHttpResponse(response)
 
   const data = await response.json()
   return data.secretAccessKey
