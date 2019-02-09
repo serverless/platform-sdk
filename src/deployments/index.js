@@ -163,17 +163,17 @@ class Deployment {
     let dashboardApi = platformConfig.backendUrl
     dashboardApi += `tenants/${this._.tenantName}/`
     dashboardApi += `applications/${this._.appName}/`
-    dashboardApi += `services/${this._.service}/`
-    dashboardApi += `stages/${this._.stage}/`
-    dashboardApi += `regions/${this._.region}/`
+    dashboardApi += `services/${this._.serviceName}/`
+    dashboardApi += `stages/${this._.stageName}/`
+    dashboardApi += `regions/${this._.regionName}/`
     dashboardApi += `deployments`
 
     let dashboardUrl = platformConfig.frontendUrl
     dashboardUrl += `tenants/${this._.tenantName}/`
     dashboardUrl += `applications/${this._.appName}/`
-    dashboardUrl += `services/${this._.service}/`
-    dashboardUrl += `stages/${this._.stage}/`
-    dashboardUrl += `regions/${this._.region}`
+    dashboardUrl += `services/${this._.serviceName}/`
+    dashboardUrl += `stages/${this._.stageName}/`
+    dashboardUrl += `regions/${this._.regionName}`
 
     // Fetch access key
     const accessKey = await getAccessKeyForTenant(this._.tenantName)
