@@ -159,20 +159,27 @@ class Deployment {
    */
 
   async save() {
-    // Create backend api endpoint
-    let endpoint = platformConfig.backendUrl
-    endpoint += `tenants/${this._.tenantName}/`
-    endpoint += `applications/${this._.appName}/`
-    endpoint += `services/${this._.service}/`
-    endpoint += `stages/${this._.stage}/`
-    endpoint += `regions/${this._.region}/`
-    endpoint += `deployments`
+    // Create backend & frontend urls
+    let dashboardApi = platformConfig.backendUrl
+    dashboardApi += `tenants/${this._.tenantName}/`
+    dashboardApi += `applications/${this._.appName}/`
+    dashboardApi += `services/${this._.service}/`
+    dashboardApi += `stages/${this._.stage}/`
+    dashboardApi += `regions/${this._.region}/`
+    dashboardApi += `deployments`
+
+    let dashboardUrl = platformConfig.frontendUrl
+    dashboardUrl += `tenants/${this._.tenantName}/`
+    dashboardUrl += `applications/${this._.appName}/`
+    dashboardUrl += `services/${this._.service}/`
+    dashboardUrl += `stages/${this._.stage}/`
+    dashboardUrl += `regions/${this._.region}`
 
     // Fetch access key
     const accessKey = await getAccessKeyForTenant(this._.tenantName)
 
     // Call api to save deployment
-    const response = await fetch(endpoint, { // eslint-disable-line
+    const response = await fetch(dashboardApi, { // eslint-disable-line
       method: 'POST',
       body: JSON.stringify(this._),
       headers: {
@@ -185,7 +192,11 @@ class Deployment {
       const text = await response.text()
       throw new Error(text)
     }
-    return response.json()
+
+    return {
+      deployment: response.json(),
+      dashboardUrl
+    }
   }
 }
 
