@@ -1,13 +1,15 @@
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
+import uuidv1 from 'uuid/v1'
 import { path as get, mergeDeepRight } from 'ramda'
 import writeFileAtomic from 'write-file-atomic'
 
 // Locate the correct .serverlessrc per current environment
 let fileName = 'serverless'
 if (process.env.SERVERLESS_PLATFORM_STAGE && process.env.SERVERLESS_PLATFORM_STAGE !== 'prod') {
-  fileName = 'serverlessdev'
+  fileName = 'serverless' + process.env.SERVERLESS_PLATFORM_STAGE.toLowerCase()
+  fileName = fileName.trim()
 }
 
 /*
@@ -27,7 +29,21 @@ export const getConfigFilePath = () => {
   } else if (globalConfigExists) {
     return globalPath
   }
-  return null
+
+  // If neither exist, create the config file in the home dir
+  // Normally the Framework does this, but just in case...
+  const config = {
+    userId: null,
+    frameworkId: uuidv1(),
+    trackingDisabled: false, // default false
+    meta: {
+      created_at: Math.round(+new Date() / 1000), // config file creation date
+      updated_at: null // config file updated date
+    }
+  }
+
+  writeFileAtomic.sync(globalPath, JSON.stringify(config, null, 2))
+  return globalPath
 }
 
 /*
@@ -39,7 +55,7 @@ export const getConfigFilePath = () => {
 export const readConfigFile = () => {
   const configFilePath = getConfigFilePath()
   const configFile = configFilePath ? fs.readFileSync(configFilePath) : null
-  return configFile ? JSON.parse(configFile) : null
+  return configFile ? JSON.parse(configFile) : {}
 }
 
 /*
