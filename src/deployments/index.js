@@ -2,12 +2,12 @@
  * Deployment
  */
 
-const ramda = require('ramda')
-const packageJsonVersion = require('../../package.json').version
-const platformConfig = require('../config')
-const { getAccessKeyForTenant } = require('../accessKeys')
+import ramda from 'ramda'
+import { version as packageJsonVersion } from '../../package.json'
+import platformConfig from '../config'
+import { getAccessKeyForTenant } from '../accessKeys'
 
-class Deployment {
+export default class {
   constructor() {
     this._ = {
       /*
@@ -199,5 +199,3 @@ class Deployment {
     }
   }
 }
-
-module.exports = Deployment

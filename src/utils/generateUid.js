@@ -2,8 +2,8 @@
  * Generate UIDs for entities
  */
 
-const uuidv4 = require('uuid/v4')
+import uuidv4 from 'uuid/v4'
 
-module.exports.generateUid = () => {
+export const generateUid = () => {
   return uuidv4()
 }
