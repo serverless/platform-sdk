@@ -9,7 +9,7 @@ import { getAccessKeyForTenant } from '../accessKeys'
 
 export default class {
   constructor() {
-    this._ = {
+    this.data = {
       /*
        * Versions
        */
@@ -59,7 +59,7 @@ export default class {
    */
 
   get() {
-    return this._
+    return this.data
   }
 
   /*
@@ -68,8 +68,8 @@ export default class {
 
   set(data) {
     // TODO: Validate
-    this._ = ramda.mergeDeepRight(this._, data)
-    return this._
+    this.data = ramda.mergeDeepRight(this.data, data)
+    return this.data
   }
 
   /*
@@ -107,8 +107,8 @@ export default class {
       }
     }
 
-    this._.functions[data.name] = ramda.mergeDeepRight(fn, data)
-    return this._.functions[data.name]
+    this.data.functions[data.name] = ramda.mergeDeepRight(fn, data)
+    return this.data.functions[data.name]
   }
 
   /*
@@ -122,7 +122,7 @@ export default class {
     if (!data.function) {
       throw new Error(`subscription 'function' is required`)
     }
-    if (!this._.functions[data.function]) {
+    if (!this.data.functions[data.function]) {
       throw new Error(
         `subscription 'function' must be added to the deployment before subscriptions`
       )
@@ -149,7 +149,7 @@ export default class {
     }
 
     sub = ramda.mergeDeepRight(sub, data)
-    this._.subscriptions.push(sub)
+    this.data.subscriptions.push(sub)
 
     return sub
   }
@@ -161,27 +161,27 @@ export default class {
   async save() {
     // Create backend & frontend urls
     let dashboardApi = platformConfig.backendUrl
-    dashboardApi += `tenants/${this._.tenantName}/`
-    dashboardApi += `applications/${this._.appName}/`
-    dashboardApi += `services/${this._.serviceName}/`
-    dashboardApi += `stages/${this._.stageName}/`
-    dashboardApi += `regions/${this._.regionName}/`
+    dashboardApi += `tenants/${this.data.tenantName}/`
+    dashboardApi += `applications/${this.data.appName}/`
+    dashboardApi += `services/${this.data.serviceName}/`
+    dashboardApi += `stages/${this.data.stageName}/`
+    dashboardApi += `regions/${this.data.regionName}/`
     dashboardApi += `deployments`
 
     let dashboardUrl = platformConfig.frontendUrl
-    dashboardUrl += `tenants/${this._.tenantName}/`
-    dashboardUrl += `applications/${this._.appName}/`
-    dashboardUrl += `services/${this._.serviceName}/`
-    dashboardUrl += `stages/${this._.stageName}/`
-    dashboardUrl += `regions/${this._.regionName}`
+    dashboardUrl += `tenants/${this.data.tenantName}/`
+    dashboardUrl += `applications/${this.data.appName}/`
+    dashboardUrl += `services/${this.data.serviceName}/`
+    dashboardUrl += `stages/${this.data.stageName}/`
+    dashboardUrl += `regions/${this.data.regionName}`
 
     // Fetch access key
-    const accessKey = await getAccessKeyForTenant(this._.tenantName)
+    const accessKey = await getAccessKeyForTenant(this.data.tenantName)
 
     // Call api to save deployment
     const response = await fetch(dashboardApi, { // eslint-disable-line
       method: 'POST',
-      body: JSON.stringify(this._),
+      body: JSON.stringify(this.data),
       headers: {
         'Content-Type': 'application/json',
         Authorization: `bearer ${accessKey}`
