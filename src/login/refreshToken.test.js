@@ -1,6 +1,6 @@
 import refreshToken from './refreshToken'
 import fetch from 'isomorphic-fetch'
-import utils from '../utils'
+import * as utils from '../utils'
 import { version as currentVersion } from '../../package.json'
 
 jest.mock('isomorphic-fetch', () =>

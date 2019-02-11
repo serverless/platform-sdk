@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import platformConfig from '../config'
-import utils from '../utils'
+import * as utils from '../utils'
 import { version as currentVersion } from '../../package.json'
 import { checkHttpResponse } from '../utils'
 

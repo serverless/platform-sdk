@@ -5,7 +5,7 @@
  */
 
 import { version as currentSdkVersion } from '../../package.json'
-import utils from '../utils'
+import * as utils from '../utils'
 
 const logout = async () => {
   // Load local configuration file
