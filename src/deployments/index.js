@@ -31,6 +31,8 @@ export default class {
       stageName: null,
       regionName: null,
 
+      status: null, // success OR errror
+
       // IF ARCHIVED... everything below this will be null
       archived: false,
 
@@ -42,7 +44,8 @@ export default class {
 
       provider: {
         type: 'aws',
-        aws: {}
+        aws: {},
+        environment: []
       },
 
       functions: {},
@@ -50,6 +53,8 @@ export default class {
       resources: {},
       layers: {},
       plugins: [],
+      safeguards: [],
+      secrets: [],
       custom: {}
     }
   }
