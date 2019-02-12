@@ -5,7 +5,6 @@ describe('index', () => {
       createAccessKeyForTenant: expect.any(Function),
       createApp: expect.any(Function),
       getApp: expect.any(Function),
-      saveDeployment: expect.any(Function),
       Deployment: expect.any(Function),
       getTokens: expect.any(Function),
       login: expect.any(Function),

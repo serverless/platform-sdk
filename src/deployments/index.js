@@ -32,6 +32,7 @@ export default class {
       regionName: null,
 
       status: null, // success OR errror
+      error: null,
 
       // IF ARCHIVED... everything below this will be null
       archived: false,
