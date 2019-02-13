@@ -45,7 +45,7 @@ export default class {
 
       provider: {
         type: 'aws',
-        aws: {},
+        custom: {},
         environment: []
       },
 
