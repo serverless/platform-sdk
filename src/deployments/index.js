@@ -6,6 +6,7 @@ import ramda from 'ramda'
 import { version as packageJsonVersion } from '../../package.json'
 import platformConfig from '../config'
 import { getAccessKeyForTenant } from '../accessKeys'
+import fetch from 'isomorphic-fetch'
 
 export default class {
   constructor() {
@@ -143,7 +144,7 @@ export default class {
     }
 
     // Add custom subscription properties per event type
-    switch (sub.type) {
+    switch (data.type) {
       case 'aws.apigateway.http':
         sub.custom.path = null
         sub.custom.method = null
@@ -200,7 +201,7 @@ export default class {
     }
 
     return {
-      deployment: response.json(),
+      deployment: await response.json(),
       dashboardUrl
     }
   }
