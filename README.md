@@ -4,7 +4,7 @@ Functional SDK for the Serverless Platfrom.
 
 ## Project Status
 
-[![Build Status](https://travis-ci.org/serverless/platform-sdk.svg)](https://travis-ci.org/serverless/platform-sdk)
+[![Build Status](https://travis-ci.com/serverless/platform-sdk.svg)](https://travis-ci.com/serverless/platform-sdk)
 [![license](https://img.shields.io/npm/l/@serverless/platform-sdk.svg)](https://www.npmjs.com/package/@serverless/platform-sdk)
 [![coverage](https://img.shields.io/codecov/c/github/serverless/platform-sdk.svg)](https://codecov.io/gh/serverless/platform-sdk)
 [![Known Vulnerabilities](https://snyk.io/test/github/serverless/platform-sdk/badge.svg)](https://snyk.io/test/github/serverless/platform-sdk)
