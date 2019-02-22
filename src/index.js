@@ -16,6 +16,7 @@ const logout = require('./logout')
 const utils = require('./utils')
 const logs = require('./logs')
 const secrets = require('./secrets')
+const urls = require('./config')
 
 module.exports = {
   ...service,
@@ -27,5 +28,6 @@ module.exports = {
   ...logout,
   ...utils,
   ...logs,
-  ...secrets
+  ...secrets,
+  urls
 }
