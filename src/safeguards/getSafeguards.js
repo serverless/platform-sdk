@@ -4,7 +4,7 @@ import { checkHttpResponse } from '../utils'
 
 export default async ({ accessKey, app, tenant }) => {
   const response = await fetch(
-    `${platformConfig.backendUrl}tenants/${tenant}/safeguards/rules?app=${app}`,
+    `${platformConfig.backendUrl}tenants/${tenant}/safeguards/rules?appName=${app}`,
     { method: 'GET', headers: { Authorization: `bearer ${accessKey}` } }
   )
 
