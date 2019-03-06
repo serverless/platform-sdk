@@ -32,11 +32,7 @@ describe('Deployment', () => {
       status: null,
       error: null,
       archived: false,
-      provider: {
-        type: 'aws',
-        custom: {},
-        environment: []
-      },
+      provider: { type: 'aws' },
       functions: {},
       subscriptions: [],
       resources: {},
@@ -146,7 +142,7 @@ describe('Deployment', () => {
           status: null,
           error: null,
           archived: false,
-          provider: { type: 'aws', custom: {}, environment: [] },
+          provider: { type: 'aws' },
           functions: {},
           subscriptions: [],
           resources: {},

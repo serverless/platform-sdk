@@ -44,11 +44,7 @@ export default class {
        * - Function-defaults in `provider` will be replicated across each function
        */
 
-      provider: {
-        type: 'aws',
-        custom: {},
-        environment: []
-      },
+      provider: { type: 'aws' },
 
       functions: {},
       subscriptions: [],
