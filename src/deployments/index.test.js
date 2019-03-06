@@ -135,7 +135,7 @@ describe('Deployment', () => {
         body: JSON.stringify({
           versionFramework: null,
           versionEnterprisePlugin: null,
-          versionSDK: '0.5.0',
+          versionSDK: packageJsonVersion,
           tenantUid: null,
           appUid: null,
           tenantName: 'tenant',
