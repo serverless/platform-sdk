@@ -6,8 +6,8 @@ if (!global._babelPolyfill) {
 // eslint-disable-next-line global-require
 require('source-map-support/register')
 
+const Deployment = require('./deployments').default
 const service = require('./service')
-const deployments = require('./deployments')
 const apps = require('./apps')
 const tenants = require('./tenants')
 const accessKeys = require('./accessKeys')
@@ -20,8 +20,8 @@ const safeguards = require('./safeguards')
 const urls = require('./config')
 
 module.exports = {
+  Deployment,
   ...service,
-  ...deployments,
   ...apps,
   ...tenants,
   ...accessKeys,
