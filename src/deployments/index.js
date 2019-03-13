@@ -175,8 +175,8 @@ export default class {
     dashboardUrl += `tenants/${this.data.tenantName}/`
     dashboardUrl += `applications/${this.data.appName}/`
     dashboardUrl += `services/${this.data.serviceName}/`
-    dashboardUrl += `stages/${this.data.stageName}/`
-    dashboardUrl += `regions/${this.data.regionName}`
+    dashboardUrl += `stage/${this.data.stageName}/`
+    dashboardUrl += `region/${this.data.regionName}`
 
     // Fetch access key
     const accessKey = await getAccessKeyForTenant(this.data.tenantName)
