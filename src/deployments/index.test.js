@@ -122,7 +122,7 @@ describe('Deployment', () => {
     })
     const { deployment, dashboardUrl } = await unsavedDeployment.save()
     expect(dashboardUrl).toEqual(
-      'https://dashboard.serverless.com/tenants/tenant/applications/app/services/service/stages/stage/regions/region'
+      'https://dashboard.serverless.com/tenants/tenant/applications/app/services/service/stage/stage/region/region'
     )
     expect(deployment).toEqual('object')
     expect(fetch).toBeCalledWith(
