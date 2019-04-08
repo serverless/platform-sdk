@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch'
+import fetch from '../fetch'
 import platformConfig from '../config'
 import { version as currentVersion } from '../../package.json'
 import { getAccessKeyForTenant } from '../accessKeys'

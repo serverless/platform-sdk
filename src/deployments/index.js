@@ -6,7 +6,7 @@ import ramda from 'ramda'
 import { version as packageJsonVersion } from '../../package.json'
 import platformConfig from '../config'
 import { getAccessKeyForTenant } from '../accessKeys'
-import fetch from 'isomorphic-fetch'
+import fetch from '../fetch'
 
 export default class {
   constructor() {

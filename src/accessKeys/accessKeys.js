@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch'
+import fetch from '../fetch'
 import platformConfig from '../config'
 import * as utils from '../utils'
 import refreshToken from '../login/refreshToken'
