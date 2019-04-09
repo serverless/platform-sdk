@@ -18,6 +18,7 @@ const logs = require('./logs')
 const secrets = require('./secrets')
 const safeguards = require('./safeguards')
 const urls = require('./config')
+const { configureFetchDefaults } = require('./fetch')
 
 module.exports = {
   Deployment,
@@ -31,5 +32,6 @@ module.exports = {
   ...logs,
   ...secrets,
   ...safeguards,
-  urls
+  urls,
+  configureFetchDefaults
 }
