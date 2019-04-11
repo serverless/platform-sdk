@@ -111,7 +111,7 @@ const login = async (tenant) => {
 
     // If tenant is included, update config w/ new accesskey for that tenant
     let accessKey
-    if (tenant) {
+    if (tenant && tenant !== 'tenantname') {
       accessKey = await createAccessKeyForTenant(tenant)
       if (accessKey) {
         configFile = utils.readConfigFile()
