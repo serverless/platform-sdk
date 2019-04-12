@@ -55,13 +55,12 @@ const login = async (tenant) => {
         opnRes.kill()
       }
 
-      if (req.query.statusCode) {
-        if (req.query.statusCode === '412') {
-          res.end()
-          server.close()
-          return reject('Please verify your email before proceeding.')
-        }
+      if (req.query.unverified) {
+        res.end()
+        server.close()
+        return reject('Complete sign-up before logging in.')
       }
+
       if (req.query.code) {
         const tokens = await getTokens(req.query.code)
         refreshToken = tokens.refresh_token
