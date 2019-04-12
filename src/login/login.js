@@ -48,10 +48,19 @@ const login = async (tenant) => {
   const opnRes = await openBrowser(auth0Endpoint)
 
   // Log in to Serverless Enterprise
-  return new Promise((resolve) => {
-    app.get('/', async (req, res) => { // eslint-disable-line
+  return new Promise((resolve, reject) => {
+    app.get('/', async (req, res) => {
+      // eslint-disable-line
       if (opnRes) {
         opnRes.kill()
+      }
+
+      if (req.query.statusCode) {
+        if (req.query.statusCode === '412') {
+          res.end()
+          server.close()
+          return reject('Please verify your email before proceeding.')
+        }
       }
       if (req.query.code) {
         const tokens = await getTokens(req.query.code)
