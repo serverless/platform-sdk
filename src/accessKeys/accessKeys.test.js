@@ -1,4 +1,20 @@
-import { getAccessKeyForTenant } from './accessKeys'
+import { getAccessKeyForTenant, createAccessKeyForTenant } from './accessKeys'
+
+jest.mock('../fetch', () =>
+  jest.fn().mockReturnValue(
+    Promise.resolve({
+      ok: true,
+      json: jest.fn().mockReturnValue(
+        Promise.resolve({
+          id_token: 'id_token',
+          access_token: 'access_token',
+          secretAccessKey: 'secret_access_key',
+          expires_in: 10000
+        })
+      )
+    })
+  )
+)
 
 jest.mock('../utils', () => ({
   readConfigFile: jest.fn().mockReturnValue({
@@ -14,9 +30,10 @@ jest.mock('../utils', () => ({
   }),
   writeConfigFile: jest.fn().mockReturnValue(),
   checkHttpResponse: jest.fn(),
-  getLoggedInUser: jest
-    .fn()
-    .mockReturnValue({ accessKeys: { foo: 'hgVH317YAhZSL7ptW9zGfC9V061hV9cL' } })
+  getLoggedInUser: jest.fn().mockReturnValue({
+    accessKeys: { foo: 'serverless_access_key' },
+    idToken: 'id_token'
+  })
 }))
 
 describe('getAccessKeyForTenant', () => {
@@ -32,10 +49,10 @@ describe('getAccessKeyForTenant', () => {
   })
 
   it('should return the serverless access key', async () => {
-    process.env.SERVERLESS_ACCESS_KEY = 'hgVH317YAhZSL7ptW9zGfC9V061hV9cL'
+    process.env.SERVERLESS_ACCESS_KEY = 'serverless_access_key'
 
     const result = await getAccessKeyForTenant('tenant')
-    expect(result).toEqual('hgVH317YAhZSL7ptW9zGfC9V061hV9cL')
+    expect(result).toEqual('serverless_access_key')
   })
 
   it('should throw an error when tenant is not defined', async () => {
@@ -58,6 +75,13 @@ describe('getAccessKeyForTenant', () => {
 
   it('should return the access key for a user and tenant', async () => {
     const result = await getAccessKeyForTenant('foo')
-    expect(result).toEqual('hgVH317YAhZSL7ptW9zGfC9V061hV9cL')
+    expect(result).toEqual('serverless_access_key')
+  })
+})
+
+describe('createAccessKeyForTenant', () => {
+  it('should fetch an access key', async () => {
+    const result = await createAccessKeyForTenant('foo', 'foobar')
+    expect(result).toEqual('secret_access_key')
   })
 })
