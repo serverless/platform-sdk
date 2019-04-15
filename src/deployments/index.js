@@ -7,6 +7,7 @@ import { version as packageJsonVersion } from '../../package.json'
 import platformConfig from '../config'
 import { getAccessKeyForTenant } from '../accessKeys'
 import fetch from '../fetch'
+import { checkHttpResponse } from '../utils'
 
 export default class {
   constructor() {
@@ -191,10 +192,7 @@ export default class {
       }
     })
 
-    if (!response.ok) {
-      const text = await response.text()
-      throw new Error(text)
-    }
+    await checkHttpResponse(response)
 
     return {
       deployment: await response.json(),
