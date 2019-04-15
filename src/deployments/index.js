@@ -24,6 +24,8 @@ export default class {
        * - Standard service data
        */
 
+      serverlessFile: null,
+      serverlessFileName: null,
       tenantUid: null,
       appUid: null,
       tenantName: null,
