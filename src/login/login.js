@@ -48,11 +48,19 @@ const login = async (tenant) => {
   const opnRes = await openBrowser(auth0Endpoint)
 
   // Log in to Serverless Enterprise
-  return new Promise((resolve) => {
-    app.get('/', async (req, res) => { // eslint-disable-line
+  return new Promise((resolve, reject) => {
+    app.get('/', async (req, res) => {
+      // eslint-disable-line
       if (opnRes) {
         opnRes.kill()
       }
+
+      if (req.query.unverified) {
+        res.end()
+        server.close()
+        return reject('Complete sign-up before logging in.')
+      }
+
       if (req.query.code) {
         const tokens = await getTokens(req.query.code)
         refreshToken = tokens.refresh_token
@@ -111,7 +119,7 @@ const login = async (tenant) => {
 
     // If tenant is included, update config w/ new accesskey for that tenant
     let accessKey
-    if (tenant) {
+    if (tenant && tenant !== 'tenantname') {
       accessKey = await createAccessKeyForTenant(tenant)
       if (accessKey) {
         configFile = utils.readConfigFile()
