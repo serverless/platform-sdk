@@ -1,7 +1,6 @@
 import { createApp } from './'
 import fetch from 'isomorphic-fetch'
 import platformConfig from '../config'
-import { version as currentVersion } from '../../package.json'
 
 jest.mock('isomorphic-fetch', () =>
   jest.fn().mockReturnValue({
@@ -33,11 +32,7 @@ describe('createApp', () => {
       {
         method: 'POST',
         body,
-        headers: {
-          'Content-Type': 'application/json',
-          'x-platform-version': currentVersion,
-          Authorization: `bearer ${data.token}`
-        }
+        headers: { Authorization: `bearer ${data.token}` }
       }
     )
   })

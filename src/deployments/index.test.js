@@ -152,7 +152,7 @@ describe('Deployment', () => {
           secrets: [],
           custom: {}
         }),
-        headers: { Authorization: 'bearer access-key', 'Content-Type': 'application/json' },
+        headers: { Authorization: 'bearer access-key' },
         method: 'POST'
       }
     )

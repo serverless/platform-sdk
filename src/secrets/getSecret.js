@@ -1,6 +1,5 @@
 import fetch from '../fetch'
 import platformConfig from '../config'
-import { checkHttpResponse } from '../utils'
 
 export default async ({ secretName, accessKey, app, service, tenant, stage }) => {
   const body = JSON.stringify({
@@ -17,8 +16,6 @@ export default async ({ secretName, accessKey, app, service, tenant, stage }) =>
       Authorization: `bearer ${accessKey}`
     }
   })
-
-  await checkHttpResponse(response, 'Could not retrieve secret')
 
   return response.json()
 }

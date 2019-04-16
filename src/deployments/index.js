@@ -7,7 +7,6 @@ import { version as packageJsonVersion } from '../../package.json'
 import platformConfig from '../config'
 import { getAccessKeyForTenant } from '../accessKeys'
 import fetch from '../fetch'
-import { checkHttpResponse } from '../utils'
 
 export default class {
   constructor() {
@@ -187,12 +186,9 @@ export default class {
       method: 'POST',
       body: JSON.stringify(this.data),
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `bearer ${accessKey}`
       }
     })
-
-    await checkHttpResponse(response)
 
     return {
       deployment: await response.json(),

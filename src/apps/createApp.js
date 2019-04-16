@@ -1,7 +1,5 @@
 import fetch from '../fetch'
 import platformConfig from '../config'
-import { version as currentVersion } from '../../package.json'
-import { checkHttpResponse } from '../utils'
 
 const slugifyApp = (text) =>
   text
@@ -21,13 +19,9 @@ const createApp = async (data) => {
     method: 'POST',
     body,
     headers: {
-      'Content-Type': 'application/json',
-      'x-platform-version': currentVersion,
       Authorization: `bearer ${data.token}`
     }
   })
-
-  await checkHttpResponse(response)
 
   return response.json()
 }

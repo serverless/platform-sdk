@@ -1,7 +1,5 @@
 import fetch from '../fetch'
 import platformConfig from '../config'
-import { version as currentVersion } from '../../package.json'
-import { checkHttpResponse } from '../utils'
 
 const archiveService = async (data) => {
   const body = {
@@ -15,15 +13,9 @@ const archiveService = async (data) => {
     {
       method: 'PUT',
       body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-        'x-platform-version': currentVersion,
-        Authorization: `bearer ${data.accessKey}`
-      }
+      headers: { Authorization: `bearer ${data.accessKey}` }
     }
   )
-
-  await checkHttpResponse(response)
 
   return response.json()
 }
