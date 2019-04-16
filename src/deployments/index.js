@@ -32,6 +32,9 @@ export default class {
       stageName: null,
       regionName: null,
 
+      // the arn generated for fetching constructed logs
+      logsRoleArn: null,
+
       status: null, // success OR errror
       error: null,
 
