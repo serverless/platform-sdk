@@ -15,17 +15,17 @@ const config = {
     auth0Domain: 'serverlessdev.auth0.com',
     auth0ClientId: 'EMAtx5b2Bf3PB94c3pm9nrADxpFvyZcm'
   },
-  staging: {
-    frontendUrl: 'https://dashboard.sls-qa.com/',
-    backendUrl: 'https://api.sls-qa.com/core/',
-    logDestinationUrl: 'https://api.sls-qa.com/malt/',
-    auth0Domain: 'serverlessdev.auth0.com',
-    auth0ClientId: 'EMAtx5b2Bf3PB94c3pm9nrADxpFvyZcm'
-  },
   dev: {
     frontendUrl: 'https://dashboard.serverless-dev.com/',
     backendUrl: 'https://api.serverless-dev.com/core/',
     logDestinationUrl: 'https://api.serverless-dev.com/malt/',
+    auth0Domain: 'serverlessdev.auth0.com',
+    auth0ClientId: 'EMAtx5b2Bf3PB94c3pm9nrADxpFvyZcm'
+  },
+  qa: {
+    frontendUrl: 'https://dashboard.serverless-qa.com/',
+    backendUrl: 'https://api.serverless-qa.com/core/',
+    logDestinationUrl: 'https://api.serverless-qa.com/malt/',
     auth0Domain: 'serverlessdev.auth0.com',
     auth0ClientId: 'EMAtx5b2Bf3PB94c3pm9nrADxpFvyZcm'
   },
