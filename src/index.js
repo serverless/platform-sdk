@@ -19,9 +19,11 @@ const secrets = require('./secrets')
 const safeguards = require('./safeguards')
 const urls = require('./config')
 const { configureFetchDefaults } = require('./fetch')
+const core = require('./core')
 
 module.exports = {
   Deployment,
+  ...core,
   ...service,
   ...apps,
   ...tenants,

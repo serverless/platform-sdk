@@ -32,6 +32,9 @@ export default class {
       stageName: null,
       regionName: null,
 
+      // the arn generated for fetching constructed logs
+      logsRoleArn: null,
+
       status: null, // success OR errror
       error: null,
 
@@ -186,15 +189,9 @@ export default class {
       method: 'POST',
       body: JSON.stringify(this.data),
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `bearer ${accessKey}`
       }
     })
-
-    if (!response.ok) {
-      const text = await response.text()
-      throw new Error(text)
-    }
 
     return {
       deployment: await response.json(),

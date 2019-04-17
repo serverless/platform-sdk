@@ -1,7 +1,6 @@
 import refreshToken from './refreshToken'
 import fetch from 'isomorphic-fetch'
 import * as utils from '../utils'
-import { version as currentVersion } from '../../package.json'
 
 jest.mock('isomorphic-fetch', () =>
   jest.fn().mockReturnValue(
@@ -42,7 +41,7 @@ describe('refreshToken', () => {
     expect(utils.readConfigFile).toBeCalledWith()
     expect(fetch).toBeCalledWith('https://api.serverless.com/core/tokens/refresh', {
       body: JSON.stringify({ refreshToken: 'refreshToken' }),
-      headers: { 'Content-Type': 'application/json', 'x-platform-version': currentVersion },
+      headers: {},
       method: 'POST'
     })
     expect(utils.writeConfigFile).toBeCalledWith({

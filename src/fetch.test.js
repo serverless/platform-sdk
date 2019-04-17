@@ -1,4 +1,5 @@
 import { configureFetchDefaults, default as wrappedFetch } from './fetch'
+import { version as currentVersion } from '../package.json'
 import fetch from 'isomorphic-fetch'
 import { Agent } from 'https'
 
@@ -35,7 +36,14 @@ rqXRfboQnoZsG4q5WTP468SQvvG5
 -----END CERTIFICATE-----
 `.replace(/\n/g, '\\n')
     configureFetchDefaults()
-    await wrappedFetch('https://example.com')
-    expect(fetch).toBeCalledWith('https://example.com', { agent: expect.any(Agent) })
+    await wrappedFetch('https://example.com', { headers: { Authorization: 'bearer token' } })
+    expect(fetch).toBeCalledWith('https://example.com', {
+      agent: expect.any(Agent),
+      headers: {
+        'Content-Type': 'application/json',
+        'x-platform-version': currentVersion,
+        Authorization: 'bearer token'
+      }
+    })
   })
 })

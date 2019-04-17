@@ -2,8 +2,6 @@ import fetch from '../fetch'
 import platformConfig from '../config'
 import * as utils from '../utils'
 import refreshToken from '../login/refreshToken'
-import { version as currentVersion } from '../../package.json'
-import { checkHttpResponse } from '../utils'
 
 /*
  * Create Access Key For Tenant
@@ -22,13 +20,9 @@ const createAccessKeyForTenant = async (tenant, title) => {
       title: title || 'serverless_' + Math.round(+new Date() / 1000)
     }),
     headers: {
-      'Content-Type': 'application/json',
-      'x-platform-version': currentVersion,
       Authorization: `bearer ${user.idToken}`
     }
   })
-
-  await checkHttpResponse(response)
 
   const data = await response.json()
   return data.secretAccessKey

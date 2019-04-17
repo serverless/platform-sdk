@@ -1,7 +1,6 @@
 import { archiveService } from './'
 import fetch from 'isomorphic-fetch'
 import platformConfig from '../config'
-import { version as currentVersion } from '../../package.json'
 
 jest.mock('isomorphic-fetch', () =>
   jest.fn().mockReturnValue({
@@ -37,11 +36,7 @@ describe('archiveService', () => {
       {
         method: 'PUT',
         body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json',
-          'x-platform-version': currentVersion,
-          Authorization: `bearer ${data.accessKey}`
-        }
+        headers: { Authorization: `bearer ${data.accessKey}` }
       }
     )
   })

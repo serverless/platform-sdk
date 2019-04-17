@@ -1,7 +1,6 @@
 import { getApp } from './'
 import fetch from 'isomorphic-fetch'
 import platformConfig from '../config'
-import { version as currentVersion } from '../../package.json'
 import refreshToken from '../login/refreshToken'
 
 jest.mock('isomorphic-fetch', () =>
@@ -37,11 +36,7 @@ describe('getApp', () => {
       `${platformConfig.backendUrl}tenants/${data.tenant}/applications/${data.app}`,
       {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-platform-version': currentVersion,
-          Authorization: `bearer userAccessKey`
-        }
+        headers: { Authorization: `bearer userAccessKey` }
       }
     )
     expect(refreshToken).toBeCalledWith()
@@ -60,11 +55,7 @@ describe('getApp', () => {
       `${platformConfig.backendUrl}tenants/${data.tenant}/applications/${data.app}`,
       {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-platform-version': currentVersion,
-          Authorization: `bearer mytoken`
-        }
+        headers: { Authorization: `bearer mytoken` }
       }
     )
     expect(refreshToken).toBeCalledWith()

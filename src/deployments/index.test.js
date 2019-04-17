@@ -29,6 +29,7 @@ describe('Deployment', () => {
       serviceName: null,
       stageName: null,
       regionName: null,
+      logsRoleArn: null,
       status: null,
       error: null,
       archived: false,
@@ -139,6 +140,7 @@ describe('Deployment', () => {
           serviceName: 'service',
           stageName: 'stage',
           regionName: 'region',
+          logsRoleArn: null,
           status: null,
           error: null,
           archived: false,
@@ -152,7 +154,7 @@ describe('Deployment', () => {
           secrets: [],
           custom: {}
         }),
-        headers: { Authorization: 'bearer access-key', 'Content-Type': 'application/json' },
+        headers: { Authorization: 'bearer access-key' },
         method: 'POST'
       }
     )
