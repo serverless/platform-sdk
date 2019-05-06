@@ -20,6 +20,7 @@ const safeguards = require('./safeguards')
 const urls = require('./config')
 const { configureFetchDefaults } = require('./fetch')
 const core = require('./core')
+const deployProfiles = require('./deployProfiles')
 
 module.exports = {
   Deployment,
@@ -34,6 +35,7 @@ module.exports = {
   ...logs,
   ...secrets,
   ...safeguards,
+  ...deployProfiles,
   urls,
   configureFetchDefaults
 }
