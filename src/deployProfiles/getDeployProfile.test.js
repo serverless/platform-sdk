@@ -29,7 +29,7 @@ describe('getDeployProfile', () => {
       stage: 'stage'
     })
     expect(fetch).toBeCalledWith(
-      'https://api.serverless.com/core/tenants/tenant/applicaitons/app/profileValue',
+      'https://api.serverless.com/core/tenants/tenant/applications/app/profileValue',
       {
         method: 'POST',
         headers: { Authorization: `bearer accessKey` },
