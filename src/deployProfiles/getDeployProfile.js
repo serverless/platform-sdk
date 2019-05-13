@@ -14,7 +14,7 @@ export default async ({ accessKey, app, tenant, stage, service }) => {
     }
   )
   if (response.status === 204) {
-    return { secretValues: [], safeguardPolicies: [] }
+    return { secretValues: [], safeguardPolicies: [], providerCredentials: null }
   }
 
   return response.json()
