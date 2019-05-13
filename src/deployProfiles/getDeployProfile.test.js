@@ -73,6 +73,6 @@ describe('getDeployProfile', () => {
         body: JSON.stringify({ stageName: 'stage', serviceName: 'service' })
       }
     )
-    expect(result).toEqual({ safeguardPolicies: [], secretValues: [] })
+    expect(result).toEqual({ safeguardPolicies: [], secretValues: [], providerCredentials: null })
   })
 })
