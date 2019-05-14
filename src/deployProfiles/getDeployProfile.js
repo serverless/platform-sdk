@@ -7,10 +7,7 @@ export default async ({ accessKey, app, tenant, stage, service }) => {
     {
       method: 'POST',
       headers: { Authorization: `bearer ${accessKey}` },
-      body: JSON.stringify({
-        stageName: stage,
-        serviceName: service
-      })
+      body: JSON.stringify({ stage, service })
     }
   )
   if (response.status === 204) {

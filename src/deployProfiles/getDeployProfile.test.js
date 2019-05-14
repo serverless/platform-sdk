@@ -40,7 +40,7 @@ describe('getDeployProfile', () => {
       {
         method: 'POST',
         headers: { Authorization: `bearer accessKey` },
-        body: JSON.stringify({ stageName: 'stage', serviceName: 'service' })
+        body: JSON.stringify({ stage: 'stage', service: 'service' })
       }
     )
     expect(result).toEqual({
@@ -70,7 +70,7 @@ describe('getDeployProfile', () => {
       {
         method: 'POST',
         headers: { Authorization: `bearer accessKey` },
-        body: JSON.stringify({ stageName: 'stage', serviceName: 'service' })
+        body: JSON.stringify({ stage: 'stage', service: 'service' })
       }
     )
     expect(result).toEqual({ safeguardPolicies: [], secretValues: [], providerCredentials: null })
