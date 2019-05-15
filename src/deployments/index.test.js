@@ -43,6 +43,7 @@ describe('Deployment', () => {
       plugins: [],
       safeguards: [],
       secrets: [],
+      outputs: {},
       custom: {}
     })
   })
@@ -156,6 +157,7 @@ describe('Deployment', () => {
           plugins: [],
           safeguards: [],
           secrets: [],
+          outputs: {},
           custom: {}
         }),
         headers: { Authorization: 'bearer access-key' },
