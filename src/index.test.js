@@ -13,7 +13,8 @@ describe('index', () => {
       archiveService: expect.any(Function),
       listTenants: expect.any(Function),
       getSecret: expect.any(Function),
-      getSafeguards: expect.any(Function)
+      getSafeguards: expect.any(Function),
+      getStateVariable: expect.any(Function)
     })
   })
 })
