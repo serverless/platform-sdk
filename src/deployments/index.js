@@ -58,6 +58,7 @@ export default class {
       plugins: [],
       safeguards: [],
       secrets: [],
+      outputs: {},
       custom: {}
     }
   }
