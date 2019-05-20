@@ -4,7 +4,7 @@ jest.mock('isomorphic-fetch', () =>
   jest.fn().mockReturnValue({
     ok: true,
     status: 200,
-    json: async () => ({ foo: 'bar' })
+    json: async () => ({ value: 'bar' })
   })
 )
 
