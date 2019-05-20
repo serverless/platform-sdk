@@ -21,6 +21,7 @@ const urls = require('./config')
 const { configureFetchDefaults } = require('./fetch')
 const core = require('./core')
 const deployProfiles = require('./deployProfiles')
+const stateVariables = require('./stateVariables')
 
 module.exports = {
   Deployment,
@@ -36,6 +37,7 @@ module.exports = {
   ...secrets,
   ...safeguards,
   ...deployProfiles,
+  ...stateVariables,
   urls,
   configureFetchDefaults
 }
