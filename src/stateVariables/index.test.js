@@ -29,6 +29,6 @@ describe('getStateVariable', () => {
         body: JSON.stringify({ outputName: 'foobar' })
       }
     )
-    expect(result).toEqual({ foo: 'bar' })
+    expect(result).toEqual({ value: 'bar' })
   })
 })
