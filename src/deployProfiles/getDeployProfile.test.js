@@ -7,7 +7,7 @@ jest.mock('isomorphic-fetch', () =>
         ok: true,
         status: 200,
         json: async () => ({
-          safeguardPolicies: [
+          safeguardsPolicies: [
             {
               ruleName: 'Rule!',
               policyId: 'xyz',
@@ -44,7 +44,7 @@ describe('getDeployProfile', () => {
       }
     )
     expect(result).toEqual({
-      safeguardPolicies: [
+      safeguardsPolicies: [
         {
           ruleName: 'Rule!',
           policyId: 'xyz',
@@ -73,6 +73,6 @@ describe('getDeployProfile', () => {
         body: JSON.stringify({ stageName: 'stage', serviceName: 'service' })
       }
     )
-    expect(result).toEqual({ safeguardPolicies: [], secretValues: [], providerCredentials: null })
+    expect(result).toEqual({ safeguardsPolicies: [], secretValues: [], providerCredentials: null })
   })
 })
