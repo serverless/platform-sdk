@@ -1,5 +1,6 @@
 describe('index', () => {
   test('require runs without error', () => {
+    jest.resetModules()
     const mod = require('./')
     expect(mod).toMatchObject({
       createAccessKeyForTenant: expect.any(Function),
@@ -16,5 +17,12 @@ describe('index', () => {
       getSafeguards: expect.any(Function),
       getStateVariable: expect.any(Function)
     })
+  })
+
+  test('registers regeneratorRuntime', () => {
+    jest.resetModules()
+    global.regeneratorRuntime = undefined
+    require('./')
+    expect(global.regeneratorRuntime).toBe(require('regenerator-runtime'))
   })
 })
