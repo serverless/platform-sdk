@@ -14,12 +14,14 @@ const safeguards = require('./safeguards')
 const urls = require('./config')
 const { configureFetchDefaults } = require('./fetch')
 const core = require('./core')
+const register = require('./register')
 const deployProfiles = require('./deployProfiles')
 const stateVariables = require('./stateVariables')
 
 module.exports = {
   Deployment,
   ...core,
+  ...register,
   ...service,
   ...apps,
   ...tenants,
