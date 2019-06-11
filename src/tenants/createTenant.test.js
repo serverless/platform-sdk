@@ -17,14 +17,14 @@ describe('createTenant', () => {
       title: 'foo-bar',
       tenant: 'foobar',
       ownerUserName: 'someusername',
-      idToken: 'someIdToken'
+      token: 'someIdToken'
     }
 
     await createTenant(data)
 
     expect(fetch).toBeCalledWith(`${platformConfig.backendUrl}tenants`, {
       method: 'POST',
-      headers: { Authorization: `bearer ${data.idToken}` },
+      headers: { Authorization: `bearer ${data.token}` },
       body: JSON.stringify({
         title: data.title,
         tenantName: data.tenant,
