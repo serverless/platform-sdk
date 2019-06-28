@@ -95,12 +95,12 @@ export default class {
       name: null,
       description: null,
       type: 'awsLambda',
+      timeout: null,
       // Provider-specific data goes here
       custom: {
         handler: null,
         memorySize: null,
         runtime: null,
-        timeout: null,
         role: null,
         onError: null,
         awsKmsKeyArn: null,
