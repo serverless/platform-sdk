@@ -12,9 +12,7 @@ describe('getServiceUrl', () => {
     const serviceUrl = getServiceUrl(data)
 
     expect(serviceUrl).toEqual(
-      `${platformConfig.frontendUrl}tenants/${data.tenant}/applications/${data.app}/services/${
-        data.name
-      }`
+      `${platformConfig.frontendUrl}tenants/${data.tenant}/applications/${data.app}/services/${data.name}`
     )
   })
 })

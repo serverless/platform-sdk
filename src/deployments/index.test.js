@@ -73,11 +73,11 @@ describe('Deployment', () => {
         name: 'func',
         description: 'desc',
         type: 'awsLambda',
+        timeout: null,
         custom: {
           handler: 'handler.hello',
           memorySize: null,
           runtime: null,
-          timeout: null,
           role: null,
           onError: null,
           awsKmsKeyArn: null,

@@ -11,9 +11,7 @@ export const getStateVariable = async ({
   region
 }) => {
   const response = await fetch(
-    `${
-      platformConfig.backendUrl
-    }tenants/${tenant}/applications/${app}/services/${service}/stages/${stage}/regions/${region}/outputs`,
+    `${platformConfig.backendUrl}tenants/${tenant}/applications/${app}/services/${service}/stages/${stage}/regions/${region}/outputs`,
     {
       method: 'POST',
       headers: { Authorization: `bearer ${accessKey}` },
