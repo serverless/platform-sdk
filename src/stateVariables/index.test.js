@@ -17,12 +17,12 @@ describe('getStateVariable', () => {
       outputName: 'foobar',
       app: 'app-with-profile',
       service: 'service',
-      tenant: 'tenant',
+      org: 'org',
       stage: 'stage',
       region: 'region'
     })
     expect(fetch).toBeCalledWith(
-      'https://api.serverless.com/core/tenants/tenant/applications/app-with-profile/services/service/stages/stage/regions/region/outputs',
+      'https://api.serverless.com/core/orgs/org/applications/app-with-profile/services/service/stages/stage/regions/region/outputs',
       {
         method: 'POST',
         headers: { Authorization: `bearer accessKey` },

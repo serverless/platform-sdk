@@ -7,7 +7,7 @@ const archiveService = async (data) => {
     region: data.region
   }
   const response = await fetch(
-    `${platformConfig.backendUrl}tenants/${data.tenant}/applications/${data.app}/services/${data.name}`,
+    `${platformConfig.backendUrl}orgs/${data.org}/applications/${data.app}/services/${data.name}`,
     {
       method: 'PUT',
       body: JSON.stringify(body),

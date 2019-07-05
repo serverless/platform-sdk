@@ -3,7 +3,7 @@ describe('index', () => {
     jest.resetModules()
     const mod = require('./')
     expect(mod).toMatchObject({
-      createAccessKeyForTenant: expect.any(Function),
+      createAccessKeyForOrg: expect.any(Function),
       createApp: expect.any(Function),
       getApp: expect.any(Function),
       Deployment: expect.any(Function),
@@ -12,7 +12,7 @@ describe('index', () => {
       openBrowser: expect.any(Function),
       refreshToken: expect.any(Function),
       archiveService: expect.any(Function),
-      listTenants: expect.any(Function),
+      listOrgs: expect.any(Function),
       getSecret: expect.any(Function),
       getSafeguards: expect.any(Function),
       getStateVariable: expect.any(Function)

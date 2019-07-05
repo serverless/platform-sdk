@@ -15,25 +15,22 @@ describe('createApp', () => {
   test('it should make a valid request', async () => {
     const data = {
       app: 'someapp',
-      tenant: 'sometenant',
+      org: 'someorg',
       token: 'sometoken'
     }
 
     await createApp(data)
 
     const body = JSON.stringify({
-      tenantName: data.tenant,
+      orgName: data.org,
       appName: data.app,
       title: data.app
     })
 
-    expect(fetch).toBeCalledWith(
-      `${platformConfig.backendUrl}tenants/${data.tenant}/applications`,
-      {
-        method: 'POST',
-        body,
-        headers: { Authorization: `bearer ${data.token}` }
-      }
-    )
+    expect(fetch).toBeCalledWith(`${platformConfig.backendUrl}orgs/${data.org}/applications`, {
+      method: 'POST',
+      body,
+      headers: { Authorization: `bearer ${data.token}` }
+    })
   })
 })

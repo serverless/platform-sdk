@@ -13,7 +13,7 @@ jest.mock('isomorphic-fetch', () =>
 jest.mock('../utils', () => ({
   getLoggedInUser: jest.fn().mockReturnValue({
     accessKeys: {
-      sometenant: 'userAccessKey'
+      someorg: 'userAccessKey'
     }
   }),
   checkHttpResponse: jest.fn()
@@ -27,13 +27,13 @@ describe('getApp', () => {
   test('it should make a valid request without a provided token', async () => {
     const data = {
       app: 'someapp',
-      tenant: 'sometenant'
+      org: 'someorg'
     }
 
     await getApp(data)
 
     expect(fetch).toBeCalledWith(
-      `${platformConfig.backendUrl}tenants/${data.tenant}/applications/${data.app}`,
+      `${platformConfig.backendUrl}orgs/${data.org}/applications/${data.app}`,
       {
         method: 'GET',
         headers: { Authorization: `bearer userAccessKey` }
@@ -45,14 +45,14 @@ describe('getApp', () => {
   test('it should make a valid request with a provided token', async () => {
     const data = {
       app: 'someapp',
-      tenant: 'sometenant',
+      org: 'someorg',
       token: 'mytoken'
     }
 
     await getApp(data)
 
     expect(fetch).toBeCalledWith(
-      `${platformConfig.backendUrl}tenants/${data.tenant}/applications/${data.app}`,
+      `${platformConfig.backendUrl}orgs/${data.org}/applications/${data.app}`,
       {
         method: 'GET',
         headers: { Authorization: `bearer mytoken` }

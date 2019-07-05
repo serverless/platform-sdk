@@ -23,11 +23,11 @@ describe('getSafeguards', () => {
       accessKey: 'accessKey',
       app: 'app',
       service: 'service',
-      tenant: 'tenant',
+      org: 'org',
       stage: 'stage'
     })
     expect(fetch).toBeCalledWith(
-      'https://api.serverless.com/core/tenants/tenant/safeguards/policies/?appName=app',
+      'https://api.serverless.com/core/orgs/org/safeguards/policies/?appName=app',
       { method: 'GET', headers: { Authorization: `bearer accessKey` } }
     )
     expect(result).toEqual([

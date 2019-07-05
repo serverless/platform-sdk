@@ -1,9 +1,9 @@
 import fetch from '../fetch'
 import platformConfig from '../config'
 
-export default async ({ accessKey, app, tenant }) => {
+export default async ({ accessKey, app, org }) => {
   const response = await fetch(
-    `${platformConfig.backendUrl}tenants/${tenant}/safeguards/policies/?appName=${app}`,
+    `${platformConfig.backendUrl}orgs/${org}/safeguards/policies/?appName=${app}`,
     { method: 'GET', headers: { Authorization: `bearer ${accessKey}` } }
   )
 

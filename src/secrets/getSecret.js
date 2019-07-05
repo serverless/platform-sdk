@@ -1,7 +1,7 @@
 import fetch from '../fetch'
 import platformConfig from '../config'
 
-export default async ({ secretName, accessKey, app, service, tenant, stage }) => {
+export default async ({ secretName, accessKey, app, service, org, stage }) => {
   const body = JSON.stringify({
     secretName,
     appName: app,
@@ -9,7 +9,7 @@ export default async ({ secretName, accessKey, app, service, tenant, stage }) =>
     stageName: stage
   })
 
-  const response = await fetch(`${platformConfig.backendUrl}tenants/${tenant}/secrets/access`, {
+  const response = await fetch(`${platformConfig.backendUrl}orgs/${org}/secrets/access`, {
     method: 'POST',
     body,
     headers: {

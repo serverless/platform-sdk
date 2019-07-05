@@ -15,7 +15,7 @@ describe('archiveService', () => {
   test('it should make a valid request', async () => {
     const data = {
       app: 'someapp',
-      tenant: 'sometenant',
+      org: 'someorg',
       name: 'somename',
       accessKey: 'someaccesskey',
       provider: 'aws',
@@ -30,7 +30,7 @@ describe('archiveService', () => {
     }
 
     expect(fetch).toBeCalledWith(
-      `${platformConfig.backendUrl}tenants/${data.tenant}/applications/${data.app}/services/${data.name}`,
+      `${platformConfig.backendUrl}orgs/${data.org}/applications/${data.app}/services/${data.name}`,
       {
         method: 'PUT',
         body: JSON.stringify(body),

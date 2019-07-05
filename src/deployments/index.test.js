@@ -1,10 +1,10 @@
 import fetch from 'isomorphic-fetch'
-import { getAccessKeyForTenant } from '../accessKeys'
+import { getAccessKeyForOrg } from '../accessKeys'
 import Deployment from './'
 import { version as packageJsonVersion } from '../../package.json'
 
 jest.mock('../accessKeys', () => ({
-  getAccessKeyForTenant: jest.fn().mockReturnValue('access-key')
+  getAccessKeyForOrg: jest.fn().mockReturnValue('access-key')
 }))
 jest.mock('isomorphic-fetch', () =>
   jest.fn().mockReturnValue(
@@ -24,9 +24,9 @@ describe('Deployment', () => {
       versionSDK: packageJsonVersion,
       serverlessFile: null,
       serverlessFileName: null,
-      tenantUid: null,
+      orgUid: null,
       appUid: null,
-      tenantName: null,
+      orgName: null,
       appName: null,
       serviceName: null,
       stageName: null,
@@ -118,7 +118,7 @@ describe('Deployment', () => {
   it('save POSTs to backend', async () => {
     const unsavedDeployment = new Deployment()
     unsavedDeployment.set({
-      tenantName: 'tenant',
+      orgName: 'org',
       appName: 'app',
       serviceName: 'service',
       stageName: 'stage',
@@ -126,11 +126,11 @@ describe('Deployment', () => {
     })
     const { deployment, dashboardUrl } = await unsavedDeployment.save()
     expect(dashboardUrl).toEqual(
-      'https://dashboard.serverless.com/tenants/tenant/applications/app/services/service/stage/stage/region/region'
+      'https://dashboard.serverless.com/orgs/org/applications/app/services/service/stage/stage/region/region'
     )
     expect(deployment).toEqual('object')
     expect(fetch).toBeCalledWith(
-      'https://api.serverless.com/core/tenants/tenant/applications/app/services/service/stages/stage/regions/region/deployments',
+      'https://api.serverless.com/core/orgs/org/applications/app/services/service/stages/stage/regions/region/deployments',
       {
         body: JSON.stringify({
           versionFramework: null,
@@ -138,9 +138,9 @@ describe('Deployment', () => {
           versionSDK: packageJsonVersion,
           serverlessFile: null,
           serverlessFileName: null,
-          tenantUid: null,
+          orgUid: null,
           appUid: null,
-          tenantName: 'tenant',
+          orgName: 'org',
           appName: 'app',
           serviceName: 'service',
           stageName: 'stage',
@@ -164,6 +164,6 @@ describe('Deployment', () => {
         method: 'POST'
       }
     )
-    expect(getAccessKeyForTenant).toBeCalledWith('tenant')
+    expect(getAccessKeyForOrg).toBeCalledWith('org')
   })
 })

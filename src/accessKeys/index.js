@@ -1,1 +1,1 @@
-export { createAccessKeyForTenant, getAccessKeyForTenant } from './accessKeys' // eslint-disable-line
+export { createAccessKeyForOrg, getAccessKeyForOrg } from './accessKeys' // eslint-disable-line

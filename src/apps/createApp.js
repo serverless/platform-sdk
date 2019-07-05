@@ -11,11 +11,11 @@ const slugifyApp = (text) =>
 
 const createApp = async (data) => {
   const body = JSON.stringify({
-    tenantName: data.tenant,
+    orgName: data.org,
     appName: slugifyApp(data.app),
     title: data.app
   })
-  const response = await fetch(`${platformConfig.backendUrl}tenants/${data.tenant}/applications`, {
+  const response = await fetch(`${platformConfig.backendUrl}orgs/${data.org}/applications`, {
     method: 'POST',
     body,
     headers: {

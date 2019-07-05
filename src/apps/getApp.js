@@ -1,16 +1,16 @@
 import fetch from '../fetch'
 import platformConfig from '../config'
-import { getAccessKeyForTenant } from '../accessKeys'
+import { getAccessKeyForOrg } from '../accessKeys'
 
 const getApp = async (data) => {
   let { token } = data
 
   if (!token) {
-    token = await getAccessKeyForTenant(data.tenant)
+    token = await getAccessKeyForOrg(data.org)
   }
 
   const response = await fetch(
-    `${platformConfig.backendUrl}tenants/${data.tenant}/applications/${data.app}`,
+    `${platformConfig.backendUrl}orgs/${data.org}/applications/${data.app}`,
     {
       method: 'GET',
       headers: {

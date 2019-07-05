@@ -5,7 +5,7 @@
 import ramda from 'ramda'
 import { version as packageJsonVersion } from '../../package.json'
 import platformConfig from '../config'
-import { getAccessKeyForTenant } from '../accessKeys'
+import { getAccessKeyForOrg } from '../accessKeys'
 import fetch from '../fetch'
 
 export default class {
@@ -26,9 +26,9 @@ export default class {
 
       serverlessFile: null,
       serverlessFileName: null,
-      tenantUid: null,
+      orgUid: null,
       appUid: null,
-      tenantName: null,
+      orgName: null,
       appName: null,
       serviceName: null,
       stageName: null,
@@ -170,7 +170,7 @@ export default class {
   async save() {
     // Create backend & frontend urls
     let dashboardApi = platformConfig.backendUrl
-    dashboardApi += `tenants/${this.data.tenantName}/`
+    dashboardApi += `orgs/${this.data.orgName}/`
     dashboardApi += `applications/${this.data.appName}/`
     dashboardApi += `services/${this.data.serviceName}/`
     dashboardApi += `stages/${this.data.stageName}/`
@@ -178,14 +178,14 @@ export default class {
     dashboardApi += `deployments`
 
     let dashboardUrl = platformConfig.frontendUrl
-    dashboardUrl += `tenants/${this.data.tenantName}/`
+    dashboardUrl += `orgs/${this.data.orgName}/`
     dashboardUrl += `applications/${this.data.appName}/`
     dashboardUrl += `services/${this.data.serviceName}/`
     dashboardUrl += `stage/${this.data.stageName}/`
     dashboardUrl += `region/${this.data.regionName}`
 
     // Fetch access key
-    const accessKey = await getAccessKeyForTenant(this.data.tenantName)
+    const accessKey = await getAccessKeyForOrg(this.data.orgName)
 
     // Call api to save deployment
     const response = await fetch(dashboardApi, { // eslint-disable-line

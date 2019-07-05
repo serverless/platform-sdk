@@ -32,11 +32,11 @@ describe('getDeployProfile', () => {
       accessKey: 'accessKey',
       app: 'app-with-profile',
       service: 'service',
-      tenant: 'tenant',
+      org: 'org',
       stage: 'stage'
     })
     expect(fetch).toBeCalledWith(
-      'https://api.serverless.com/core/tenants/tenant/applications/app-with-profile/profileValue',
+      'https://api.serverless.com/core/orgs/org/applications/app-with-profile/profileValue',
       {
         method: 'POST',
         headers: { Authorization: `bearer accessKey` },
@@ -62,11 +62,11 @@ describe('getDeployProfile', () => {
       accessKey: 'accessKey',
       app: 'wrong-app',
       service: 'service',
-      tenant: 'tenant',
+      org: 'org',
       stage: 'stage'
     })
     expect(fetch).toBeCalledWith(
-      'https://api.serverless.com/core/tenants/tenant/applications/wrong-app/profileValue',
+      'https://api.serverless.com/core/orgs/org/applications/wrong-app/profileValue',
       {
         method: 'POST',
         headers: { Authorization: `bearer accessKey` },

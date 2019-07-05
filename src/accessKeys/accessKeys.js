@@ -4,18 +4,18 @@ import * as utils from '../utils'
 import refreshToken from '../login/refreshToken'
 
 /*
- * Create Access Key For Tenant
+ * Create Access Key For Org
  */
 
-const createAccessKeyForTenant = async (tenant, title) => {
+const createAccessKeyForOrg = async (org, title) => {
   await refreshToken()
 
   const user = utils.getLoggedInUser()
 
-  const response = await fetch(`${platformConfig.backendUrl}tenants/${tenant}/accessKeys`, {
+  const response = await fetch(`${platformConfig.backendUrl}orgs/${org}/accessKeys`, {
     method: 'POST',
     body: JSON.stringify({
-      tenantName: tenant,
+      orgName: org,
       userName: user.username,
       title: title || 'serverless_' + Math.round(+new Date() / 1000)
     }),
@@ -29,19 +29,19 @@ const createAccessKeyForTenant = async (tenant, title) => {
 }
 
 /*
- * Get Access Key For Tenant
- * - Fetches the access key for the specified `tenant`
+ * Get Access Key For Org
+ * - Fetches the access key for the specified `org`
  * - If an access key is present as an env var, that overrides all else
  */
 
-const getAccessKeyForTenant = async (tenant) => {
+const getAccessKeyForOrg = async (org) => {
   // Check if in ENV, return that first...
   if (process.env.SERVERLESS_ACCESS_KEY) {
     return process.env.SERVERLESS_ACCESS_KEY
   }
 
-  if (!tenant) {
-    throw new Error('SDK: getAccessKeyForTenant() requires a "tenant".')
+  if (!org) {
+    throw new Error('SDK: getAccessKeyForOrg() requires a "org".')
   }
 
   await refreshToken()
@@ -49,11 +49,11 @@ const getAccessKeyForTenant = async (tenant) => {
   const user = utils.getLoggedInUser()
 
   // Check if in config file, return that next...
-  if (!user.accessKeys || !user.accessKeys[tenant]) {
-    throw new Error(`Could not find an access key for tenant ${tenant}.  Log out and log in again to create a new access key for this tenant.`) // eslint-disable-line
+  if (!user.accessKeys || !user.accessKeys[org]) {
+    throw new Error(`Could not find an access key for org ${org}.  Log out and log in again to create a new access key for this org.`) // eslint-disable-line
   }
 
-  return user.accessKeys[tenant]
+  return user.accessKeys[org]
 }
 
-export { createAccessKeyForTenant, getAccessKeyForTenant }
+export { createAccessKeyForOrg, getAccessKeyForOrg }

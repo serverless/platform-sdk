@@ -1,4 +1,4 @@
-import { getAccessKeyForTenant, createAccessKeyForTenant } from './accessKeys'
+import { getAccessKeyForOrg, createAccessKeyForOrg } from './accessKeys'
 
 jest.mock('../fetch', () =>
   jest.fn().mockReturnValue(
@@ -36,7 +36,7 @@ jest.mock('../utils', () => ({
   })
 }))
 
-describe('getAccessKeyForTenant', () => {
+describe('getAccessKeyForOrg', () => {
   const OLD_ENV = process.env
 
   beforeEach(() => {
@@ -51,37 +51,37 @@ describe('getAccessKeyForTenant', () => {
   it('should return the serverless access key', async () => {
     process.env.SERVERLESS_ACCESS_KEY = 'serverless_access_key'
 
-    const result = await getAccessKeyForTenant('tenant')
+    const result = await getAccessKeyForOrg('org')
     expect(result).toEqual('serverless_access_key')
   })
 
-  it('should throw an error when tenant is not defined', async () => {
+  it('should throw an error when org is not defined', async () => {
     try {
-      await getAccessKeyForTenant('')
+      await getAccessKeyForOrg('')
     } catch (e) {
-      expect.arrayContaining(['Error: SDK: getAccessKeyForTenant() requires a "tenant".'])
+      expect.arrayContaining(['Error: SDK: getAccessKeyForOrg() requires a "org".'])
     }
   })
 
   it('should throw an error when a user does not have an access key', async () => {
     try {
-      await getAccessKeyForTenant('foo')
+      await getAccessKeyForOrg('foo')
     } catch (e) {
       expect.arrayContaining([
-        'Error: Could not find an access key for tenant foo.  Log out and log in again to create a new access key for this tenant.'
+        'Error: Could not find an access key for org foo.  Log out and log in again to create a new access key for this org.'
       ])
     }
   })
 
-  it('should return the access key for a user and tenant', async () => {
-    const result = await getAccessKeyForTenant('foo')
+  it('should return the access key for a user and org', async () => {
+    const result = await getAccessKeyForOrg('foo')
     expect(result).toEqual('serverless_access_key')
   })
 })
 
-describe('createAccessKeyForTenant', () => {
+describe('createAccessKeyForOrg', () => {
   it('should fetch an access key', async () => {
-    const result = await createAccessKeyForTenant('foo', 'foobar')
+    const result = await createAccessKeyForOrg('foo', 'foobar')
     expect(result).toEqual('secret_access_key')
   })
 })

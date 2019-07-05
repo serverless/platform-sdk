@@ -3,7 +3,7 @@ require('./runtime')
 const Deployment = require('./deployments').default
 const service = require('./service')
 const apps = require('./apps')
-const tenants = require('./tenants')
+const orgs = require('./orgs')
 const accessKeys = require('./accessKeys')
 const login = require('./login')
 const logout = require('./logout')
@@ -22,7 +22,7 @@ module.exports = {
   ...core,
   ...service,
   ...apps,
-  ...tenants,
+  ...orgs,
   ...accessKeys,
   ...login,
   ...logout,

@@ -16,10 +16,10 @@ describe('getSecret', () => {
       accessKey: 'accessKey',
       app: 'app',
       service: 'service',
-      tenant: 'tenant',
+      org: 'org',
       stage: 'stage'
     })
-    expect(fetch).toBeCalledWith('https://api.serverless.com/core/tenants/tenant/secrets/access', {
+    expect(fetch).toBeCalledWith('https://api.serverless.com/core/orgs/org/secrets/access', {
       method: 'POST',
       body: JSON.stringify({
         secretName: 'secretname',

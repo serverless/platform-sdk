@@ -18,7 +18,7 @@ Functional SDK for the Serverless Platfrom.
   - [createAccessKey](#createaccesskey)
   - [archiveService](#archiveservice)
   - [getServiceUrl](#getserviceurl)
-  - [listTenants](#listtenants)
+  - [listOrgs](#listorgs)
   - [createDeployment](#createdeployment)
   - [updateDeployment](#updatedeployment)
   - [getApp](#getapp)
@@ -92,7 +92,7 @@ Creates a platform access key for the authenticated user.
 Object
 
 - `username` - `string` - dashboard username
-- `tenant` - `string` - dashboard tenant
+- `org` - `string` - dashboard org
 - `idToken` - `string` - Auth0 idToken
 - `title` - `string` - title of the access key
 
@@ -107,7 +107,7 @@ const { createAccessKey } = require('@serverless/platform-sdk')
 
 const data = {
   username: 'eahefnawy',
-  tenant: 'eahefnawy',
+  org: 'eahefnawy',
   idToken: 'abc',
   title: 'Framework'
 }
@@ -124,7 +124,7 @@ Archives a service in the platform.
 
 Object
 
-- `tenant` - `string` - dashboard tenant
+- `org` - `string` - dashboard org
 - `accessKey` - `string` - dashboard access key
 - `app` - `string` - service app
 - `name` - `string` - service name
@@ -141,7 +141,7 @@ None
 const { archiveService } = require('@serverless/platform-sdk')
 
 const data = {
-  tenant: 'eahefnawy',
+  org: 'eahefnawy',
   accessKey: 'abc',
   app: 'my-app',
   name: 'my-service',
@@ -161,7 +161,7 @@ Constructs a service url based on passed-in data.
 
 Object
 
-- `tenant` - `string` - dashboard tenant
+- `org` - `string` - dashboard org
 - `app` - `string` - service app
 - `name` - `string` - service name
 
@@ -176,7 +176,7 @@ The service url string.
 const { getServiceUrl } = require('@serverless/platform-sdk')
 
 const data = {
-  tenant: 'eahefnawy',
+  org: 'eahefnawy',
   app: 'my-app',
   name: 'my-service'
 }
@@ -186,8 +186,8 @@ const serviceUrl = getServiceUrl(data)
 
 ---
 
-### `listTenants`
-Lists the tenants for a given username
+### `listOrgs`
+Lists the orgs for a given username
 
 **Parameters**
 
@@ -199,19 +199,19 @@ Object
 
 **Returns**
 
-Array of objects, each represents a single tenant data model.
+Array of objects, each represents a single org data model.
 
 **Example**
 
 ```js
-const { listTenants } = require('@serverless/platform-sdk')
+const { listOrgs } = require('@serverless/platform-sdk')
 
 const data = {
   username: 'eahefnawy',
   idToken: 'abc'
 }
 
-const tenants = await listTenants(data)
+const orgs = await listOrgs(data)
 ```
 
 ---
@@ -223,7 +223,7 @@ Creates a platform deployment
 
 Object
 
-- `tenant` - `string` - dashboard tenant name
+- `org` - `string` - dashboard org name
 - `app` - `string` - app name
 - `serviceName` - `string` - service name
 - `accessKey` - `string` - dashboard access key
@@ -239,7 +239,7 @@ Object - Deployment model
 const { createDeployment } = require('@serverless/platform-sdk')
 
 const data = {
-  tenant: 'eahefnawy',
+  org: 'eahefnawy',
   app: 'my-app',
   serviceName: 'my-service',
   accessKey: 'abc',
@@ -262,7 +262,7 @@ Updates a platform deployment
 
 Object
 
-- `tenant` - `string` - dashboard tenant name
+- `org` - `string` - dashboard org name
 - `app` - `string` - app name
 - `serviceName` - `string` - service name
 - `deploymentId` - `string` - id of the previously created deployment
@@ -281,7 +281,7 @@ Object - Deployment model
 const { updateDeployment } = require('@serverless/platform-sdk')
 
 const data = {
-  tenant: 'eahefnawy',
+  org: 'eahefnawy',
   app: 'my-app',
   serviceName: 'my-service',
   deploymentId: 'abc',
@@ -304,7 +304,7 @@ Gets a platform app
 
 Object
 
-- `tenant` - `string` - dashboard tenant name
+- `org` - `string` - dashboard org name
 - `app` - `string` - app name
 - `token` - `string` - Auth0 id token
 
@@ -319,7 +319,7 @@ Object - App model
 const { getApp } = require('@serverless/platform-sdk')
 
 const data = {
-  tenant: 'eahefnawy',
+  org: 'eahefnawy',
   app: 'my-app',
   token: 'abc'
 }
@@ -336,7 +336,7 @@ Creates a platform app
 
 Object
 
-- `tenant` - `string` - dashboard tenant name
+- `org` - `string` - dashboard org name
 - `app` - `string` - app name
 - `token` - `string` - Auth0 id token
 
@@ -351,7 +351,7 @@ Object - App model
 const { createApp } = require('@serverless/platform-sdk')
 
 const data = {
-  tenant: 'eahefnawy',
+  org: 'eahefnawy',
   app: 'my-app',
   token: 'abc'
 }

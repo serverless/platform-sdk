@@ -1,9 +1,9 @@
 import fetch from '../fetch'
 import platformConfig from '../config'
 
-export default async ({ accessKey, app, tenant, stage, service }) => {
+export default async ({ accessKey, app, org, stage, service }) => {
   const response = await fetch(
-    `${platformConfig.backendUrl}tenants/${tenant}/applications/${app}/profileValue`,
+    `${platformConfig.backendUrl}orgs/${org}/applications/${app}/profileValue`,
     {
       method: 'POST',
       headers: { Authorization: `bearer ${accessKey}` },

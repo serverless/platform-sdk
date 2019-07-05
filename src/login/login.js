@@ -12,11 +12,11 @@ import jwtDecode from 'jwt-decode'
 import { version as currentSdkVersion } from '../../package.json'
 import * as utils from '../utils'
 import openBrowser from './openBrowser'
-import { createAccessKeyForTenant } from '../accessKeys'
+import { createAccessKeyForOrg } from '../accessKeys'
 import getTokens from './getTokens'
 import platformConfig from '../config'
 
-const login = async (tenant) => {
+const login = async (org) => {
   // Load local configuration file
   let configFile = utils.readConfigFile()
   if (!configFile) {
@@ -117,13 +117,13 @@ const login = async (tenant) => {
     // Write updated data to .serverlessrc
     let updatedConfigFile = utils.writeConfigFile(configFile)
 
-    // If tenant is included, update config w/ new accesskey for that tenant
+    // If org is included, update config w/ new accesskey for that org
     let accessKey
-    if (tenant && tenant !== 'tenantname') {
-      accessKey = await createAccessKeyForTenant(tenant)
+    if (org && org !== 'orgname') {
+      accessKey = await createAccessKeyForOrg(org)
       if (accessKey) {
         configFile = utils.readConfigFile()
-        configFile.users[id].dashboard.accessKeys[tenant] = accessKey
+        configFile.users[id].dashboard.accessKeys[org] = accessKey
         updatedConfigFile = utils.writeConfigFile(configFile)
       }
     }
