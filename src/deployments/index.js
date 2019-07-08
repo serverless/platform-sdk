@@ -59,7 +59,16 @@ export default class {
       safeguards: [],
       secrets: [],
       outputs: {},
-      custom: {}
+      custom: {},
+      vcsInfo: {
+        type: null,
+        originUrl: null,
+        branch: null,
+        commitId: null,
+        commitMessage: null,
+        committerEmail: null,
+        repoPath: null
+      }
     }
   }
 

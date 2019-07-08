@@ -44,7 +44,16 @@ describe('Deployment', () => {
       safeguards: [],
       secrets: [],
       outputs: {},
-      custom: {}
+      custom: {},
+      vcsInfo: {
+        type: null,
+        originUrl: null,
+        branch: null,
+        commitId: null,
+        commitMessage: null,
+        committerEmail: null,
+        repoPath: null
+      }
     })
   })
 
@@ -158,7 +167,16 @@ describe('Deployment', () => {
           safeguards: [],
           secrets: [],
           outputs: {},
-          custom: {}
+          custom: {},
+          vcsInfo: {
+            type: null,
+            originUrl: null,
+            branch: null,
+            commitId: null,
+            commitMessage: null,
+            committerEmail: null,
+            repoPath: null
+          }
         }),
         headers: { Authorization: 'bearer access-key' },
         method: 'POST'
