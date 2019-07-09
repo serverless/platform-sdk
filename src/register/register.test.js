@@ -12,12 +12,18 @@ jest.mock('isomorphic-fetch', () =>
 
 describe('register', () => {
   it('posts to register endpoint', async () => {
-    const response = await register('sue@example.com', 'hunter2')
+    const response = await register('sue@example.com', 'hunter2', 'su', 'su-ten', "sue's tenant")
     expect(response).toEqual({ accountId: '11111' })
-    expect(fetch).toBeCalledWith('https://api.serverless.com/core/register', {
+    expect(fetch).toBeCalledWith('https://api.serverless.com/core/tenant', {
       method: 'POST',
       headers: {},
-      body: JSON.stringify({ email: 'sue@example.com', password: 'hunter2' })
+      body: JSON.stringify({
+        tenantName: 'su-ten',
+        title: "sue's tenant",
+        ownerUserName: 'su',
+        ownerPassword: 'hunter2',
+        ownerEmail: 'sue@example.com'
+      })
     })
   })
 })
