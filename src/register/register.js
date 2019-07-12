@@ -2,7 +2,7 @@ import fetch from '../fetch'
 import platformConfig from '../config'
 
 const register = async (email, password, username, tenantName, tenantTitle) => {
-  const response = await fetch(`${platformConfig.backendUrl}tenant`, {
+  const response = await fetch(`${platformConfig.backendUrl}tenants`, {
     method: 'POST',
     body: JSON.stringify({
       tenantName,
