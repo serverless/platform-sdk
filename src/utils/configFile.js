@@ -80,7 +80,7 @@ export const writeConfigFile = (data) => {
 export const getLoggedInUser = () => {
   const config = readConfigFile()
   const user = get(['users', config.userId, 'dashboard'], config)
-  if (!user || !user.username || !user.idToken) {
+  if (!user || !user.username) {
     return null // user is logged out
   }
   return {
