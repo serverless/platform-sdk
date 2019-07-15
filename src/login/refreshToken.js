@@ -5,6 +5,9 @@ import * as utils from '../utils'
 const refreshToken = async () => {
   const configFile = utils.readConfigFile()
   const currentId = configFile.userId
+  if (!configFile.users[currentId].dashboard.refreshToken) {
+    return
+  }
 
   // id token not expired, no need to renew
   if (Number(configFile.users[currentId].dashboard.expiresAt) > Date.now()) {
