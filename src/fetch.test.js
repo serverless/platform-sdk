@@ -10,6 +10,8 @@ jest.mock('isomorphic-fetch', () =>
   })
 )
 
+jest.spyOn(global.console, 'log')
+
 afterAll(() => jest.restoreAllMocks())
 
 describe('fetch', () => {
@@ -45,5 +47,56 @@ rqXRfboQnoZsG4q5WTP468SQvvG5
         Authorization: 'bearer token'
       }
     })
+  })
+
+  it('smoke test with no env vars', async () => {
+    delete process.env.SLS_DEBUG
+    delete process.env.SDK_HTTP_DEBUG
+    configureFetchDefaults()
+    await wrappedFetch('https://example.com', { headers: { Authorization: 'bearer token' } })
+    expect(fetch).toBeCalledWith('https://example.com', {
+      agent: expect.any(Agent),
+      headers: {
+        'Content-Type': 'application/json',
+        'x-platform-version': currentVersion,
+        Authorization: 'bearer token'
+      }
+    })
+  })
+
+  it('smoke test with SLS_DEBUG env vars', async () => {
+    process.env.SLS_DEBUG = 't'
+    delete process.env.SDK_HTTP_DEBUG
+    configureFetchDefaults()
+    await wrappedFetch('https://example.com', { headers: { Authorization: 'bearer token' } })
+    expect(fetch).toBeCalledWith('https://example.com', {
+      agent: expect.any(Agent),
+      headers: {
+        'Content-Type': 'application/json',
+        'x-platform-version': currentVersion,
+        Authorization: 'bearer token'
+      }
+    })
+    // eslint-disable-next-line no-console
+    expect(console.log).toBeCalledWith('platform-sdk fetching: GET https://example.com')
+  })
+
+  it('smoke test with SDK_HTTP_DEBUG env vars', async () => {
+    delete process.env.SLS_DEBUG
+    process.env.SDK_HTTP_DEBUG = 't'
+    configureFetchDefaults()
+    await wrappedFetch('https://example.com', { headers: { Authorization: 'bearer token' } })
+    expect(fetch).toBeCalledWith('https://example.com', {
+      agent: expect.any(Agent),
+      headers: {
+        'Content-Type': 'application/json',
+        'x-platform-version': currentVersion,
+        Authorization: 'bearer token'
+      }
+    })
+    // eslint-disable-next-line no-console
+    expect(console.log).toBeCalledWith(
+      'platform-sdk fetching: GET https://example.com {"Authorization":"bearer token"} NO_BODY'
+    )
   })
 })
