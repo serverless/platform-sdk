@@ -43,6 +43,10 @@ export function configureFetchDefaults() {
 }
 
 export default async (url, options = {}) => {
+  if (process.env.SLS_DEBUG) {
+    // eslint-disable-next-line no-console
+    console.log(`platform-sdk fetching: ${options.method || 'GET'} ${url} ${options.body || ''}`)
+  }
   const response = await fetch(url, {
     agent,
     ...options,
