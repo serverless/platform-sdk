@@ -28,6 +28,8 @@ const logout = async () => {
     loggedInUser.enterprise = loggedInUser.enterprise || {}
     loggedInUser.enterprise.versionSDK = currentSdkVersion
     loggedInUser.enterprise.timeLastLogout = Math.round(+new Date() / 1000)
+
+    configFile.userId = null
   }
 
   // Write updated data to .serverlessrc
