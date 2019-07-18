@@ -4,7 +4,7 @@ describe('configFile', () => {
   it('getLoggedInUser returns user!', () => {
     const { getLoggedInUser } = require('./configFile')
     jest.mock('fs', () => ({
-      readFileSync: jest.fn().mockReturnValue(
+      readFileSync: jest.fn().mockReturnValueOnce(
         new Buffer(
           JSON.stringify({
             userId: 'USER',
@@ -28,5 +28,28 @@ describe('configFile', () => {
       accessKeys: 'KEYS',
       idToken: 'TOKEN'
     })
+  })
+
+  it("getLoggedInUser doesn't return user when there's no userId", () => {
+    const { getLoggedInUser } = require('./configFile')
+    jest.mock('fs', () => ({
+      readFileSync: jest.fn().mockReturnValueOnce(
+        new Buffer(
+          JSON.stringify({
+            users: {
+              undefined: {
+                dashboard: {
+                  username: 'USERNAME',
+                  accessKeys: 'KEYS',
+                  idToken: 'TOKEN'
+                }
+              }
+            }
+          })
+        )
+      ),
+      existsSync: jest.fn().mockReturnValue(true)
+    }))
+    expect(getLoggedInUser()).toEqual(null)
   })
 })
