@@ -60,7 +60,7 @@ export const readConfigFile = () => {
 
 /*
  * Write Config File
- * - Writes a .serverlessrc file on the local machine in the root dir.
+ * - Writes a .serverlessrc file on the local machine in the root dir
  */
 
 export const writeConfigFile = (data) => {
