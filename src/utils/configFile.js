@@ -60,7 +60,7 @@ export const readConfigFile = () => {
 
 /*
  * Write Config File
- * - Writes a .serverlessrc file on the local machine in the root dir.
+ * - Writes a .serverlessrc file on the local machine in the root dir
  */
 
 export const writeConfigFile = (data) => {
@@ -79,6 +79,9 @@ export const writeConfigFile = (data) => {
 
 export const getLoggedInUser = () => {
   const config = readConfigFile()
+  if (!config.userId) {
+    return null
+  }
   const user = get(['users', config.userId, 'dashboard'], config)
   if (!user || !user.username) {
     return null // user is logged out
