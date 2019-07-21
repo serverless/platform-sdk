@@ -27,19 +27,8 @@ const login = async (tenant) => {
 
   // Start local server to aide CLI sign-in/up
   const app = express()
-  const whitelist = ['http://serverless.com', 'http://serverless-dev.com']
-  const corsOptions = {
-    origin: (origin, callback) => {
-      if (whitelist.indexOf(origin) !== -1) {
-        callback(null, true)
-      } else {
-        callback(new Error('Not allowed by CORS'))
-      }
-    }
-  }
-
   app.use(bodyParser.json())
-  app.use(cors(corsOptions))
+  app.use(cors({ origin: platformConfig.frontendUrl }))
   const server = app.listen(8000)
   let refreshToken
 
