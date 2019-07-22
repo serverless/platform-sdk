@@ -48,9 +48,22 @@ const getAccessKeyForTenant = async (tenant) => {
 
   const user = utils.getLoggedInUser()
 
-  // Check if in config file, return that next...
+  // Check if in config file, if not, & if possible, create one
   if (!user.accessKeys || !user.accessKeys[tenant]) {
-    throw new Error(`Could not find an access key for tenant ${tenant}.  Log out and log in again to create a new access key for this tenant.`) // eslint-disable-line
+    if (user.idToken) {
+      user.accessKeys[tenant] = await createAccessKeyForTenant(tenant)
+      utils.writeConfigFile({
+        users: {
+          [user.userId]: {
+            dashboard: { accessKeys: { [tenant]: user.accessKeys[tenant] } }
+          }
+        }
+      })
+    } else {
+      throw new Error(
+        `Could not find an access key for tenant ${tenant}.  Log out and log in again to create a new acce ss key for this tenant.`
+      )
+    }
   }
 
   return user.accessKeys[tenant]
