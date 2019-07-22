@@ -6,7 +6,6 @@
 
 import express from 'express'
 import bodyParser from 'body-parser'
-import cors from 'cors'
 import querystring from 'querystring'
 import jwtDecode from 'jwt-decode'
 import { version as currentSdkVersion } from '../../package.json'
@@ -28,7 +27,6 @@ const login = async (tenant) => {
   // Start local server to aide CLI sign-in/up
   const app = express()
   app.use(bodyParser.json())
-  app.use(cors())
   const server = app.listen(8000)
   let refreshToken
 
