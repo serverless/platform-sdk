@@ -1,6 +1,7 @@
 import fetch from '../fetch'
 import platformConfig from '../config'
 import * as utils from '../utils'
+import jwtDecode from 'jwt-decode'
 
 const refreshToken = async () => {
   const configFile = utils.readConfigFile()
@@ -10,7 +11,8 @@ const refreshToken = async () => {
   }
 
   // id token not expired, no need to renew
-  if (Number(configFile.users[currentId].dashboard.expiresAt) > Date.now()) {
+  const decoded = jwtDecode(configFile.users[currentId].dashboard.idToken)
+  if (Number(decoded.exp) * 1000 > Date.now()) {
     return
   }
 

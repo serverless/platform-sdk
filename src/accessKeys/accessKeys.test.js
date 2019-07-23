@@ -16,6 +16,16 @@ jest.mock('../fetch', () =>
   )
 )
 
+Date.now = jest.fn().mockReturnValue(1548263344735)
+
+jest.mock('jwt-decode', () =>
+  jest.fn().mockReturnValue(
+    Promise.resolve({
+      exp: 1548263344735 - 10000
+    })
+  )
+)
+
 jest.mock('../utils', () => ({
   readConfigFile: jest.fn().mockReturnValue({
     userId: 'userId',

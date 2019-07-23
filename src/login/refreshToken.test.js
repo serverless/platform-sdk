@@ -1,5 +1,7 @@
 import refreshToken from './refreshToken'
 import fetch from 'isomorphic-fetch'
+import jwtDecode from 'jwt-decode'
+
 import * as utils from '../utils'
 
 jest.mock('isomorphic-fetch', () =>
@@ -17,6 +19,14 @@ jest.mock('isomorphic-fetch', () =>
   )
 )
 
+jest.mock('jwt-decode', () =>
+  jest.fn().mockReturnValue(
+    Promise.resolve({
+      exp: 1548263344735 - 10000
+    })
+  )
+)
+
 Date.now = jest.fn().mockReturnValue(1548263344735)
 
 jest.mock('../utils', () => ({
@@ -25,7 +35,7 @@ jest.mock('../utils', () => ({
     users: {
       userId: {
         dashboard: {
-          expiresAt: 1548263344735 - 10000,
+          idToken: 'idToken',
           refreshToken: 'refreshToken'
         }
       }
@@ -39,6 +49,7 @@ describe('refreshToken', () => {
   it('refreshes tokens', async () => {
     await refreshToken()
     expect(utils.readConfigFile).toBeCalledWith()
+    expect(jwtDecode).toBeCalledWith('idToken')
     expect(fetch).toBeCalledWith('https://api.serverless.com/core/tokens/refresh', {
       body: JSON.stringify({ refreshToken: 'refreshToken' }),
       headers: {},
