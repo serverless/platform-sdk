@@ -1,5 +1,6 @@
-import getDeployProfile from './getDeployProfile'
+import { getDeployProfile } from './'
 import fetch from 'isomorphic-fetch'
+
 jest.mock('isomorphic-fetch', () =>
   jest.fn().mockImplementation((url) => {
     if (url.endsWith('/app-with-profile/profileValue')) {
