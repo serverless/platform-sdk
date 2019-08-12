@@ -1,13 +1,28 @@
 import fs from 'fs'
 import https from 'https'
 import fetch from 'isomorphic-fetch'
+import HttpsProxyAgent from 'https-proxy-agent'
 import { checkHttpResponse } from './utils'
 import { version as currentVersion } from '../package.json'
+import { parse as parseUrl } from 'url'
 
 let agent
 let headers
 
 export function configureFetchDefaults() {
+  // Use HTTPS Proxy (Optional)
+  const proxy =
+    process.env.proxy ||
+    process.env.HTTP_PROXY ||
+    process.env.http_proxy ||
+    process.env.HTTPS_PROXY ||
+    process.env.https_proxy
+
+  const agentOptions = {}
+  if (proxy) {
+    Object.assign(agentOptions, parseUrl(proxy))
+  }
+
   const ca = process.env.ca || process.env.HTTPS_CA || process.env.https_ca
 
   let caCerts = []
@@ -28,12 +43,16 @@ export function configureFetchDefaults() {
   }
 
   if (caCerts.length > 0) {
-    const caOptions = {
+    Object.assign(agentOptions, {
       rejectUnauthorized: true,
       ca: caCerts
-    }
-    // Update the agent -- http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/node-registering-certs.html
-    agent = new https.Agent(caOptions)
+    })
+  }
+
+  if (proxy) {
+    agent = new HttpsProxyAgent(agentOptions)
+  } else if (agentOptions.ca) {
+    agent = new https.Agent(agentOptions)
   }
 
   headers = {

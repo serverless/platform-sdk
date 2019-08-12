@@ -2,6 +2,7 @@ import { configureFetchDefaults, default as wrappedFetch } from './fetch'
 import { version as currentVersion } from '../package.json'
 import fetch from 'isomorphic-fetch'
 import { Agent } from 'https'
+import HttpsProxyAgent from 'https-proxy-agent'
 
 jest.mock('isomorphic-fetch', () =>
   jest.fn().mockReturnValue({
@@ -41,6 +42,21 @@ rqXRfboQnoZsG4q5WTP468SQvvG5
     await wrappedFetch('https://example.com', { headers: { Authorization: 'bearer token' } })
     expect(fetch).toBeCalledWith('https://example.com', {
       agent: expect.any(Agent),
+      headers: {
+        'Content-Type': 'application/json',
+        'x-platform-version': currentVersion,
+        Authorization: 'bearer token'
+      }
+    })
+  })
+
+  it('sets proxy from HTTPS_PROXY option', async () => {
+    delete process.env.HTTPS_CA
+    process.env.HTTPS_PROXY = 'https://localhost:8080'
+    configureFetchDefaults()
+    await wrappedFetch('https://example.com', { headers: { Authorization: 'bearer token' } })
+    expect(fetch).toBeCalledWith('https://example.com', {
+      agent: expect.any(HttpsProxyAgent),
       headers: {
         'Content-Type': 'application/json',
         'x-platform-version': currentVersion,
