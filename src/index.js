@@ -17,6 +17,7 @@ const core = require('./core')
 const register = require('./register')
 const deployProfiles = require('./deployProfiles')
 const stateVariables = require('./stateVariables')
+const managedAccounts = require('./managedAccounts')
 
 module.exports = {
   Deployment,
@@ -34,6 +35,7 @@ module.exports = {
   ...safeguards,
   ...deployProfiles,
   ...stateVariables,
+  ...managedAccounts,
   urls,
   configureFetchDefaults
 }
