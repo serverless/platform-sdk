@@ -44,3 +44,7 @@ const config = {
 }
 
 module.exports = config[platformStage]
+
+if (process.env.SERVERLESS_PLATFORM_FRONTEND_URL) {
+  module.exports.frontendUrl = process.env.SERVERLESS_PLATFORM_FRONTEND_URL
+}
