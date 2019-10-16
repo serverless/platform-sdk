@@ -8,9 +8,13 @@
 
 const WS = require('ws')
 const platformConfig = require('../config')
+const { getAgent } = require('../fetch')
 
 module.exports = function loginIdentity() {
-  const ws = new WS(`${platformConfig.loginBrokerUrl}broker`, undefined, { followRedirects: true })
+  const ws = new WS(`${platformConfig.loginBrokerUrl}broker`, undefined, {
+    followRedirects: true,
+    agent: getAgent()
+  })
 
   let resolveTransactionId, rejectTransactionId
   const transactionId = new Promise((resolve, reject) => {
