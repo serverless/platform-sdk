@@ -4,16 +4,14 @@
  * - Loads and updates data in user's .serverlessrc.
  */
 
-import express from 'express'
-import bodyParser from 'body-parser'
 import querystring from 'querystring'
 import jwtDecode from 'jwt-decode'
 import { version as currentSdkVersion } from '../../package.json'
 import * as utils from '../utils'
 import openBrowser from './openBrowser'
 import { createAccessKeyForTenant } from '../accessKeys'
-import getTokens from './getTokens'
 import platformConfig from '../config'
+import loginIdentity from './loginIdentity'
 
 const login = async (tenant) => {
   // Load local configuration file
@@ -24,11 +22,8 @@ const login = async (tenant) => {
     )
   }
 
-  // Start local server to aide CLI sign-in/up
-  const app = express()
-  app.use(bodyParser.json())
-  const server = app.listen(8000)
-  let refreshToken
+  const loginIdentityPromises = loginIdentity()
+  const transactionId = await loginIdentityPromises.transactionId
 
   const scope = ['openid', 'email_verified', 'email', 'profile', 'name', 'offline_access']
 
@@ -38,98 +33,54 @@ const login = async (tenant) => {
     audience: `https://${AUTH0_DOMAIN}/userinfo`,
     response_type: 'code',
     client_id: platformConfig.auth0ClientId,
-    redirect_uri: `${platformConfig.frontendUrl}callback`,
+    redirect_uri: `${platformConfig.frontendUrl}callback?transactionId=${transactionId}`,
     scope: scope.join(' ')
   })
   const auth0Endpoint = `https://${AUTH0_DOMAIN}/authorize?${auth0Queries}`
 
-  const opnRes = await openBrowser(auth0Endpoint)
+  await openBrowser(auth0Endpoint)
 
-  // Log in to Serverless Enterprise
-  return new Promise((resolve, reject) => {
-    app.get('/', async (req, res) => {
-      // eslint-disable-line
-      if (opnRes) {
-        opnRes.kill()
-      }
+  const data = await loginIdentityPromises.loginData
 
-      if (req.query.unverified) {
-        res.end()
-        server.close()
-        return reject('Complete sign-up before logging in.')
-      }
+  const decoded = jwtDecode(data.idToken)
+  const id = decoded.tracking_id || decoded.sub
+  configFile.userId = id
+  configFile.users = configFile.users || {}
+  configFile.users[id] = {
+    userId: id,
+    name: decoded.name,
+    email: decoded.email,
+    username: data.username,
+    dashboard: data
+  }
 
-      if (req.query.code) {
-        const tokens = await getTokens(req.query.code)
-        refreshToken = tokens.refresh_token
-        const queriesObj = {
-          idToken: tokens.id_token,
-          accessToken: tokens.access_token,
-          expiresIn: tokens.expires_in,
-          cli: true,
-          cliAuthed: true
-        }
-        const tokensQueries = querystring.stringify(queriesObj)
-        res.redirect(`${platformConfig.frontendUrl}callback?${tokensQueries}`)
-        res.end()
-      } else {
-        const endLoginQueries = querystring.stringify({
-          cli: 'true',
-          cliLoginSuccessful: 'true'
-        })
-        res.redirect(`${platformConfig.frontendUrl}?${endLoginQueries}`)
-        res.end()
-        server.close()
-        const tokens = {
-          refreshToken,
-          ...req.query
-        }
-        tokens.expiresAt = Number(req.query.expiresAt)
-        return resolve(tokens)
-      }
-    })
-  }).then(async (data) => {
-    // Update user's config file (.serverlessrc)
-    const decoded = jwtDecode(data.idToken)
-    const id = decoded.tracking_id || decoded.sub
-    configFile.userId = id
-    configFile.users = configFile.users || {}
-    configFile.users[id] = {
-      userId: id,
-      name: decoded.name,
-      email: decoded.email,
-      username: data.username,
-      dashboard: data
+  // Ensure accessKeys object exists
+  if (!configFile.users[id].dashboard.accessKeys) {
+    configFile.users[id].dashboard.accessKeys = {}
+  }
+
+  // Add enterprise object
+  configFile.users[id].enterprise = configFile.users[id].enterprise || {}
+  configFile.users[id].enterprise.versionSDK = currentSdkVersion
+  configFile.users[id].enterprise.timeLastLogin = Math.round(+new Date() / 1000)
+
+  // Write updated data to .serverlessrc
+  let updatedConfigFile = utils.writeConfigFile(configFile)
+
+  // If tenant is included, update config w/ new accesskey for that tenant
+  let accessKey
+  if (tenant && tenant !== 'tenantname') {
+    accessKey = await createAccessKeyForTenant(tenant)
+    if (accessKey) {
+      configFile = utils.readConfigFile()
+      configFile.users[id].dashboard.accessKeys[tenant] = accessKey
+      updatedConfigFile = utils.writeConfigFile(configFile)
     }
+  }
 
-    // Ensure accessKeys object exists
-    if (!configFile.users[id].dashboard.accessKeys) {
-      configFile.users[id].dashboard.accessKeys = {}
-    }
+  // TODO: Log Stat
 
-    // Add enterprise object
-    configFile.users[id].enterprise = configFile.users[id].enterprise || {}
-    configFile.users[id].enterprise.versionSDK = currentSdkVersion
-    configFile.users[id].enterprise.timeLastLogin = Math.round(+new Date() / 1000)
-
-    // Write updated data to .serverlessrc
-    let updatedConfigFile = utils.writeConfigFile(configFile)
-
-    // If tenant is included, update config w/ new accesskey for that tenant
-    let accessKey
-    if (tenant && tenant !== 'tenantname') {
-      accessKey = await createAccessKeyForTenant(tenant)
-      if (accessKey) {
-        configFile = utils.readConfigFile()
-        configFile.users[id].dashboard.accessKeys[tenant] = accessKey
-        updatedConfigFile = utils.writeConfigFile(configFile)
-      }
-    }
-
-    // TODO: Log Stat
-
-    return updatedConfigFile
-  })
+  return updatedConfigFile
 }
 
 module.exports = login
