@@ -42,7 +42,7 @@ const login = async (tenant) => {
 
   const data = await loginIdentityPromises.loginData
 
-  const decoded = jwtDecode(data.idToken)
+  const decoded = jwtDecode(data.id_token)
   const id = decoded.tracking_id || decoded.sub
   configFile.userId = id
   configFile.users = configFile.users || {}
@@ -51,7 +51,13 @@ const login = async (tenant) => {
     name: decoded.name,
     email: decoded.email,
     username: data.username,
-    dashboard: data
+    dashboard: {
+      refreshToken: data.refresh_token,
+      accessToken: data.access_token,
+      idToken: data.id_token,
+      expiresAt: Date.now() + data.expires_in,
+      username: decoded.nickname
+    }
   }
 
   // Ensure accessKeys object exists
