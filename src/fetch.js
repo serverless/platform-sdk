@@ -9,7 +9,7 @@ import { parse as parseUrl } from 'url'
 let agent
 let headers
 
-export function configureFetchDefaults() {
+export function getAgent() {
   // Use HTTPS Proxy (Optional)
   const proxy =
     process.env.proxy ||
@@ -50,10 +50,15 @@ export function configureFetchDefaults() {
   }
 
   if (proxy) {
-    agent = new HttpsProxyAgent(agentOptions)
+    return new HttpsProxyAgent(agentOptions)
   } else if (agentOptions.ca) {
-    agent = new https.Agent(agentOptions)
+    return new https.Agent(agentOptions)
   }
+  return undefined
+}
+
+export function configureFetchDefaults() {
+  agent = getAgent()
 
   headers = {
     'Content-Type': 'application/json',
