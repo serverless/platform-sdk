@@ -11,6 +11,14 @@ jest.mock('opn', () =>
 )
 
 describe('openBrowser', () => {
+  let DISPLAY
+  beforeAll(() => {
+    ;({ DISPLAY } = process.env)
+    process.env.DISPLAY = ':0'
+  })
+  afterAll(() => {
+    process.env.DISPLAY = DISPLAY
+  })
   it('call opn to open browser specified in env', async () => {
     process.env.BROWSER = 'firefox'
     await openBrowser('https://foobar')
