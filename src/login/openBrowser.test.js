@@ -11,6 +11,33 @@ jest.mock('opn', () =>
 )
 
 describe('openBrowser', () => {
+  let DISPLAY
+  let platform
+  beforeAll(() => {
+    ;({
+      platform,
+      env: { DISPLAY }
+    } = process)
+    process.env.DISPLAY = ':0'
+  })
+  afterAll(() => {
+    process.env.DISPLAY = DISPLAY
+    process.platform = platform
+  })
+
+  it("doesn't call opn to when BROWSER=none", async () => {
+    process.env.BROWSER = 'none'
+    await openBrowser('https://foobar')
+    expect(opn.mock.calls.length).toEqual(0)
+  })
+
+  it("doesn't set app to when platform=darwin & browser=open", async () => {
+    process.env.BROWSER = 'open'
+    process.platform = 'darwin'
+    await openBrowser('https://foobar')
+    expect(opn).toBeCalledWith('https://foobar', { wait: false })
+  })
+
   it('call opn to open browser specified in env', async () => {
     process.env.BROWSER = 'firefox'
     await openBrowser('https://foobar')

@@ -4,26 +4,26 @@ import opn from 'opn'
 import chalk from 'chalk'
 import isDockerContainer from 'is-docker'
 
-function displayManualOpenMessage(url, err) {
-  // https://github.com/sindresorhus/log-symbols
-  console.log('---------------------------')
-  const errMsg = err ? `\nError: ${err.message}` : ''
-  const msg = `Unable to open browser automatically${errMsg}`
-  console.log(`🙈  ${chalk.red(msg)}`)
-  console.log(chalk.green('Please open your browser & open the URL below to login:'))
-  console.log(chalk.yellow(url))
-  console.log('---------------------------')
-  return false
-}
-
 module.exports = function openBrowser(url) {
   let browser = process.env.BROWSER
-  if (browser === 'none' || isDockerContainer()) {
-    return displayManualOpenMessage(url)
+  if (
+    browser === 'none' ||
+    isDockerContainer() ||
+    (['darwin', 'linux'].includes(process.platform) && !process.env.DISPLAY)
+  ) {
+    console.log(chalk.green('Please open your browser & open the URL below to login:'))
+    console.log(chalk.yellow(url))
+    return false
   }
   if (process.platform === 'darwin' && browser === 'open') {
     browser = undefined
   }
+  console.log(
+    chalk.green(
+      'If your browser does not open automatically, please open it &  open the URL below to log in:'
+    )
+  )
+  console.log(chalk.yellow(url))
   const options = { wait: false, app: browser }
-  return opn(url, options).catch((err) => displayManualOpenMessage(url, err))
+  return opn(url, options).catch(() => false)
 }
