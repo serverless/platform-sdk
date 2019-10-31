@@ -20,7 +20,7 @@ module.exports = function openBrowser(url) {
   }
   console.log(
     chalk.green(
-      'If your browser does not open automatically, open it and & open the URL below to log in:'
+      'If your browser does not open automatically, please open it &  open the URL below to log in:'
     )
   )
   console.log(chalk.yellow(url))
