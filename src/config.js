@@ -3,7 +3,7 @@ const platformStage = process.env.SERVERLESS_PLATFORM_STAGE || 'prod'
 const config = {
   local: {
     frontendUrl: 'http://localhost:3000/',
-    backendUrl: 'https://api.serverless-dev.com/core/',
+    backendUrl: 'https://localhost:3011/core/',
     loginBrokerUrl: 'https://api.serverless-dev.com/login/',
     logDestinationUrl: 'https://api.serverless-dev.com/malt/',
     auth0Domain: 'serverlessdev.auth0.com',
