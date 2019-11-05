@@ -56,7 +56,7 @@ const login = async (tenant) => {
       accessToken: data.access_token,
       idToken: data.id_token,
       expiresAt: Date.now() + data.expires_in,
-      username: decoded.nickname
+      username: data.username
     }
   }
 
