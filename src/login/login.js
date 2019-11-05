@@ -44,6 +44,7 @@ const login = async (tenant) => {
 
   const decoded = jwtDecode(data.id_token)
   const id = decoded.tracking_id || decoded.sub
+  const expiresAt = data.expires_in ? Date.now() + data.expires_in : data.expires_at
   configFile.userId = id
   configFile.users = configFile.users || {}
   configFile.users[id] = {
@@ -55,8 +56,8 @@ const login = async (tenant) => {
       refreshToken: data.refresh_token,
       accessToken: data.access_token,
       idToken: data.id_token,
-      expiresAt: Date.now() + data.expires_in,
-      username: decoded.nickname
+      expiresAt: expiresAt,
+      username: data.username
     }
   }
 
