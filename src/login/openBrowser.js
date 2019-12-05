@@ -6,11 +6,7 @@ import isDockerContainer from 'is-docker'
 
 module.exports = function openBrowser(url) {
   let browser = process.env.BROWSER
-  if (
-    browser === 'none' ||
-    isDockerContainer() ||
-    (['darwin', 'linux'].includes(process.platform) && !process.env.DISPLAY)
-  ) {
+  if (browser === 'none' || isDockerContainer()) {
     console.log(chalk.green('Please open your browser & open the URL below to login:'))
     console.log(chalk.yellow(url))
     return false
