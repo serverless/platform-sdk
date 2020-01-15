@@ -1,19 +1,18 @@
 language: node_js
 sudo: false
 node_js:
-- '10.15'
-- 8
-- 6
+  - '10.15'
+  - 8
+  - 6
 before_install:
-- npm run setup:ci
+  - npm run setup:ci
 install:
-- npm run setup
+  - npm run setup
 script:
-- npm run lint
-- npm run test:ci
+  - npm run lint
+  - npm run test:ci
 before_deploy:
-- snyk monitor --org=serverless
-- node ./scripts/updatePreReleaseVersion.js
+  - node ./scripts/updatePreReleaseVersion.js
 deploy:
   # production releases
   - provider: npm
