@@ -51,6 +51,9 @@ const getAccessKeyForTenant = async (tenant) => {
   // Check if in config file, if not, & if possible, create one
   if (!user.accessKeys || !user.accessKeys[tenant]) {
     if (user.idToken) {
+      if (!user.accessKeys) {
+        user.accessKeys = {}
+      }
       user.accessKeys[tenant] = await createAccessKeyForTenant(tenant)
       utils.writeConfigFile({
         users: {
