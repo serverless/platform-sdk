@@ -18,6 +18,8 @@ describe('openBrowser', () => {
       platform,
       env: { DISPLAY }
     } = process)
+    // Make the process variable editable (throws an error in Node v14)
+    process = { ...process, env: { ...process.env } }
     process.env.DISPLAY = ':0'
   })
   afterAll(() => {
