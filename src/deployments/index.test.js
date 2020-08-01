@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch'
+import fetch from 'cross-fetch'
 import { getAccessKeyForTenant } from '../accessKeys'
 import Deployment from './'
 import { version as packageJsonVersion } from '../../package.json'
@@ -6,7 +6,7 @@ import { version as packageJsonVersion } from '../../package.json'
 jest.mock('../accessKeys', () => ({
   getAccessKeyForTenant: jest.fn().mockReturnValue('access-key')
 }))
-jest.mock('isomorphic-fetch', () =>
+jest.mock('cross-fetch', () =>
   jest.fn().mockReturnValue(
     Promise.resolve({
       ok: true,

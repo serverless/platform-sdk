@@ -1,8 +1,8 @@
 import { createApp } from './'
-import fetch from 'isomorphic-fetch'
+import fetch from 'cross-fetch'
 import platformConfig from '../config'
 
-jest.mock('isomorphic-fetch', () =>
+jest.mock('cross-fetch', () =>
   jest.fn().mockReturnValue({
     ok: true,
     json: async () => {}

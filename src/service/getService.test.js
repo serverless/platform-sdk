@@ -1,8 +1,8 @@
-import fetch from 'isomorphic-fetch'
+import fetch from 'cross-fetch'
 import { getService } from '.'
 import platformConfig from '../config'
 
-jest.mock('isomorphic-fetch', () =>
+jest.mock('cross-fetch', () =>
   jest.fn().mockReturnValue(
     Promise.resolve({
       ok: true,

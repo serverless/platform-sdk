@@ -1,10 +1,10 @@
 import { configureFetchDefaults, default as wrappedFetch } from './fetch'
 import { version as currentVersion } from '../package.json'
-import fetch from 'isomorphic-fetch'
+import fetch from 'cross-fetch'
 import { Agent } from 'https'
 import HttpsProxyAgent from 'https-proxy-agent'
 
-jest.mock('isomorphic-fetch', () =>
+jest.mock('cross-fetch', () =>
   jest.fn().mockReturnValue({
     ok: true,
     json: async () => ({ destinationArn: 'arn:dest' })

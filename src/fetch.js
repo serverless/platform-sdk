@@ -1,6 +1,6 @@
 import fs from 'fs'
 import https from 'https'
-import fetch from 'isomorphic-fetch'
+import fetch from 'cross-fetch'
 import HttpsProxyAgent from 'https-proxy-agent'
 import { checkHttpResponse } from './utils'
 import { version as currentVersion } from '../package.json'
