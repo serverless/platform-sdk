@@ -4,7 +4,7 @@ import os from 'os'
 import { readConfigFile, getLoggedInUser } from './index.js'
 
 jest.mock('fs', () => ({
-  ...require.requireActual('fs'),
+  ...jest.requireActual('fs'),
   existsSync: jest.fn().mockReturnValue(true),
   readFileSync: jest.fn().mockReturnValue(
     JSON.stringify({
