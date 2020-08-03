@@ -1,4 +1,6 @@
-# Platform SDK
+# Platform SDK (deprecated)
+
+_*Note*: This package is deprecated in favor of [@serverless/platform-client](https://www.npmjs.com/package/@serverless/platform-client). It accepts only bug fixes_
 
 Functional SDK for the Serverless Platfrom.
 
