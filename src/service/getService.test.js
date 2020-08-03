@@ -1,8 +1,8 @@
-import fetch from 'cross-fetch'
+import fetch from 'node-fetch'
 import { getService } from '.'
 import platformConfig from '../config'
 
-jest.mock('cross-fetch', () =>
+jest.mock('node-fetch', () =>
   jest.fn().mockReturnValue(
     Promise.resolve({
       ok: true,

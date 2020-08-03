@@ -1,8 +1,8 @@
-import fetch from 'cross-fetch'
+import fetch from 'node-fetch'
 import platformConfig from '../config'
 import { removeLogDestination } from './'
 
-jest.mock('cross-fetch', () =>
+jest.mock('node-fetch', () =>
   jest.fn().mockReturnValue(
     Promise.resolve({
       ok: true,

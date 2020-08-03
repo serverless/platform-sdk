@@ -28,10 +28,10 @@
   },
   "dependencies": {
     "chalk": "^2.4.1",
-    "cross-fetch": "^3.0.5",
     "https-proxy-agent": "^4.0.0",
     "is-docker": "^1.1.0",
     "jwt-decode": "^2.2.0",
+    "node-fetch": "^2.6.0",
     "opn": "^5.5.0",
     "querystring": "^0.2.0",
     "ramda": "^0.25.0",

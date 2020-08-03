@@ -1,7 +1,7 @@
 import { getDeployProfiles } from './'
-import fetch from 'cross-fetch'
+import fetch from 'node-fetch'
 
-jest.mock('cross-fetch', () =>
+jest.mock('node-fetch', () =>
   jest.fn().mockImplementation((url) => {
     if (url.endsWith('/org-with-profile/deploymentProfiles')) {
       return {

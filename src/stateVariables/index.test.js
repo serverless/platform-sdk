@@ -1,6 +1,6 @@
 import { getStateVariable } from './index'
-import fetch from 'cross-fetch'
-jest.mock('cross-fetch', () =>
+import fetch from 'node-fetch'
+jest.mock('node-fetch', () =>
   jest.fn().mockReturnValue({
     ok: true,
     status: 200,

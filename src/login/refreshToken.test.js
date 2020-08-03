@@ -1,10 +1,10 @@
 import refreshToken from './refreshToken'
-import fetch from 'cross-fetch'
+import fetch from 'node-fetch'
 import jwtDecode from 'jwt-decode'
 
 import * as utils from '../utils'
 
-jest.mock('cross-fetch', () =>
+jest.mock('node-fetch', () =>
   jest.fn().mockReturnValue(
     Promise.resolve({
       ok: true,

@@ -1,9 +1,9 @@
 import { getApp } from './'
-import fetch from 'cross-fetch'
+import fetch from 'node-fetch'
 import platformConfig from '../config'
 import refreshToken from '../login/refreshToken'
 
-jest.mock('cross-fetch', () =>
+jest.mock('node-fetch', () =>
   jest.fn().mockReturnValue({
     ok: true,
     json: async () => {}
