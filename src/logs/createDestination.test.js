@@ -1,8 +1,8 @@
-import fetch from 'isomorphic-fetch'
+import fetch from 'node-fetch'
 import platformConfig from '../config'
 import { getLogDestination } from './'
 
-jest.mock('isomorphic-fetch', () =>
+jest.mock('node-fetch', () =>
   jest.fn().mockReturnValue(
     Promise.resolve({
       ok: true,

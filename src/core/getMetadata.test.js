@@ -1,7 +1,7 @@
 import getMetadata from './getMetadata'
-import fetch from 'isomorphic-fetch'
+import fetch from 'node-fetch'
 
-jest.mock('isomorphic-fetch', () =>
+jest.mock('node-fetch', () =>
   jest.fn().mockReturnValue(
     Promise.resolve({
       ok: true,

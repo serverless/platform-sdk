@@ -1,8 +1,8 @@
 import { archiveService } from './'
-import fetch from 'isomorphic-fetch'
+import fetch from 'node-fetch'
 import platformConfig from '../config'
 
-jest.mock('isomorphic-fetch', () =>
+jest.mock('node-fetch', () =>
   jest.fn().mockReturnValue({
     ok: true,
     json: async () => {}

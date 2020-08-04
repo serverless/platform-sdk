@@ -1,6 +1,6 @@
 import getSafeguards from './getSafeguards'
-import fetch from 'isomorphic-fetch'
-jest.mock('isomorphic-fetch', () =>
+import fetch from 'node-fetch'
+jest.mock('node-fetch', () =>
   jest.fn().mockReturnValue({
     ok: true,
     json: async () => [
@@ -26,7 +26,9 @@ describe('getSafeguards', () => {
       tenant: 'tenant',
       stage: 'stage'
     })
-    expect(fetch).toBeCalledWith(
+    expect(
+      fetch
+    ).toBeCalledWith(
       'https://api.serverless.com/core/tenants/tenant/safeguards/policies/?appName=app',
       { method: 'GET', headers: { Authorization: `bearer accessKey` } }
     )

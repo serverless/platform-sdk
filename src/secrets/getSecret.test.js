@@ -1,6 +1,6 @@
 import getSecret from './getSecret'
-import fetch from 'isomorphic-fetch'
-jest.mock('isomorphic-fetch', () =>
+import fetch from 'node-fetch'
+jest.mock('node-fetch', () =>
   jest.fn().mockReturnValue({
     ok: true,
     json: async () => ({ destinationArn: 'arn:dest' })
