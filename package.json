@@ -1,6 +1,6 @@
 {
   "name": "@serverless/platform-sdk",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "Serverless Platform SDK",
   "author": "Serverless, Inc.",
   "license": "Apache-2.0",
